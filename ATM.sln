@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.27428.2011
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATM", "ATM\ATM.csproj", "{F795D620-CBC2-461B-A7A3-4462CDE4438C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F86FAED1-3E06-4B94-868B-93D4974655D5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3B770A89-1070-4833-944A-0C7BF948A93B}"
 	ProjectSection(SolutionItems) = preProject
-		..\TransponderReceiver.dll = ..\TransponderReceiver.dll
+		TransponderReceiver.dll = TransponderReceiver.dll
 	EndProjectSection
 EndProject
 Global
