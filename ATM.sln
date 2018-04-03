@@ -5,10 +5,7 @@ VisualStudioVersion = 15.0.27428.2011
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATM", "ATM\ATM.csproj", "{F795D620-CBC2-461B-A7A3-4462CDE4438C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3B770A89-1070-4833-944A-0C7BF948A93B}"
-	ProjectSection(SolutionItems) = preProject
-		TransponderReceiver.dll = TransponderReceiver.dll
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransponderRecieverConsoleApp", "TransponderRecieverConsoleApp\TransponderRecieverConsoleApp.csproj", "{B83CA9CB-654B-4C20-8C01-2D3F133B2AED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +17,10 @@ Global
 		{F795D620-CBC2-461B-A7A3-4462CDE4438C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F795D620-CBC2-461B-A7A3-4462CDE4438C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F795D620-CBC2-461B-A7A3-4462CDE4438C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B83CA9CB-654B-4C20-8C01-2D3F133B2AED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B83CA9CB-654B-4C20-8C01-2D3F133B2AED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B83CA9CB-654B-4C20-8C01-2D3F133B2AED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B83CA9CB-654B-4C20-8C01-2D3F133B2AED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
