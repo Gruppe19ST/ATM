@@ -13,9 +13,9 @@ namespace ATM
         public float XCoordinate { get; set; }
         public float YCoordinate { get; set; }
         public float Altitude { get; set; }
-        public string TimeStamp { get; set; }
+        public DateTime TimeStamp { get; set; }
 
-        public TrackObject(string tag, float x, float y, float alt, string time)
+        public TrackObject(string tag, float x, float y, float alt, DateTime time)
         {
             Tag = tag;
             XCoordinate = x;

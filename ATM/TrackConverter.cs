@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TransponderReceiver;
+using System.Globalization;
 
 namespace ATM
 {
@@ -33,7 +34,9 @@ namespace ATM
             float xCoordinate = float.Parse(elements[1]);
             float yCoordinate = float.Parse(elements[2]);
             float altitude = float.Parse(elements[3]);
-            string timeStamp = elements[4]; // skal ændres til en datetime senere, så output bliver læseligt. 
+            // string timeStamp = elements[4]; // skal ændres til en datetime senere, så output bliver læseligt. 
+            DateTime timeStamp = DateTime.ParseExact(elements[4], "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture);
+            // https://msdn.microsoft.com/en-us/library/w2sa9yss(v=vs.110).aspx
             return new TrackObject(tag, xCoordinate, yCoordinate, altitude, timeStamp); // returnerer nyt track
         }
 
