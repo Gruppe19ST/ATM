@@ -17,24 +17,25 @@ namespace ATM
             _transponderReceiver.TransponderDataReady += _transponderReceiver_TransponderDataReady;
         }
 
+        private void _transponderReceiver_TransponderDataReady(object sender, RawTransponderDataEventArgs e)
+        {
+            foreach (var data in e.TransponderData) // liste af strings med rå trackdata  
+            {
+                TrackObject track = ConvertTrackObject(data); // Opretter et nyt track for hvert element i listen
+                Console.WriteLine(track.ToString()); // udskriver track i konsolvinduet 
+            }
+        }
+
         public TrackObject ConvertTrackObject(string responderData)
         {
-            string[] elements = responderData.Split(';');
+            string[] elements = responderData.Split(';'); // delimiter er ; 
             string tag = elements[0];
             float xCoordinate = float.Parse(elements[1]);
             float yCoordinate = float.Parse(elements[2]);
             float altitude = float.Parse(elements[3]);
             string timeStamp = elements[4]; // skal ændres til en datetime senere, så output bliver læseligt. 
-            return new TrackObject(tag, xCoordinate, yCoordinate, altitude, timeStamp);
+            return new TrackObject(tag, xCoordinate, yCoordinate, altitude, timeStamp); // returnerer nyt track
         }
 
-        private void _transponderReceiver_TransponderDataReady(object sender, RawTransponderDataEventArgs e)
-        {
-            foreach (var data in e.TransponderData)
-            {
-                TrackObject track = ConvertTrackObject(data);
-                Console.WriteLine(track.ToString());
-            }
-        }
     }
 }
