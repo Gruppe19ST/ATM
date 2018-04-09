@@ -14,9 +14,9 @@ namespace TransponderRecieverConsoleApp
         
         static void Main(string[] args)
         {
-           /* TrackConverter trackConverter = new TrackConverter(TransponderReceiverFactory.CreateTransponderDataReceiver());
-            trackConverter.TrackObjectsReady += TrackConverter_TrackObjectsReady;*/
-            TrackReceiver trackReceiver = new TrackReceiver();
+            TrackConverter trackConverter = new TrackConverter(TransponderReceiverFactory.CreateTransponderDataReceiver());
+            //trackConverter.TrackObjectsReady += TrackConverter_TrackObjectsReady;*/
+            TrackReceiver trackReceiver = new TrackReceiver(trackConverter);
             
 
             Console.ReadLine(); 

@@ -77,14 +77,14 @@ namespace ATM.Test.Unit
              Assert.That(_trackReceiver.GetListOfTrackObjects().Count, Is.EqualTo(2));
          }*/
 
-        [Test]
+        /*[Test]
         public void handleEventData_ListWith2_CorrectTag()
         {
             var args = new RawTransponderDataEventArgs(info);
 
             _transponderReceiver.TransponderDataReady += Raise.EventWith(args);
             Assert.That(_trackReceiver.GetListOfTrackObjects().ElementAt(0).Tag, Is.EqualTo("Tag123"));
-        }
+        }*/
 
        /* [Test]
         public void handleEventData_ListWith2_RaiseEvent()
