@@ -37,7 +37,7 @@ namespace ATM
 
         }
 
-        private void OnTrackObjectListUpdated(TrackObjectEventArgs trackObjects)
+        public void OnTrackObjectListUpdated(TrackObjectEventArgs trackObjects)
         {
             var handler = TrackObjectsReady;
             handler?.Invoke(this,trackObjects);

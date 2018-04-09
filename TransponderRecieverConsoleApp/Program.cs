@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TransponderReceiver;
 using ATM;
+using ATM.Receiver;
 
 namespace TransponderRecieverConsoleApp
 {
@@ -13,9 +14,10 @@ namespace TransponderRecieverConsoleApp
         
         static void Main(string[] args)
         {
-            TrackConverter trackConverter = new TrackConverter(TransponderReceiverFactory.CreateTransponderDataReceiver());
-            trackConverter.TrackObjectsReady += TrackConverter_TrackObjectsReady;
-
+           /* TrackConverter trackConverter = new TrackConverter(TransponderReceiverFactory.CreateTransponderDataReceiver());
+            trackConverter.TrackObjectsReady += TrackConverter_TrackObjectsReady;*/
+            TrackReceiver trackReceiver = new TrackReceiver();
+            
 
             Console.ReadLine(); 
             

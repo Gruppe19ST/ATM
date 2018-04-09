@@ -30,8 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,12 +44,15 @@
     <Reference Include="TransponderReceiver">
       <HintPath>..\TransponderReceiver.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ITrackConverter.cs" />
-    <Compile Include="TrackConverter.cs" />
+    <Compile Include="Converter\ITrackConverter.cs" />
+    <Compile Include="Converter\TrackConverter.cs" />
+    <Compile Include="Receiver\ITrackReceiver.cs" />
+    <Compile Include="Receiver\TrackReceiver.cs" />
     <Compile Include="TrackObject.cs" />
-    <Compile Include="TrackObjectEventArgs.cs" />
+    <Compile Include="Converter\TrackObjectEventArgs.cs" />
     <Compile Include="TrackObjectificationSoftware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
