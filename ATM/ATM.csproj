@@ -43,8 +43,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ITrackConverter.cs" />
     <Compile Include="TrackConverter.cs" />
     <Compile Include="TrackObject.cs" />
+    <Compile Include="TrackObjectEventArgs.cs" />
     <Compile Include="TrackObjectificationSoftware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

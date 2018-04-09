@@ -16,18 +16,19 @@ namespace ATM.Test.Unit
     {
         private TrackConverter _uut;
         private ITransponderReceiver _transponderReceiver;
+        string input = "Tag123;12345;12345;1000;20151006213456789";
 
         [SetUp]
         public void SetUp()
         {
             _transponderReceiver = Substitute.For<ITransponderReceiver>();
             _uut = new TrackConverter(_transponderReceiver);
+            
         }
 
         [Test]
         public void stringToTrack_Conversion_TagIsCorrect()
         {
-            string input = "Tag123;12345;12345;1000;20151006213456789";
             TrackObject outputTrack = _uut.ConvertTrackObject(input);
             Assert.That(outputTrack.Tag,Is.EqualTo("Tag123"));
         }
@@ -35,21 +36,20 @@ namespace ATM.Test.Unit
         [Test]
         public void stringToTrack_Conversion_XcorIsCorrect()
         {
-            string input = "Tag123;12345;12345;1000;20151006213456789";
             TrackObject outputTrack = _uut.ConvertTrackObject(input);
             Assert.That(outputTrack.XCoordinate, Is.EqualTo(12345));
         }
+
         [Test]
         public void stringToTrack_Conversion_YcorIsCorrect()
         {
-            string input = "Tag123;12345;12345;1000;20151006213456789";
             TrackObject outputTrack = _uut.ConvertTrackObject(input);
             Assert.That(outputTrack.YCoordinate, Is.EqualTo(12345));
         }
+
         [Test]
         public void stringToTrack_Conversion_AltIsCorrect()
         {
-            string input = "Tag123;12345;12345;1000;20151006213456789";
             TrackObject outputTrack = _uut.ConvertTrackObject(input);
             Assert.That(outputTrack.Altitude, Is.EqualTo(1000));
         }
@@ -57,7 +57,6 @@ namespace ATM.Test.Unit
         [Test]
         public void stringToTrack_Conversion_TimestampIsCorrect()
         {
-            string input = "Tag123;12345;12345;1000;20151006213456789";
             TrackObject outputTrack = _uut.ConvertTrackObject(input);
             Assert.That(outputTrack.TimeStamp, Is.EqualTo(DateTime.ParseExact("20151006213456789", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture)));
         }
