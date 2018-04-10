@@ -8,5 +8,7 @@ namespace ATM.Logic.Interfaces
 {
     interface ISeperationEventChecker
     {
+        void CheckSeperationEvent();
+        void SaveToDTO();
     }
 }

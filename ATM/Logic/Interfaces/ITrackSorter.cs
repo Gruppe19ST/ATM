@@ -8,5 +8,7 @@ namespace ATM.Logic.Interfaces
 {
     interface ITrackSorter
     {
+        void SortTracks(List<TrackObject> listOfTrackObjects);
+        void SaveToDTO();
     }
 }

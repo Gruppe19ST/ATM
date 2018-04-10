@@ -8,5 +8,6 @@ namespace ATM.Logic.Interfaces
 {
     interface ISeperationEventHandler
     {
+        void CreateWarning();
     }
 }

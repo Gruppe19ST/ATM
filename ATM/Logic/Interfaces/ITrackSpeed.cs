@@ -8,5 +8,7 @@ namespace ATM.Logic.Interfaces
 {
     interface ITrackSpeed
     {
+        void CalculateSpeed();
+        void SaveToDTO();
     }
 }

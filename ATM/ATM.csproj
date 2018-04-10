@@ -56,7 +56,6 @@
     <Compile Include="Logic\Interfaces\ISeperationEventLogger.cs" />
     <Compile Include="Logic\Interfaces\ISeperationEventChecker.cs" />
     <Compile Include="Logic\Interfaces\ISeperationEventHandler.cs" />
-    <Compile Include="Logic\Interfaces\ISeperationEventPrinter.cs" />
     <Compile Include="Logic\Interfaces\ITrackCompassCourse.cs" />
     <Compile Include="Logic\Interfaces\ITrackController.cs" />
     <Compile Include="Logic\Interfaces\ITrackSorter.cs" />
