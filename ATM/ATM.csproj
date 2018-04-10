@@ -47,14 +47,19 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converter\ITrackConverter.cs" />
-    <Compile Include="Converter\TrackConverter.cs" />
-    <Compile Include="Receiver\ITrackReceiver.cs" />
-    <Compile Include="Receiver\TrackReceiver.cs" />
+    <Compile Include="Logic\Handlers\Converter\ITrackConverter.cs" />
+    <Compile Include="Logic\Handlers\Converter\TrackConverter.cs" />
+    <Compile Include="Logic\Handlers\Receiver\ITrackReceiver.cs" />
+    <Compile Include="Logic\Handlers\Receiver\TrackReceiver.cs" />
     <Compile Include="TrackObject.cs" />
-    <Compile Include="Converter\TrackObjectEventArgs.cs" />
+    <Compile Include="Logic\Handlers\Converter\TrackObjectEventArgs.cs" />
     <Compile Include="TrackObjectificationSoftware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Logic\Controllers\" />
+    <Folder Include="Logic\DTO\" />
+    <Folder Include="Logic\Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
