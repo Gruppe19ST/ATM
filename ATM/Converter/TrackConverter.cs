@@ -22,6 +22,7 @@ namespace ATM
 
         private void _transponderReceiver_TransponderDataReady(object sender, RawTransponderDataEventArgs e)
         {
+            listOfTrackObjects.Clear();
             foreach (var data in e.TransponderData) // liste af strings med rå trackdata  
             {
                 TrackObject track = ConvertTrackObject(data); // Opretter et nyt track for hvert element i listen
@@ -33,7 +34,7 @@ namespace ATM
 
             // Raise et event med listen
             OnTrackObjectListUpdated(new TrackObjectEventArgs(listOfTrackObjects));
-            listOfTrackObjects.Clear();
+            
 
         }
 
