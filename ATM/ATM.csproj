@@ -47,10 +47,20 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logic\DTO\DTOSeperationEvents.cs" />
+    <Compile Include="Logic\DTO\DTOTrack.cs" />
     <Compile Include="Logic\Handlers\Converter\ITrackConverter.cs" />
     <Compile Include="Logic\Handlers\Converter\TrackConverter.cs" />
     <Compile Include="Logic\Handlers\Receiver\ITrackReceiver.cs" />
     <Compile Include="Logic\Handlers\Receiver\TrackReceiver.cs" />
+    <Compile Include="Logic\Interfaces\ISeperationEventLogger.cs" />
+    <Compile Include="Logic\Interfaces\ISeperationEventChecker.cs" />
+    <Compile Include="Logic\Interfaces\ISeperationEventHandler.cs" />
+    <Compile Include="Logic\Interfaces\ISeperationEventPrinter.cs" />
+    <Compile Include="Logic\Interfaces\ITrackCompassCourse.cs" />
+    <Compile Include="Logic\Interfaces\ITrackController.cs" />
+    <Compile Include="Logic\Interfaces\ITrackSorter.cs" />
+    <Compile Include="Logic\Interfaces\ITrackSpeed.cs" />
     <Compile Include="TrackObject.cs" />
     <Compile Include="Logic\Handlers\Converter\TrackObjectEventArgs.cs" />
     <Compile Include="TrackObjectificationSoftware.cs" />
@@ -58,8 +68,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Logic\Controllers\" />
-    <Folder Include="Logic\DTO\" />
-    <Folder Include="Logic\Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
