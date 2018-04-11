@@ -53,6 +53,7 @@
     <Compile Include="Logic\Handlers\Converter\TrackConverter.cs" />
     <Compile Include="Logic\Handlers\Receiver\ITrackReceiver.cs" />
     <Compile Include="Logic\Handlers\Receiver\TrackReceiver.cs" />
+    <Compile Include="Logic\Handlers\TrackSpeed.cs" />
     <Compile Include="Logic\Interfaces\ISeperationEventLogger.cs" />
     <Compile Include="Logic\Interfaces\ISeperationEventChecker.cs" />
     <Compile Include="Logic\Interfaces\ISeperationEventHandler.cs" />

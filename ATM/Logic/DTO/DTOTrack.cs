@@ -8,5 +8,6 @@ namespace ATM.Logic.DTO
 {
     class DTOTrack
     {
+
     }
 }
