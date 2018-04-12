@@ -10,16 +10,22 @@ namespace ATM.Logic.Handlers
 {
     public class TrackCompassCourse : ITrackCompassCourse
     {
-        public double CalculateCompassCourse(TrackObject oldTrackObject, TrackObject newTrackObject)
+        private double compassCourse;
+
+        public TrackCompassCourse()
+        {
+            compassCourse = 0;
+        }
+        public double CalculateCompassCourse(TrackObject p, TrackObject c)
         {
             //Vector pointing from the planes old position to the planes new position
             CompassCourseVector planeVector = new CompassCourseVector()
             {
-                X = newTrackObject.XCoordinate - oldTrackObject.XCoordinate,
-                Y = newTrackObject.YCoordinate - oldTrackObject.YCoordinate
+                X = c.XCoordinate - p.XCoordinate,
+                Y = c.YCoordinate - p.YCoordinate
             };
 
-            //Vector pointing north. Used to calculate angle the plane is heading
+            //Vector pointing north. Used to calculate the course the plane is heading
             CompassCourseVector northVector = new CompassCourseVector()
             {
                 X = 0,
@@ -29,14 +35,14 @@ namespace ATM.Logic.Handlers
             var dotProduct = (planeVector.X * northVector.X) + (planeVector.Y * northVector.Y);
             var determinant = (planeVector.X * northVector.X) - (planeVector.Y * northVector.Y);
 
-            //Calculate angle between north and plane vector. 
-            var angle = Math.Atan2(determinant, dotProduct) * (180 / Math.PI); //Convert radians to degrees.
+            //Calculate course between north and plane vector. 
+            var compassCourse = Math.Atan2(determinant, dotProduct) * (180 / Math.PI); //Convert radians to degrees.
 
-            //Convert negative angle values between 0-1 PI to number between 0-360 degrees
-            if (angle < 0)
-                return Math.Round(360 + angle, 3);
+            //Convert negative course values between 0-1 PI to number between 0-360 degrees
+            if (compassCourse < 0)
+                return Math.Round(360 + compassCourse,3);
 
-            return Math.Round(angle, 3);
+            return Math.Round(compassCourse,3);
         }
     }
 }

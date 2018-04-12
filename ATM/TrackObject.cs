@@ -15,6 +15,7 @@ namespace ATM
         public float Altitude { get; set; }
         public DateTime TimeStamp { get; set; }
         public double horizontalVelocity { get; set; }
+        public double compassCourse { get; set; }
 
         public TrackObject(string tag, float x, float y, float alt, DateTime time)
         {
@@ -24,6 +25,7 @@ namespace ATM
             Altitude = alt;
             TimeStamp = time;
             horizontalVelocity = 0;
+            compassCourse = 0;
         }
         
         public override string ToString()

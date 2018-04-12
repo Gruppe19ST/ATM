@@ -8,6 +8,6 @@ namespace ATM.Logic.Interfaces
 {
     public interface ITrackCompassCourse
     {
-        double CalculateCompassCourse(TrackObject oldTrackObject, TrackObject newTrackObject);
+        double CalculateCompassCourse(TrackObject p, TrackObject c);
     }
 }
