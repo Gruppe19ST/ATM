@@ -63,7 +63,20 @@ namespace ATM.Logic.Handlers
                 }
             }
 
+            if (_conflictedList.Count > 0)
+            {
+                OnSeparationEvent(_conflictedList);
+            }
+
             return _conflictedList;
         }
+
+        private void OnSeparationEvent(List<List<TrackObject>> conflictedList)
+        {
+            var handler = SeperationEvents;
+            handler?.Invoke(this,conflictedList);
+        }
+
+        public event EventHandler<List<List<TrackObject>>> SeperationEvents;
     }
 }
