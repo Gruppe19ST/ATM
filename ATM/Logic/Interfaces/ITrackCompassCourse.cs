@@ -8,7 +8,6 @@ namespace ATM.Logic.Interfaces
 {
     public interface ITrackCompassCourse
     {
-        void CalculateCompassCourse();
-        void SaveToDTO();
+        double CalculateCompassCourse(TrackObject oldTrackObject, TrackObject newTrackObject);
     }
 }

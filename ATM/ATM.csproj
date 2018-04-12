@@ -51,8 +51,10 @@
     <Compile Include="Logic\DTO\DTOSeperationEvents.cs" />
     <Compile Include="Logic\DTO\DTOTrack.cs" />
     <Compile Include="Logic\Handlers\CheckForSeparationEvent.cs" />
+    <Compile Include="Logic\Handlers\CompassCourseVector.cs" />
     <Compile Include="Logic\Handlers\Converter\ITrackConverter.cs" />
     <Compile Include="Logic\Handlers\Converter\TrackConverter.cs" />
+    <Compile Include="Logic\Handlers\TrackCompassCourse.cs" />
     <Compile Include="Logic\Interfaces\ITrackReceiver.cs" />
     <Compile Include="Logic\Handlers\TrackReceiver.cs" />
     <Compile Include="Logic\Handlers\Sorter.cs" />

@@ -4,21 +4,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ATM.Logic.Handlers;
+using ATM.Logic.Interfaces;
 
 namespace ATM.Logic.Controllers
 {
-    class Controller : Interfaces.ITrackController
+    class Controller : ITrackController
     {
         List<TrackObject> priorTracks;
         List<TrackObject> currentTracks;
-        private Interfaces.ISorter _sorter;
+        private ISorter _sorter;
+        private ISeperationEventChecker _checker;
+        private ISeperationEventHandler _warningCreator;
         private TrackSpeed ts;
 
-        public Controller(Interfaces.ISorter sorter)
+        public Controller(ISorter sorter, ISeperationEventChecker checker, ISeperationEventHandler warningCreator)
         {
             _sorter = sorter;
+            _checker = checker;
+            _warningCreator = warningCreator;
+
             _sorter.TrackSortedReady += _sorter_TrackSortedReady;
+            _checker.SeperationEvents += _checker_SeperationEvents;
+
+
             ts = new TrackSpeed();
+        }
+
+        private void _checker_SeperationEvents(object sender, List<List<TrackObject>> e)
+        {
+            _warningCreator.CreateWarning(e);
         }
 
         private void _sorter_TrackSortedReady(object sender, TrackObjectEventArgs e)
