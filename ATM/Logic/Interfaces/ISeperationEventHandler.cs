@@ -8,6 +8,6 @@ namespace ATM.Logic.Interfaces
 {
     public interface ISeperationEventHandler
     {
-        List<string> CreateWarning();
+        List<string> CreateWarning(List<List<TrackObject>> conflictedTracks);
     }
 }
