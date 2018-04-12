@@ -10,7 +10,7 @@ namespace ATM.Logic.Handlers
 {
     public class CheckForSeparationEvent : ISeperationEventChecker
     {
-        private List<TrackObject> testlist, xCoorSortedList, yCoorSortedList;
+        private List<TrackObject> listOfTracks, xCoorSortedList, yCoorSortedList;
 
         private float horizontalSeperationLimit, verticalSeperationLimit;
         private List<TrackObject> separationTracks;
@@ -21,24 +21,15 @@ namespace ATM.Logic.Handlers
         public CheckForSeparationEvent(List<TrackObject> sortedTracksList)
         {
             // Initialization
-            testlist = new List<TrackObject>();
-            xCoorSortedList = new List<TrackObject>();
-            yCoorSortedList = new List<TrackObject>();
+            listOfTracks = new List<TrackObject>();
             separationTracks = new List<TrackObject>();
-            xConflictedTracks = new List<List<TrackObject>>();
-            yConflictedTracks = new List<List<TrackObject>>();
             conflictedList = new List<List<TrackObject>>();
             horizontalSeperationLimit = 5000;
             verticalSeperationLimit = 300;
             
 
-            // Put list in list
-            testlist = sortedTracksList;
-
-            // Sort the received list and put it in the 2 lists
-            xCoorSortedList = sortedTracksList.OrderBy(o => o.XCoordinate).ToList();
-            yCoorSortedList = sortedTracksList.OrderBy(o => o.YCoordinate).ToList();
-            
+            // Put received list in local list
+            listOfTracks = sortedTracksList;
 
         }
 
@@ -46,9 +37,9 @@ namespace ATM.Logic.Handlers
         {
             conflictedList.Clear();
 
-            foreach (var checkTrack in testlist)
+            foreach (var checkTrack in listOfTracks)
             {
-                foreach (var compareTrack in testlist)
+                foreach (var compareTrack in listOfTracks)
                 {
                     if (!checkTrack.Tag.Equals(compareTrack.Tag))
                     {

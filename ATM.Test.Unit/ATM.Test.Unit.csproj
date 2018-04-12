@@ -62,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckForSeparationEventUnitTest.cs" />
-    <Compile Include="SortingTest.cs" />
     <Compile Include="TrackConverterUnitTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
