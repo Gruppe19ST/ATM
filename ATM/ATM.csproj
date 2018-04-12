@@ -62,6 +62,7 @@
     <Compile Include="Logic\Interfaces\ITrackController.cs" />
     <Compile Include="Logic\Interfaces\ITrackSorter.cs" />
     <Compile Include="Logic\Interfaces\ITrackSpeed.cs" />
+    <Compile Include="Logic\Handlers\CreateSeparationEventWarning.cs" />
     <Compile Include="TrackObject.cs" />
     <Compile Include="Logic\Handlers\Converter\TrackObjectEventArgs.cs" />
     <Compile Include="TrackObjectificationSoftware.cs" />

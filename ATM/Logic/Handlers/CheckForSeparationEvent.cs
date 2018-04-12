@@ -28,6 +28,7 @@ namespace ATM.Logic.Handlers
 
         public void CheckSeperationEvent()
         {
+            conflictedTrackObjects.Clear();
             for (int i = 0; i < xCoorSortedList.Count; i++)
             {
                 if (i != 0)
