@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Logic\DTO\DTOSeperationEvents.cs" />
     <Compile Include="Logic\DTO\DTOTrack.cs" />
+    <Compile Include="Logic\Handlers\CheckForSeparationEvent.cs" />
     <Compile Include="Logic\Handlers\Converter\ITrackConverter.cs" />
     <Compile Include="Logic\Handlers\Converter\TrackConverter.cs" />
     <Compile Include="Logic\Handlers\Receiver\ITrackReceiver.cs" />

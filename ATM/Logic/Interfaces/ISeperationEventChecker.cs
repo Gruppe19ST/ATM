@@ -9,6 +9,6 @@ namespace ATM.Logic.Interfaces
     interface ISeperationEventChecker
     {
         void CheckSeperationEvent();
-        void SaveToDTO();
+        void SaveToDTO(List<List<TrackObject>> conflictedTracksList);
     }
 }
