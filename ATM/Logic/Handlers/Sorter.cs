@@ -13,9 +13,12 @@ namespace ATM.Logic.Handlers
             private int[] _altLimit;
             public List<TrackObject> SortedList;
             public event EventHandler<TrackObjectEventArgs> TrackSortedReady;
+            public Logic.Interfaces.ITrackReceiver _trackreceiver;
 
-            public Sorter()
+
+            public Sorter(Logic.Interfaces.ITrackReceiver trackreceiver)
             {
+            _trackreceiver = trackreceiver;
                 _xLimit = new int[] { 10000, 90000 };
                 _altLimit = new int[] { 500, 20000 };
                 _yLimit = new int[] { 10000, 90000 };
