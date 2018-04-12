@@ -17,16 +17,12 @@ namespace ATM.Test.Unit
         
         private List<TrackObject> _listOfTracks;
         private TrackObject _track1, _track2;
-
-        private ISorter _sorter;
-        private ITrackController _controller;
+        
         private CheckForSeparationEvent _uut;
 
         [SetUp]
         public void SetUp()
         {
-            _sorter = Substitute.For<ISorter>();
-            _controller = Substitute.For<ITrackController>();
             _listOfTracks = new List<TrackObject>();
 
             _track1 = new TrackObject("Tag123", 70000,70000,1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
