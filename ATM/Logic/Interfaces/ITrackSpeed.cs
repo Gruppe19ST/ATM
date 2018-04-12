@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATM.Logic.Interfaces
 {
-    interface ITrackSpeed
+    public interface ITrackSpeed
     {
         void CalculateSpeed();
         void SaveToDTO();

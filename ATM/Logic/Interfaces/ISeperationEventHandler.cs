@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATM.Logic.Interfaces
 {
-    interface ISeperationEventHandler
+    public interface ISeperationEventHandler
     {
         List<string> CreateWarning();
     }

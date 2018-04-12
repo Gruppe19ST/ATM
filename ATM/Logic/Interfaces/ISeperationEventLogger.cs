@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATM.Logic.Interfaces
 {
-    interface ISeperationEventLogger
+    public interface ISeperationEventLogger
     {
         void SaveToFile();
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATM.Logic.Interfaces
 {
-    interface ISeperationEventChecker
+    public interface ISeperationEventChecker
     {
         List<List<TrackObject>> CheckSeparationEvents();
         void CheckSeperationEvent();
