@@ -15,7 +15,9 @@ namespace ATM.Test.Unit
     {
 
         private ATM.Logic.Handlers.Sorter _uut;
-            private List<TrackObject> _tracks;
+        private ATM.Logic.Interfaces.ITrackReceiver trackreceiver; 
+
+        private List<TrackObject> _tracks;
 
             [SetUp]
 

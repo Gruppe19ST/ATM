@@ -53,8 +53,8 @@
     <Compile Include="Logic\Handlers\CheckForSeparationEvent.cs" />
     <Compile Include="Logic\Handlers\Converter\ITrackConverter.cs" />
     <Compile Include="Logic\Handlers\Converter\TrackConverter.cs" />
-    <Compile Include="Logic\Handlers\Receiver\ITrackReceiver.cs" />
-    <Compile Include="Logic\Handlers\Receiver\TrackReceiver.cs" />
+    <Compile Include="Logic\Interfaces\ITrackReceiver.cs" />
+    <Compile Include="Logic\Handlers\TrackReceiver.cs" />
     <Compile Include="Logic\Handlers\Sorter.cs" />
     <Compile Include="Logic\Handlers\TrackSpeed.cs" />
     <Compile Include="Logic\Interfaces\ISeperationEventLogger.cs" />
