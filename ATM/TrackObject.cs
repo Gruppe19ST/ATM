@@ -24,6 +24,11 @@ namespace ATM
             TimeStamp = time;
         }
 
+        public TrackObject()
+        {
+
+        }
+
         public override string ToString()
         {
             String trackInfo=String.Format("Track Tag: "+Tag+" X coordinates: " +XCoordinate+" Y coordinates: "+YCoordinate+" Altitude: "+Altitude+"m Timestamp: "+TimeStamp);

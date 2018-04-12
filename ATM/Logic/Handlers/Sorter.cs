@@ -12,7 +12,7 @@ namespace ATM.Logic.Handlers
             private int[] _yLimit;
             private int[] _altLimit;
             public List<TrackObject> SortedList;
-            public DTO.DTOTrack DTOTrack;
+            public event EventHandler<TrackObjectEventArgs> TrackSortedReady;
 
             public Sorter()
             {
@@ -33,13 +33,15 @@ namespace ATM.Logic.Handlers
                     }
                 }
 
-                UpdateDTO(SortedList);
+            OnTrackSortedUpdated(new TrackObjectEventArgs(SortedList));
             }
 
-            public void UpdateDTO(List<TrackObject> sortedlist)
-            {
-                DTOTrack.SortedTracks = SortedList;
-            }
+        public void OnTrackSortedUpdated(TrackObjectEventArgs tracksortedobject)
+        {
+            var handler = TrackSortedReady;
+            handler?.Invoke(this, tracksortedobject);
+        }
+
         }
 
     }

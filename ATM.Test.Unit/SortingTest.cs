@@ -10,25 +10,24 @@ using ATM;
 
 namespace ATM.Test.Unit
 {
+        [TestFixture]
     class SortingTest
     {
-        [TestFixture]
-        class SortingTest
-        {
-            private ATM.Logic.Sorter _uut;
+
+        private ATM.Logic.Handlers.Sorter _uut;
             private List<TrackObject> _tracks;
 
             [SetUp]
 
             public void SetUp()
             {
-                _uut = new Logic.Sorter();
+                _uut = new Logic.Handlers.Sorter();
                 _tracks = new List<TrackObject>();
 
             }
 
             [Test]
-
+        
             public void Sorter_Lav_Y()
             {
                 _tracks.Add(new TrackObject() { Altitude = 5000, XCoordinate = 15000, YCoordinate = 10000 });
@@ -65,4 +64,4 @@ namespace ATM.Test.Unit
 
         }
     }
-}
+

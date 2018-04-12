@@ -47,6 +47,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logic\Controllers\Controller.cs" />
     <Compile Include="Logic\DTO\DTOSeperationEvents.cs" />
     <Compile Include="Logic\DTO\DTOTrack.cs" />
     <Compile Include="Logic\Handlers\CheckForSeparationEvent.cs" />
@@ -70,8 +71,6 @@
     <Compile Include="TrackObjectificationSoftware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logic\Controllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
