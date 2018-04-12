@@ -8,7 +8,7 @@ using ATM.Logic.Interfaces;
 
 namespace ATM.Logic.Handlers
 {
-    class CheckForSeparationEvent : ISeperationEventChecker
+    public class CheckForSeparationEvent : ISeperationEventChecker
     {
         private List<TrackObject> testlist, xCoorSortedList, yCoorSortedList;
 

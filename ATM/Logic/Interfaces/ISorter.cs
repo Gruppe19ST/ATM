@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATM.Logic.Interfaces
 {
-    interface ISorter
+    public interface ISorter
     {
         void SortTracks(List<TrackObject> tracks);
     }
