@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATM.Logic.Interfaces
 {
-    interface ITrackController
+    public interface ITrackController
     {
         void HandleTrack();
     }

@@ -19,15 +19,20 @@ namespace ATM.Test.Unit
         private TrackObject _track1, _track2;
 
         private ISorter _sorter;
+        private ITrackController _controller;
         private CheckForSeparationEvent _uut;
 
         [SetUp]
         public void SetUp()
         {
+            _sorter = Substitute.For<ISorter>();
+            _controller = Substitute.For<ITrackController>();
+
             _track1 = new TrackObject("Tag123", 70000,70000,1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _track2 = new TrackObject("Tag456", 70000, 70000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _listOfTracks.Add(_track1);
             _listOfTracks.Add(_track2);
+            _uut = new CheckForSeparationEvent(_listOfTracks);
         }
 
         [Test]
@@ -37,7 +42,7 @@ namespace ATM.Test.Unit
             _track2.YCoordinate = 66000;
             _track2.Altitude = 1100;
 
-            Assert.That(_uut.);
+            Assert.That(_uut.CheckSeparationEvents().Count, Is.GreaterThan(0));
         }
     }
 }
