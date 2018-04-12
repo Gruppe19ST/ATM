@@ -14,6 +14,7 @@ namespace ATM
         public float YCoordinate { get; set; }
         public float Altitude { get; set; }
         public DateTime TimeStamp { get; set; }
+        public double horizontalVelocity { get; set; }
 
         public TrackObject(string tag, float x, float y, float alt, DateTime time)
         {
@@ -22,13 +23,9 @@ namespace ATM
             YCoordinate = y;
             Altitude = alt;
             TimeStamp = time;
+            horizontalVelocity = 0;
         }
-
-        public TrackObject()
-        {
-
-        }
-
+        
         public override string ToString()
         {
             String trackInfo=String.Format("Track Tag: "+Tag+" X coordinates: " +XCoordinate+" Y coordinates: "+YCoordinate+" Altitude: "+Altitude+"m Timestamp: "+TimeStamp);
