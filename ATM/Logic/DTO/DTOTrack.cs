@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATM.Logic.DTO
 {
-    class DTOTrack
+    public class DTOTrack
     {
         public List<TrackObject> SortedTracks { get; set; }
 

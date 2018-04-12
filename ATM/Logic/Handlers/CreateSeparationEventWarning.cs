@@ -5,19 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using ATM.Logic.Interfaces;
 
-namespace ATM.Logic
+namespace ATM.Logic.Handlers
 {
     public class CreateSeparationEventWarning : ISeperationEventHandler
     {
-        private DTO.DTOSeperationEvents DTOSeparationTracks;
         private List<string> warnings = new List<string>();
 
-        public List<String> CreateWarning()
+
+        public List<String> CreateWarning(List<List<TrackObject>> conflictList)
         {
             warnings.Clear();
-            if (DTOSeparationTracks.SeparationTracks.Count != 0)
+            if (conflictList.Count != 0)
             {
-                foreach (var separation in DTOSeparationTracks.SeparationTracks)
+                foreach (var separation in conflictList)
                 {
                     warnings.Add(separation[0].Tag + " og " + separation[1].Tag + " er i konflikt");
                 }

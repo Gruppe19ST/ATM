@@ -27,6 +27,7 @@ namespace ATM.Test.Unit
         {
             _sorter = Substitute.For<ISorter>();
             _controller = Substitute.For<ITrackController>();
+            _listOfTracks = new List<TrackObject>();
 
             _track1 = new TrackObject("Tag123", 70000,70000,1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _track2 = new TrackObject("Tag456", 70000, 70000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
@@ -43,6 +44,16 @@ namespace ATM.Test.Unit
             _track2.Altitude = 1100;
 
             Assert.That(_uut.CheckSeparationEvents().Count, Is.GreaterThan(0));
+        }
+
+        [Test]
+        public void checkSeparation_NotTooClose_ReturnEmptyList()
+        {
+            _track2.XCoordinate = 10000;
+            _track2.YCoordinate = 10000;
+            _track2.Altitude = 5000;
+
+            Assert.That(_uut.CheckSeparationEvents().Count, Is.EqualTo(0));
         }
     }
 }
