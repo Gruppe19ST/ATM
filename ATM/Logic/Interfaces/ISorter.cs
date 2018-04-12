@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ATM.Logic.DTO
+namespace ATM.Logic.Interfaces
 {
-    class DTOTrack
+    interface ISorter
     {
-        public List<TrackObject> SortedTracks { get; set; }
+        void SortTracks(List<TrackObject> tracks);
     }
 }
