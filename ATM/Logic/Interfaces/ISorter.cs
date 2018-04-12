@@ -8,6 +8,7 @@ namespace ATM.Logic.Interfaces
 {
     public interface ISorter
     {
+        event EventHandler<TrackObjectEventArgs> TrackSortedReady;
         void SortTracks(List<TrackObject> tracks);
     }
 }

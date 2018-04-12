@@ -9,5 +9,6 @@ namespace ATM.Logic.DTO
     public class DTOTrack
     {
         public List<TrackObject> SortedTracks { get; set; }
+
     }
 }
