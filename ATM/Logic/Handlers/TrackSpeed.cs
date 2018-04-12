@@ -8,30 +8,25 @@ namespace ATM.Logic.Handlers
 {
     class TrackSpeed : Interfaces.ITrackSpeed
     {
-        private List<TrackObject> localTacks;
+        private TimeSpan timeSpan;
+        private double horizontalDisplacement;
+        private double horizontalVelocity;
 
-        public TrackSpeed(ref DTO.DTOTrack dtoTrack)
+        public TrackSpeed()
         {
-            //localTacks = dtoTrack.getTrackList();
+            horizontalDisplacement = 0;
+            horizontalVelocity = 0;
+            timeSpan = TimeSpan.Zero;
         }
 
-        public void CalculateSpeed()
+        public double CalculateSpeed(TrackObject c, TrackObject p)
         {
-            foreach (var track in localTacks)
-            {
-                // timespan interval = track.t1-track.t0; 
-                // Sørg for at t0 og x0 sættes til 0 ved den første måling og at den første måling indlæses i x1 og t1. 
-
-                // track.horizontalVelocity = math.abs(track.x1-track.x0)/(interval.TotalSeconds); 
-                
-                // x1 er nuværende position, x0 er den tidligere position
-                // t0 er nuværende timestamp, t0 er tidligere timestamp 
-            }
+            timeSpan = c.TimeStamp - p.TimeStamp;
+            horizontalDisplacement = Math.Sqrt(Math.Pow((c.XCoordinate - p.XCoordinate), 2) + Math.Pow((c.YCoordinate - p.YCoordinate), 2));
+            horizontalVelocity = horizontalDisplacement / timeSpan.TotalSeconds;
+            return horizontalVelocity;
         }
 
-        public void SaveToDTO()
-        {
-            // dtoTrack.sortedTracks = localTracks; 
-        }
+        
     }
 }
