@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATM.Logic.Interfaces
 {
-    interface ITrackSorter
+    public interface ITrackSorter
     {
         void SortTracks(List<TrackObject> listOfTrackObjects);
         void SaveToDTO();

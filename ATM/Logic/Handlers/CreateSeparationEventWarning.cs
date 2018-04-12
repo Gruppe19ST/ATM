@@ -7,7 +7,7 @@ using ATM.Logic.Interfaces;
 
 namespace ATM.Logic
 {
-    class CreateSeparationEventWarning : ISeperationEventHandler
+    public class CreateSeparationEventWarning : ISeperationEventHandler
     {
         private DTO.DTOSeperationEvents DTOSeparationTracks;
         private List<string> warnings = new List<string>();

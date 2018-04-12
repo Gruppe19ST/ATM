@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATM.Logic.Interfaces
 {
-    interface ITrackCompassCourse
+    public interface ITrackCompassCourse
     {
         void CalculateCompassCourse();
         void SaveToDTO();
