@@ -48,15 +48,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logic\Controllers\Controller.cs" />
-    <Compile Include="Logic\DTO\DTOSeperationEvents.cs" />
-    <Compile Include="Logic\DTO\DTOTrack.cs" />
     <Compile Include="Logic\Handlers\CheckForSeparationEvent.cs" />
     <Compile Include="Logic\Handlers\CompassCourseVector.cs" />
+    <Compile Include="Logic\Handlers\TrackObjectEventArgs.cs" />
     <Compile Include="Logic\Interfaces\ITrackConverter.cs" />
     <Compile Include="Logic\Handlers\TrackConverter.cs" />
     <Compile Include="Logic\Handlers\TrackCompassCourse.cs" />
     <Compile Include="Logic\Interfaces\ITrackReceiver.cs" />
-    <Compile Include="Logic\Handlers\TrackReceiver.cs" />
     <Compile Include="Logic\Handlers\Sorter.cs" />
     <Compile Include="Logic\Handlers\TrackSpeed.cs" />
     <Compile Include="Logic\Interfaces\ISeperationEventLogger.cs" />
@@ -69,7 +67,7 @@
     <Compile Include="Logic\Interfaces\ITrackSpeed.cs" />
     <Compile Include="Logic\Handlers\CreateSeparationEventWarning.cs" />
     <Compile Include="TrackObject.cs" />
-    <Compile Include="Logic\Handlers\TrackObjectEventArgs.cs" />
+    <Compile Include="Logic\Handlers\SeparationEventArgs.cs" />
     <Compile Include="TrackObjectificationSoftware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

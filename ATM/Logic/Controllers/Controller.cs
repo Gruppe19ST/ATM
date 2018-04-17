@@ -32,7 +32,7 @@ namespace ATM.Logic.Controllers
             tcc = new TrackCompassCourse();
         }
 
-        private void _checker_SeperationEvents(object sender, List<List<TrackObject>> e)
+        private void _checker_SeperationEvents(object sender, SeparationEventArgs e)
         {
             _warningCreator.CreateWarning(e);
         }

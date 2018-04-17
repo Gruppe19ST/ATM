@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ATM.Logic.Interfaces;
+using ATM.Logic.Handlers;
 
 namespace ATM.Logic.Handlers
 {
@@ -12,19 +14,29 @@ namespace ATM.Logic.Handlers
             private int[] _yLimit;
             private int[] _altLimit;
             public List<TrackObject> SortedList;
+            private List<TrackObject> listOfTrackObjects;
             public event EventHandler<TrackObjectEventArgs> TrackSortedReady;
-            public Logic.Interfaces.ITrackConverter _trackconverter;
+            public ITrackConverter _trackconverter;
 
 
-            public Sorter(Logic.Interfaces.ITrackConverter trackconverter)
+            public Sorter(Interfaces.ITrackConverter trackconverter)
             {
-            _trackconverter = trackconverter;
+                _trackconverter = trackconverter;
+                _trackconverter.TrackObjectsReady += _trackconverter_TrackObjectsReady;
                 _xLimit = new int[] { 10000, 90000 };
                 _altLimit = new int[] { 500, 20000 };
                 _yLimit = new int[] { 10000, 90000 };
                 SortedList = new List<TrackObject>();
             }
-            public void SortTracks(List<TrackObject> tracks)
+
+        private void _trackconverter_TrackObjectsReady(object sender, TrackObjectEventArgs e)
+        {
+            listOfTrackObjects = e.TrackObjects;
+            SortTracks(listOfTrackObjects);
+            
+        }
+
+        public void SortTracks(List<TrackObject> tracks)
             {
                 foreach (var var in tracks)
                 {
@@ -32,10 +44,11 @@ namespace ATM.Logic.Handlers
                         var.YCoordinate < _yLimit[1] && var.Altitude > _altLimit[0] && var.Altitude < _altLimit[1])
                     {
                         SortedList.Add(var);
+                        //Console.WriteLine(var.ToString());
                     }
                 }
 
-            OnTrackSortedUpdated(new TrackObjectEventArgs(SortedList));
+                OnTrackSortedUpdated(new TrackObjectEventArgs(SortedList));
             }
 
         public void OnTrackSortedUpdated(TrackObjectEventArgs tracksortedobject)
