@@ -10,7 +10,7 @@ using ATM;
 
 namespace ATM.Test.Unit
 {
-        [TestFixture]
+     [TestFixture]
     class SortingTest
     {
         private ATM.Logic.Handlers.Sorter _uut;
