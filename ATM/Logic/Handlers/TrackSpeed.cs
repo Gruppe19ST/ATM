@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATM.Logic.Handlers
 {
-    class TrackSpeed : Interfaces.ITrackSpeed
+    public class TrackSpeed : Interfaces.ITrackSpeed
     {
         private TimeSpan timeSpan;
         private double horizontalDisplacement;

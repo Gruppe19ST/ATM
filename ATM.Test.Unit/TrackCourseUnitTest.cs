@@ -3,22 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NUnit.Framework.Internal;
 using NUnit.Framework;
+using NSubstitute;
+using ATM;
 
 namespace ATM.Test.Unit
 {
-    [TestFixture]
-    class TrackRecieverUnitTest
+    class TrackCourseUnitTest
     {
-        private ATM.Logic.Handlers.TrackCompassCourse _uut;
-
-
-        [SetUp]
-
-        public void Setup()
-        {
-
-        }
+        [TestFixture]
 
     }
 }

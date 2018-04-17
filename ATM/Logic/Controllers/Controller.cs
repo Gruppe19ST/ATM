@@ -30,6 +30,7 @@ namespace ATM.Logic.Controllers
 
 
             ts = new TrackSpeed();
+            tcc = new TrackCompassCourse();
         }
 
         private void _checker_SeperationEvents(object sender, SeparationEventArgs e)
