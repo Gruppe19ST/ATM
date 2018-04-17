@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ATM.Logic.Handlers.Converter
+namespace ATM.Logic.Handlers
 {
     public class TrackObjectEventArgs : EventArgs
     {
