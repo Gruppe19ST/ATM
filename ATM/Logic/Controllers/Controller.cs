@@ -16,6 +16,7 @@ namespace ATM.Logic.Controllers
         private ISeperationEventChecker _checker;
         private ISeperationEventHandler _warningCreator;
         private TrackSpeed ts;
+        private TrackCompassCourse tcc;
 
         public Controller(ISorter sorter, ISeperationEventChecker checker, ISeperationEventHandler warningCreator)
         {
@@ -51,6 +52,7 @@ namespace ATM.Logic.Controllers
                     {
                         trackC.horizontalVelocity = ts.CalculateSpeed(trackC, trackP);
                         //tilføj kompaskurs her
+                        trackC.compassCourse = tcc.CalculateCompassCourse(trackC, trackP);
                     }
 
                 }
