@@ -12,7 +12,6 @@ namespace ATM.Test.Unit
 {
     class TrackCourseUnitTest
     {
-        [TestFixture]
 
     }
 }

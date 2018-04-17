@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ATM.Logic.Handlers.Converter;
 using NSubstitute;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
