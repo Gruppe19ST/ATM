@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using ATM.Logic.Interfaces;
 using TransponderReceiver;
 
 namespace ATM.Logic.Handlers.Converter
