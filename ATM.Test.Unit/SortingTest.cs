@@ -14,7 +14,7 @@ namespace ATM.Test.Unit
     class SortingTest
     {
         private ATM.Logic.Handlers.Sorter _uut;
-        private ATM.Logic.Interfaces.ITrackReceiver trackreceiver; 
+        private ATM.Logic.Interfaces.ITrackConverter trackconverter; 
 
         private List<TrackObject> _tracks;
         private TrackObject trackobject;
@@ -26,8 +26,8 @@ namespace ATM.Test.Unit
 
         public void SetUp()
         {
-            trackreceiver = Substitute.For<Logic.Interfaces.ITrackReceiver>();
-            _uut = new Logic.Handlers.Sorter(trackreceiver);
+            trackconverter = Substitute.For<Logic.Interfaces.ITrackConverter>();
+            _uut = new Logic.Handlers.Sorter(trackconverter);
             _tracks = new List<TrackObject>();
             trackobject = new TrackObject("123", 12345, 12345, 1000, Convert.ToDateTime(20151006213456789));
             _tracks.Add(trackobject);
@@ -46,7 +46,10 @@ namespace ATM.Test.Unit
 
             public void RaiseEvent()
         {
-            var args = new Raw;
+            var args = new TrackObjectEventArgs(new List<TrackObject> {trackobject});
+
+            trackconverter.TrackObjectsReady += Raise.EventWith(args);
+            Assert.That(_nEventsRaised, Is.EqualTo(1));
         }
 
             //public void Sorter_Lav_Y()
