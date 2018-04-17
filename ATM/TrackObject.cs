@@ -27,6 +27,11 @@ namespace ATM
             horizontalVelocity = 0;
             compassCourse = 0;
         }
+
+        public TrackObject()
+        {
+
+        }
         
         public override string ToString()
         {

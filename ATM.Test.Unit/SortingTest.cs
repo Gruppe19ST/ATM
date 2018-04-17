@@ -43,7 +43,6 @@ namespace ATM.Test.Unit
 
 
         [Test]
-
             public void RaiseEvent()
         {
             var args = new TrackObjectEventArgs(new List<TrackObject> {trackobject});
@@ -52,40 +51,66 @@ namespace ATM.Test.Unit
             Assert.That(_nEventsRaised, Is.EqualTo(1));
         }
 
-            //public void Sorter_Lav_Y()
-            //{
-            //    _tracks.Add(new TrackObject() { Altitude = 5000, XCoordinate = 15000, YCoordinate = 10000 });
-            //    _tracks.Add(new TrackObject() { Altitude = 5000, XCoordinate = 15000, YCoordinate = 11000 });
+        [Test]
+        public void Sorter_Lav_Y()
+        {
+            _tracks.Add(new TrackObject() { Altitude = 5000, XCoordinate = 15000, YCoordinate = 10000 });
+            _tracks.Add(new TrackObject() { Altitude = 5000, XCoordinate = 15000, YCoordinate = 11000 });
 
-            //    _uut.SortTracks(_tracks);
-            //    Assert.That(_uut.SortedList.Count.Equals(1));
-            //}
-
-            //public void Sorter_Høj_Y()
-            //{
-
-            //}
-
-            //public void Sorter_Lav_X()
-            //{
-
-            //}
-
-            //public void Sorter_Høj_X()
-            //{
-
-            //}
-
-            //public void Sorter_Lav_Alt()
-            //{
-
-            //}
-
-            //public void Sorter_Høj_Alt()
-            //{
-
-            //}
-
+            _uut.SortTracks(_tracks);
+            Assert.That(_uut.SortedList.Count.Equals(1));
         }
+
+        [Test]
+        public void Sorter_Høj_Y()
+        {
+            _tracks.Add(new TrackObject() { Altitude = 5000, XCoordinate = 15000, YCoordinate = 90000 });
+            _tracks.Add(new TrackObject() { Altitude = 5000, XCoordinate = 15000, YCoordinate = 89000 });
+
+            _uut.SortTracks(_tracks);
+            Assert.That(_uut.SortedList.Count.Equals(1));
+        }
+
+        [Test]
+        public void Sorter_Lav_X()
+        {
+            _tracks.Add(new TrackObject() { Altitude = 5000, XCoordinate = 10000, YCoordinate = 15000 });
+            _tracks.Add(new TrackObject() { Altitude = 5000, XCoordinate = 11000, YCoordinate = 15000 });
+
+            _uut.SortTracks(_tracks);
+            Assert.That(_uut.SortedList.Count.Equals(1));
+        }
+
+        [Test]
+        public void Sorter_Høj_X()
+        {
+            _tracks.Add(new TrackObject() { Altitude = 5000, XCoordinate = 90000, YCoordinate = 15000 });
+            _tracks.Add(new TrackObject() { Altitude = 5000, XCoordinate = 89000, YCoordinate = 15000 });
+
+            _uut.SortTracks(_tracks);
+            Assert.That(_uut.SortedList.Count.Equals(1));
+        }
+
+        [Test]
+        public void Sorter_Lav_Alt()
+        {
+            _tracks.Add(new TrackObject() { Altitude = 500, XCoordinate = 15000, YCoordinate = 15000 });
+            _tracks.Add(new TrackObject() { Altitude = 5000, XCoordinate = 15000, YCoordinate = 15000 });
+
+            _uut.SortTracks(_tracks);
+            Assert.That(_uut.SortedList.Count.Equals(1));
+        }
+
+        [Test]
+        public void Sorter_Høj_Alt()
+        {
+            _tracks.Add(new TrackObject() { Altitude = 20000, XCoordinate = 10000, YCoordinate = 15000 });
+            _tracks.Add(new TrackObject() { Altitude = 5000, XCoordinate = 11000, YCoordinate = 15000 });
+
+            _uut.SortTracks(_tracks);
+            Assert.That(_uut.SortedList.Count.Equals(1));
+        }
+
     }
+}
 
