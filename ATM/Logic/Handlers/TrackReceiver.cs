@@ -11,7 +11,7 @@ namespace ATM.Receiver
     public class TrackReceiver : ITrackReceiver
     {
         private List<TrackObject> listOfTrackObjects;
-        private TrackConverter trackConverter;
+        private ITrackConverter trackConverter;
 
         public TrackReceiver(TrackConverter converter)
         {
