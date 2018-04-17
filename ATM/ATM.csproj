@@ -56,7 +56,6 @@
     <Compile Include="Logic\Handlers\TrackConverter.cs" />
     <Compile Include="Logic\Handlers\TrackCompassCourse.cs" />
     <Compile Include="Logic\Interfaces\ITrackReceiver.cs" />
-    <Compile Include="Logic\Handlers\TrackReceiver.cs" />
     <Compile Include="Logic\Handlers\Sorter.cs" />
     <Compile Include="Logic\Handlers\TrackSpeed.cs" />
     <Compile Include="Logic\Interfaces\ISeperationEventLogger.cs" />

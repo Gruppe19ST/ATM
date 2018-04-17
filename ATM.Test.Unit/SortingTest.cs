@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +11,11 @@ using ATM;
 
 namespace ATM.Test.Unit
 {
-        [TestFixture]
+    [TestFixture]
     class SortingTest
     {
-        private ATM.Logic.Handlers.Sorter _uut;
-        private ATM.Logic.Interfaces.ITrackConverter trackconverter; 
+        private Logic.Handlers.Sorter _uut;
+        private Logic.Interfaces.ITrackConverter trackconverter; 
 
         private List<TrackObject> _tracks;
         private TrackObject trackobject;
@@ -23,13 +24,12 @@ namespace ATM.Test.Unit
         private TrackObjectEventArgs _receivedArgs;
 
         [SetUp]
-
         public void SetUp()
         {
             trackconverter = Substitute.For<Logic.Interfaces.ITrackConverter>();
             _uut = new Logic.Handlers.Sorter(trackconverter);
             _tracks = new List<TrackObject>();
-            trackobject = new TrackObject("123", 12345, 12345, 1000, Convert.ToDateTime(20151006213456789));
+            trackobject = new TrackObject("123", 12345, 12345, 1000, DateTime.ParseExact("20151006213456789", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _tracks.Add(trackobject);
 
             _nEventsRaised = 0;
@@ -43,7 +43,6 @@ namespace ATM.Test.Unit
 
 
         [Test]
-
             public void RaiseEvent()
         {
             var args = new TrackObjectEventArgs(new List<TrackObject> {trackobject});
