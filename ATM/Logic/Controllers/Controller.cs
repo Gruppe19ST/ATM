@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ATM.Logic.Handlers;
+using ATM.Logic.Handlers.Converter;
 using ATM.Logic.Interfaces;
 
 namespace ATM.Logic.Controllers
@@ -32,7 +33,7 @@ namespace ATM.Logic.Controllers
             tcc = new TrackCompassCourse();
         }
 
-        private void _checker_SeperationEvents(object sender, List<List<TrackObject>> e)
+        private void _checker_SeperationEvents(object sender, SeparationEventArgs e)
         {
             _warningCreator.CreateWarning(e);
         }
