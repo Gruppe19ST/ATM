@@ -8,6 +8,7 @@ using NUnit.Framework.Internal;
 using NUnit.Framework;
 using NSubstitute;
 using ATM;
+using ATM.Logic.Handlers;
 
 namespace ATM.Test.Unit
 {
