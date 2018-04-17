@@ -39,7 +39,8 @@ namespace ATM.Logic.Handlers
 
         }
 
-        public List<List<TrackObject>> CheckSeparationEvents()
+        //public List<List<TrackObject>> CheckSeparationEvents()
+        public void CheckSeparationEvents()
         {
             _conflictedList.Clear();
 
@@ -65,18 +66,18 @@ namespace ATM.Logic.Handlers
 
             if (_conflictedList.Count > 0)
             {
-                OnSeparationEvent(_conflictedList);
+                OnSeparationEvent(new SeparationEventArgs(_conflictedList));
             }
 
-            return _conflictedList;
+            //return _conflictedList;
         }
 
-        private void OnSeparationEvent(List<List<TrackObject>> conflictedList)
+        private void OnSeparationEvent(SeparationEventArgs conflictedList)
         {
             var handler = SeperationEvents;
             handler?.Invoke(this,conflictedList);
         }
 
-        public event EventHandler<List<List<TrackObject>>> SeperationEvents;
+        public event EventHandler<SeparationEventArgs> SeperationEvents;
     }
 }

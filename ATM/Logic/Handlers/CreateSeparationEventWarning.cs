@@ -9,17 +9,27 @@ namespace ATM.Logic.Handlers
 {
     public class CreateSeparationEventWarning : ISeperationEventHandler
     {
+        private ISeperationEventChecker _checker;
         private List<string> warnings = new List<string>();
+        private List<List<TrackObject>> _conflictList;
 
-
-        public List<String> CreateWarning(List<List<TrackObject>> conflictList)
+        public CreateSeparationEventWarning(ISeperationEventChecker checker)
         {
+            _checker = checker;
+            _checker.SeperationEvents += (o, trackArgs) => CreateWarning(trackArgs);
+        }
+        
+
+
+        public List<String> CreateWarning(SeparationEventArgs conflictList)
+        {
+            _conflictList = conflictList.SeparationObjects;
             warnings.Clear();
-            if (conflictList.Count != 0)
+            if (_conflictList.Count != 0)
             {
-                foreach (var separation in conflictList)
+                foreach (var separation in _conflictList)
                 {
-                    warnings.Add(separation[0].Tag + " og " + separation[1].Tag + " er i konflikt");
+                    warnings.Add(separation[0].Tag + " and " + separation[1].Tag + " are in conflict");
                 }
             }
 

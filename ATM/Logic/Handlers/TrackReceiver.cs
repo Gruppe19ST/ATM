@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ATM.Logic.Handlers.Converter;
 using ATM.Logic.Interfaces;
-using TransponderReceiver;
 
-namespace ATM.Receiver
+namespace ATM.Logic.Handlers
 {
     public class TrackReceiver : ITrackReceiver
     {

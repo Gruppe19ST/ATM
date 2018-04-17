@@ -70,6 +70,7 @@
     <Compile Include="Logic\Handlers\CreateSeparationEventWarning.cs" />
     <Compile Include="TrackObject.cs" />
     <Compile Include="Logic\Handlers\Converter\TrackObjectEventArgs.cs" />
+    <Compile Include="Logic\Handlers\SeparationEventArgs.cs" />
     <Compile Include="TrackObjectificationSoftware.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
