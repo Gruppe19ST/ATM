@@ -67,7 +67,6 @@
     <Compile Include="CheckForSeparationEventUnitTest.cs" />
     <Compile Include="CreateSeparationWarningUnitTest.cs" />
     <Compile Include="SortingTest.cs" />
-    <Compile Include="TrackCompassCourseUnitTest.cs" />
     <Compile Include="TrackConverterUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrackCourseUnitTest.cs" />
