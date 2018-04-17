@@ -10,6 +10,8 @@ namespace ATM.Logic.Handlers
 {
     public class CheckForSeparationEvent : ISeperationEventChecker
     {
+        public bool eventRaised = false;
+
         // List to hold received list of tracks
         private readonly List<TrackObject> _listOfTracks;
 
@@ -44,7 +46,21 @@ namespace ATM.Logic.Handlers
         {
             _conflictedList.Clear();
 
-            foreach (var checkTrack in _listOfTracks)
+            for (int i = 0; i < _listOfTracks.Count; i++)
+            {
+                for (int j = i+1; j < _listOfTracks.Count; j++)
+                {
+                    if (Math.Abs(_listOfTracks[i].XCoordinate - _listOfTracks[j].XCoordinate) <= _horizontalSeperationLimit
+                        && Math.Abs(_listOfTracks[i].YCoordinate - _listOfTracks[j].YCoordinate) <= _horizontalSeperationLimit
+                        && Math.Abs(_listOfTracks[i].Altitude - _listOfTracks[j].Altitude) <= _verticalSeperationLimit)
+                    {
+                        _conflictedList.Add(new List<TrackObject> { _listOfTracks[i], _listOfTracks[j] });
+                    }
+                }
+            }
+
+
+            /*foreach (var checkTrack in _listOfTracks)
             {
                 foreach (var compareTrack in _listOfTracks)
                 {
@@ -54,15 +70,11 @@ namespace ATM.Logic.Handlers
                             && Math.Abs(checkTrack.YCoordinate - compareTrack.YCoordinate) <= _horizontalSeperationLimit
                             && Math.Abs(checkTrack.Altitude - compareTrack.Altitude) <= _verticalSeperationLimit)
                         {
-                            _separationTracks.Clear();
-                            _separationTracks.Add(checkTrack);
-                            _separationTracks.Add(compareTrack);
-
-                            _conflictedList.Add(_separationTracks);
+                            _conflictedList.Add(new List<TrackObject> { checkTrack, compareTrack });    
                         }
                     }
                 }
-            }
+            }*/
 
             if (_conflictedList.Count > 0)
             {
