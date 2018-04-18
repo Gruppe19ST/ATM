@@ -58,6 +58,7 @@ namespace ATM.Test.Unit
         }
 
         [Test]
+
         public void CalculateCourseNegativeXandPostiveY()
         {
             track1 = new TrackObject("Tag123", 80000, 60000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
