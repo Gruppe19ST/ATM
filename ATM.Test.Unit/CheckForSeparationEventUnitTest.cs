@@ -17,11 +17,10 @@ namespace ATM.Test.Unit
         
         private List<TrackObject> _listOfTracks;
         private TrackObject _track1, _track2, _track3, _track4;
-       // List<List<TrackObject>> _conflictedTracksList;
 
         private CheckForSeparationEvent _uut;
         private SeparationEventArgs _receivedArgs;
-        private int _count;
+        
 
         [SetUp]
         public void SetUp()
@@ -33,19 +32,6 @@ namespace ATM.Test.Unit
             _track3 = new TrackObject("Tag789", 89000,89000,5000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _track4 = new TrackObject("TagABC", 72000, 72000, 1200, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
 
-            /*_listOfTracks.Clear();
-            _listOfTracks.Add(_track1);
-            _listOfTracks.Add(_track2);
-            //_listOfTracks.Add(_track3);*/
-
-            /* _uut = new CheckForSeparationEvent(_listOfTracks);
-             _uut.CheckSeparationEvents();
-             _uut.SeperationEvents += (o, args) =>
-             {
-                 _count++;
-                 _receivedArgs = args;
-
-             };*/
         }
 
         public void SeparationEvent()
@@ -98,11 +84,16 @@ namespace ATM.Test.Unit
         [Test]
         public void checkSeparation_NotTooClose_ReturnEmptyList()
         {
+            _listOfTracks.Clear();
+            _listOfTracks.Add(_track1);
             _track2.XCoordinate = 10000;
             _track2.YCoordinate = 10000;
             _track2.Altitude = 5000;
+            _listOfTracks.Add(_track2);
+            
+            SeparationEvent();
 
-            //Assert.That(_conflictedTracksList, Is.EqualTo(null));
+            Assert.That(_receivedArgs, Is.EqualTo(null));
         }
     }
 }
