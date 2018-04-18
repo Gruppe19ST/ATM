@@ -14,13 +14,14 @@ namespace ATM.Test.Unit
     [TestFixture]
     public class CheckForSeparationEventUnitTest
     {
-        
         private List<TrackObject> _listOfTracks;
         private TrackObject _track1, _track2, _track3, _track4;
 
         private CheckForSeparationEvent _uut;
         private SeparationEventArgs _receivedArgs;
-        
+
+        private int _nEventsRaised;
+
 
         [SetUp]
         public void SetUp()
@@ -32,12 +33,14 @@ namespace ATM.Test.Unit
             _track3 = new TrackObject("Tag789", 89000,89000,5000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _track4 = new TrackObject("TagABC", 72000, 72000, 1200, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
 
+            _nEventsRaised = 0;
         }
 
         public void SeparationEvent()
         {
             _uut = new CheckForSeparationEvent(_listOfTracks);
             _uut.SeperationEvents += (o, args) => {
+                ++_nEventsRaised;
                 _receivedArgs = args;
             };
             _uut.CheckSeparationEvents();
@@ -52,7 +55,8 @@ namespace ATM.Test.Unit
 
             SeparationEvent();
 
-            Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(1));
+            Assert.That(_nEventsRaised, Is.EqualTo(1));
+            //Assert.That(_receivedArgs.SeparationObjects, Is.EqualTo(2));
         }
 
         [Test]
@@ -65,7 +69,8 @@ namespace ATM.Test.Unit
 
             SeparationEvent();
 
-            Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(1));
+            Assert.That(_nEventsRaised, Is.EqualTo(1));
+            //Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(2));
         }
 
         [Test]
@@ -78,7 +83,8 @@ namespace ATM.Test.Unit
 
             SeparationEvent();
 
-            Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(2));
+            Assert.That(_nEventsRaised, Is.EqualTo(2));
+            //Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(2));
         }
 
         [Test]
