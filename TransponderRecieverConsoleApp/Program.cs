@@ -36,7 +36,9 @@ namespace TransponderRecieverConsoleApp
             _listOfTracks.Add(_track3);
 
             CheckForSeparationEvent separationChecker = new CheckForSeparationEvent(_listOfTracks);
+            LogSeparationEvent separationLogger = new LogSeparationEvent(separationChecker);
             separationChecker.CheckSeparationEvents();
+
             
 
             Console.ReadLine(); 
