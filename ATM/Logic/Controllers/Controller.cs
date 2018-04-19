@@ -56,7 +56,7 @@ namespace ATM.Logic.Controllers
 
         private void _checker_SeperationEvents(object sender, SeparationEventArgs e) //skal denne være her? 
         {
-            _warningCreator.CreateWarning(e);
+            _warningCreator.DisplayWarning(e);
         }
 
         public void HandleTrack()
