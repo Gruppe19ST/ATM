@@ -50,18 +50,10 @@ namespace ATM.Logic.Handlers
                     {
                         // If two tracks are on separation course, they should be added to a list with TrackObjects
                         // And this list should be added to the conflicted-list
-                        //_conflictedList.Add(new List<TrackObject> { _listOfTracks[i], _listOfTracks[j] });
                         OnSeparationEvent(new SeparationEventArgs(new List<TrackObject> { _listOfTracks[i], _listOfTracks[j] }));
                     }
                 }
             }
-
-            /*
-            // If there are any conflicted tracks, then an event should be raised
-            if (_conflictedList.Count > 0)
-            {
-                OnSeparationEvent(new SeparationEventArgs(_conflictedList));
-            }*/
         }
 
         private void OnSeparationEvent(SeparationEventArgs conflictedList)

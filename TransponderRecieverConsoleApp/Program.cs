@@ -28,7 +28,7 @@ namespace TransponderRecieverConsoleApp
             //CreateSeparationEventWarning warner = new CreateSeparationEventWarning(checker);
             Controller controller = new Controller(sorter);
 
-            _listOfTracks = new List<TrackObject>();
+            /*_listOfTracks = new List<TrackObject>();
             _track1 = new TrackObject("Tag123", 70000, 70000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _track2 = new TrackObject("Tag456", 68000, 68000, 800, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _track3 = new TrackObject("Tag789", 72000, 72000, 1200, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
@@ -41,7 +41,7 @@ namespace TransponderRecieverConsoleApp
 
             CheckForSeparationEvent separationChecker = new CheckForSeparationEvent(_listOfTracks);
             LogSeparationEvent separationLogger = new LogSeparationEvent(separationChecker);
-            separationChecker.CheckSeparationEvents();
+            separationChecker.CheckSeparationEvents();*/
 
 
             Console.ReadLine(); 
