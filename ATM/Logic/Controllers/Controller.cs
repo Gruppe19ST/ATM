@@ -69,8 +69,8 @@ namespace ATM.Logic.Controllers
                     {
                         trackC.horizontalVelocity = ts.CalculateSpeed(trackC, trackP);
                         //tilføj kompaskurs her
-                        //trackC.compassCourse = tcc.CalculateCompassCourse(trackC, trackP);
-                        //Console.WriteLine(trackC.ToString()+Convert.ToString(trackC.horizontalVelocity));
+                        trackC.compassCourse = tcc.CalculateCompassCourse(trackC, trackP);
+                        Console.WriteLine($"{trackC.Tag}, {Convert.ToString(trackC.horizontalVelocity)} m/s, {Convert.ToString(trackC.compassCourse)} deg.");
                     }
 
                 }
