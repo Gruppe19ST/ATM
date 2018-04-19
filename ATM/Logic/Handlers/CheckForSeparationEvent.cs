@@ -16,14 +16,10 @@ namespace ATM.Logic.Handlers
         // Variables for the limits for horizontal and vertical separation
         private readonly float _horizontalSeperationLimit, _verticalSeperationLimit;
 
-        // List to contain lists of conflicted tracks
-        //private readonly List<List<TrackObject>> _conflictedList;
-
         public CheckForSeparationEvent(List<TrackObject> sortedTracksList)
         {
             // Initialization of lists
             _listOfTracks = new List<TrackObject>();
-            //_conflictedList = new List<List<TrackObject>>();
 
             // Set the limits to the specified values
             _horizontalSeperationLimit = 5000;
@@ -35,8 +31,6 @@ namespace ATM.Logic.Handlers
 
         public void CheckSeparationEvents()
         {
-           // _conflictedList.Clear();
-
             // Runs through the elements in _listOfTracks
             for (int i = 0; i < _listOfTracks.Count; i++)
             {
