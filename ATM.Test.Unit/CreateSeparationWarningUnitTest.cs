@@ -21,6 +21,8 @@ namespace ATM.Test.Unit
         private ISeperationEventChecker _checker;
         private CreateSeparationEventWarning _uut;
 
+        private SeparationEventArgs args;
+
         [SetUp]
         public void SetUp()
         {
@@ -31,29 +33,21 @@ namespace ATM.Test.Unit
             _conflictedTracks = new List<List<TrackObject>>();
 
             _track1 = new TrackObject("Tag123", 70000, 70000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
-            _track2 = new TrackObject("Tag456", 70000, 70000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
+            _track2 = new TrackObject("Tag456", 66000, 66000, 1100, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _listOfTracks.Add(_track1);
             _listOfTracks.Add(_track2);
-            _conflictedTracks.Add(_listOfTracks);
+
+            args = new SeparationEventArgs(_listOfTracks);
+            _checker.SeperationEvents += Raise.EventWith(args);
+
         }
 
         [Test]
         public void createWarning_SeperationEvent_returnWarning()
         {
-            _track2.XCoordinate = 66000;
-            _track2.YCoordinate = 66000;
-            _track2.Altitude = 1100;
-            
-            //Assert.That(_uut.CreateWarning(_conflictedTracks).Count, Is.GreaterThan(0));
+            Assert.That(_uut.CreateWarning(args), Is.EqualTo(_track1.Tag + " and " + _track2.Tag + " are in conflict"));
         }
-
-        [Test]
-        public void createWarning_NoSeparationEvent_noWarning()
-        {
-            _conflictedTracks.Remove(_listOfTracks);
-
-            //Assert.That(_uut.CreateWarning(_conflictedTracks).Count, Is.EqualTo(0));
-        }
+        
     }
 
 }

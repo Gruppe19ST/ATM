@@ -50,6 +50,7 @@
     <Compile Include="Logic\Controllers\Controller.cs" />
     <Compile Include="Logic\Handlers\CheckForSeparationEvent.cs" />
     <Compile Include="Logic\Handlers\CompassCourseVector.cs" />
+    <Compile Include="Logic\Handlers\LogSeparationEvent.cs" />
     <Compile Include="Logic\Handlers\TrackObjectEventArgs.cs" />
     <Compile Include="Logic\Interfaces\ITrackConverter.cs" />
     <Compile Include="Logic\Handlers\TrackConverter.cs" />
