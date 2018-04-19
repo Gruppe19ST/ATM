@@ -9,6 +9,6 @@ namespace ATM.Logic.Interfaces
 {
     public interface ISeperationEventHandler
     {
-        string CreateWarning(SeparationEventArgs conflictedTracks);
+        void DisplayWarning(SeparationEventArgs conflictedTracks);
     }
 }

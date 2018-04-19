@@ -7,18 +7,17 @@ using ATM.Logic.Interfaces;
 
 namespace ATM.Logic.Handlers
 {
-    public class CreateSeparationEventWarning : ISeperationEventHandler
+    public class WarningDisplay : ISeperationEventHandler
     {
-        public CreateSeparationEventWarning(ISeperationEventChecker checker)
+        public WarningDisplay(ISeperationEventChecker checker)
         {
-            checker.SeperationEvents += (o, trackArgs) => CreateWarning(trackArgs);
+            checker.SeperationEvents += (o, trackArgs) => DisplayWarning(trackArgs);
         }
         
-        public string CreateWarning(SeparationEventArgs conflictList)
+        public void DisplayWarning(SeparationEventArgs conflictList)
         {
             // $ for at gøre kompile hurtigere
             System.Console.WriteLine($"{conflictList.SeparationObjects[0].Tag} and {conflictList.SeparationObjects[1].Tag} are in conflict");
-            return $"{conflictList.SeparationObjects[0].Tag} and {conflictList.SeparationObjects[1].Tag} are in conflict";
         }
     }
 }

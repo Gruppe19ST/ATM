@@ -19,7 +19,7 @@ namespace ATM.Test.Unit
         private TrackObject _track1, _track2;
 
         private ISeperationEventChecker _checker;
-        private CreateSeparationEventWarning _uut;
+        private WarningDisplay _uut;
 
         private SeparationEventArgs args;
 
@@ -27,7 +27,7 @@ namespace ATM.Test.Unit
         public void SetUp()
         {
             _checker = Substitute.For<ISeperationEventChecker>();
-            _uut = new CreateSeparationEventWarning(_checker);
+            _uut = new WarningDisplay(_checker);
 
             _listOfTracks = new List<TrackObject>();
             _conflictedTracks = new List<List<TrackObject>>();
