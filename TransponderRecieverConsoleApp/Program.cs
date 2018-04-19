@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using TransponderReceiver;
 using ATM;
 using ATM.Logic.Handlers;
+using ATM.Logic.Controllers;
 using ATM.Logic.Interfaces;
-using ATM.Receiver;
 
 namespace TransponderRecieverConsoleApp
 {
@@ -20,8 +20,12 @@ namespace TransponderRecieverConsoleApp
             TrackConverter trackConverter = new TrackConverter(TransponderReceiverFactory.CreateTransponderDataReceiver());
             //trackConverter.TrackObjectsReady += TrackConverter_TrackObjectsReady;*/
             //TrackReceiver trackReceiver = new TrackReceiver(trackConverter);
-            Sorter _sorter = new Sorter(trackConverter);
-            
+            Sorter sorter = new Sorter(trackConverter);
+            //CheckForSeparationEvent checker = new CheckForSeparationEvent();
+            //CreateSeparationEventWarning warner = new CreateSeparationEventWarning(checker);
+            Controller controller = new Controller(sorter);
+
+
 
             Console.ReadLine(); 
             
