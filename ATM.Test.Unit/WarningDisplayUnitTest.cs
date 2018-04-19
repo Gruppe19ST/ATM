@@ -12,7 +12,7 @@ using ATM.Logic.Interfaces;
 namespace ATM.Test.Unit
 {
     [TestFixture]
-    public class CreateSeparationWarningUnitTest
+    public class WarningDisplayUnitTest
     {
         private List<List<TrackObject>> _conflictedTracks;
         private List<TrackObject> _listOfTracks;
