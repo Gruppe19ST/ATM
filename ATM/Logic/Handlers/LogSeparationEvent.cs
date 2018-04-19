@@ -11,7 +11,7 @@ namespace ATM.Logic.Handlers
     public class LogSeparationEvent : ISeperationEventLogger
     {
         // Filename
-        private static readonly string Path = System.Reflection.Assembly.GetExecutingAssembly().Location;
+        private static readonly string Path = System.Environment.CurrentDirectory;
         static string fileName = "test.txt";
         private static readonly string FilePath = System.IO.Path.Combine(Path, fileName);
 
@@ -28,11 +28,14 @@ namespace ATM.Logic.Handlers
         {
             // Input to file
             string input = $"{Convert.ToString(separationEvent.SeparationObjects[0].TimeStamp)}, {separationEvent.SeparationObjects[0].Tag}, {separationEvent.SeparationObjects[1].Tag}";
+            StreamWriter writer;
 
-            using (StreamWriter writer = File.AppendText(FilePath))
-            {
-                writer.WriteLine(input);
-            }
+                using (writer = File.AppendText(FilePath))
+                {
+                    writer.WriteLine(input);
+                }
+            //}
+            
         }
     }
 }
