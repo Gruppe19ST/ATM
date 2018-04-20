@@ -40,16 +40,21 @@ namespace ATM.Logic.Controllers
             currentTracks = null;
         }
 
+        public List<TrackObject> GetList()
+        {
+            return priorTracks;
+        }
+
         private void CheckTracks()
         {
             _checker = new CheckForSeparationEvent(currentTracks); 
-            _warningCreator = new WarningDisplay(_checker);
+            _warningCreator = new CreateWarning(_checker);
             _checker.SeperationEvents += _checker_SeperationEvents;
         }
 
         private void _checker_SeperationEvents(object sender, SeparationEventArgs e) //skal denne være her? 
         {
-            _warningCreator.DisplayWarning(e);
+            _warningCreator.CreateSeparationWarning(e);
         }
 
         public void HandleTrack()
