@@ -11,6 +11,7 @@ using ATM.Logic.Handlers;
 using ATM.Logic.Controllers;
 using ATM.Logic.Interfaces;
 
+
 namespace TransponderRecieverConsoleApp
 {
     class Program
@@ -20,10 +21,11 @@ namespace TransponderRecieverConsoleApp
 
         static void Main(string[] args)
         {
+
             TrackConverter trackConverter = new TrackConverter(TransponderReceiverFactory.CreateTransponderDataReceiver());
             Sorter sorter = new Sorter(trackConverter);
             Controller controller = new Controller(sorter);
-
+           
             /*_listOfTracks = new List<TrackObject>();
             _track1 = new TrackObject("Tag123", 70000, 70000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _track2 = new TrackObject("Tag456", 68000, 68000, 800, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
@@ -48,16 +50,16 @@ namespace TransponderRecieverConsoleApp
             separationChecker.CheckSeparationEvents(_listOfTracks);*/
 
 
-            Console.ReadLine(); 
+            //Console.ReadLine(); 
             
         }
 
-        private static void TrackConverter_TrackObjectsReady(object sender, TrackObjectEventArgs e)
-        {
-            foreach (var track in e.TrackObjects)
-            {
-                Console.WriteLine(track.ToString());
-            }
-        }
+        //private static void TrackConverter_TrackObjectsReady(object sender, TrackObjectEventArgs e)
+        //{
+        //    foreach (var track in e.TrackObjects)
+        //    {
+        //        Console.WriteLine(track.ToString());
+        //    }
+        //}
     }
 }

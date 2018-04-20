@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ATM.Logic.Interfaces
+namespace ATM.Test.Integration
 {
-    public interface ITrackController
+    class IT3_TrackCourse_TrackSpeed
     {
-        void HandleTrack();
-       
-
     }
 }
