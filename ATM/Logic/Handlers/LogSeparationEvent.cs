@@ -22,7 +22,8 @@ namespace ATM.Logic.Handlers
 
         public LogSeparationEvent(ISeperationEventChecker checker)
         {
-            checker.SeperationEvents += (o, trackArgs) => SaveToFile(trackArgs);
+            checker.FinishedSeperationEvents += (o, trackArgs) => SaveToFile(trackArgs);
+            //checker.SeperationEvents += (o, trackArgs) => SaveToFile(trackArgs);
         }
         
         public void SaveToFile(SeparationEventArgs separationEvent)
@@ -30,7 +31,8 @@ namespace ATM.Logic.Handlers
             foreach (var separationObject in separationEvent.SeparationObjects)
             {
                 // Input to file
-                string input = $"{Convert.ToString(separationObject.EventTime, Thread.CurrentThread.CurrentCulture)}: {separationObject.Tag1}, {separationObject.Tag2}";
+                string input = $"Separation from {Convert.ToString(separationObject.FirstTime, Thread.CurrentThread.CurrentCulture)} to {Convert.ToString(separationObject.FirstTime, Thread.CurrentThread.CurrentCulture)} with tracks: " +
+                               $"{separationObject.Tag1}, {separationObject.Tag2}";
 
                 StreamWriter writer;
 

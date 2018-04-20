@@ -16,7 +16,7 @@ namespace TransponderRecieverConsoleApp
     class Program
     {
         private static List<TrackObject> _listOfTracks;
-        private static TrackObject _track1, _track2, _track3;
+        private static TrackObject _track1, _track2, _track3, _track4;
 
         static void Main(string[] args)
         {
@@ -39,14 +39,22 @@ namespace TransponderRecieverConsoleApp
             _listOfTracks.Add(_track2);
             _listOfTracks.Add(_track3);
 
-            CheckForSeparationEvent separationChecker = new CheckForSeparationEvent(_listOfTracks);
+            CheckForSeparationEvent separationChecker = new CheckForSeparationEvent();
             CreateWarning separationWarning = new CreateWarning(separationChecker);
             LogSeparationEvent separationLogger = new LogSeparationEvent(separationChecker);
-            separationChecker.CheckSeparationEvents();
+            separationChecker.CheckSeparationEvents(_listOfTracks);
 
 
-            Console.ReadLine(); 
-            
+            Console.ReadLine();
+
+            _track4 = new TrackObject("Tag456", 89000, 89000, 5000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
+            _track2 = _track4;
+
+            separationChecker.CheckSeparationEvents(_listOfTracks);
+                
+
+            Console.ReadLine();
+
         }
 
         private static void TrackConverter_TrackObjectsReady(object sender, TrackObjectEventArgs e)

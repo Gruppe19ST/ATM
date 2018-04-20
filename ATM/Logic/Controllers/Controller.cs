@@ -47,7 +47,8 @@ namespace ATM.Logic.Controllers
               HandleTrack();  
             }
 
-            _checker = new CheckForSeparationEvent(currentTracks); // opretter checker her i stedet for at give den med som constructor parameter
+            // ALWH: Jeg har fjernet listen som konstruktor-parameter, da det ikke gav mening.
+            _checker = new CheckForSeparationEvent(); // opretter checker her i stedet for at give den med som constructor parameter
             _warningCreator = new CreateWarning(_checker);
 
             _checker.SeperationEvents += _checker_SeperationEvents;
