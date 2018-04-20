@@ -7,14 +7,14 @@ using ATM.Logic.Interfaces;
 
 namespace ATM.Logic.Handlers
 {
-    public class WarningDisplay : ISeperationEventHandler
+    public class CreateWarning : ISeperationEventHandler
     {
-        public WarningDisplay(ISeperationEventChecker checker)
+        public CreateWarning(ISeperationEventChecker checker)
         {
-            checker.SeperationEvents += (o, trackArgs) => DisplayWarning(trackArgs);
+            checker.SeperationEvents += (o, trackArgs) => CreateSeparationWarning(trackArgs);
         }
         
-        public void DisplayWarning(SeparationEventArgs conflictList)
+        public void CreateSeparationWarning(SeparationEventArgs conflictList)
         {
             foreach (var separationObject in conflictList.SeparationObjects)
             {
