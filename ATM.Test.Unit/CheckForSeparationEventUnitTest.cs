@@ -55,8 +55,9 @@ namespace ATM.Test.Unit
 
             SeparationEvent();
 
-            Assert.That(_nEventsRaised, Is.EqualTo(1));
-            //Assert.That(_receivedArgs.SeparationObjects, Is.EqualTo(2));
+            // Assume, that when 1 pair of tracks is too close, this creates 1 separation event object
+            Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(1));
+            
         }
 
         [Test]
@@ -69,8 +70,9 @@ namespace ATM.Test.Unit
 
             SeparationEvent();
 
-            Assert.That(_nEventsRaised, Is.EqualTo(1));
-            //Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(2));
+            // Assume, that when 1 pair of tracks is too close, this creates 1 separation event object
+            // and that this happens, eventhough 3 tracks are now in the air
+            Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(1));
         }
 
         [Test]
@@ -83,8 +85,8 @@ namespace ATM.Test.Unit
 
             SeparationEvent();
 
-            Assert.That(_nEventsRaised, Is.EqualTo(2));
-            //Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(2));
+            // Assume, that when 2 pair of tracks are too close, this creates 2 separation events
+            Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(2));
         }
 
         [Test]

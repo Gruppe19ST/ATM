@@ -31,6 +31,7 @@ namespace ATM.Logic.Handlers
 
         private void _trackconverter_TrackObjectsReady(object sender, TrackObjectEventArgs e)
         {
+            
             listOfTrackObjects = e.TrackObjects;
             SortTracks(listOfTrackObjects);
             
@@ -38,6 +39,7 @@ namespace ATM.Logic.Handlers
 
         public void SortTracks(List<TrackObject> tracks)
             {
+                SortedList.Clear();
                 foreach (var var in tracks)
                 {
                     if (var.XCoordinate > _xLimit[0] && var.XCoordinate < _xLimit[1] && var.YCoordinate > _yLimit[0] &&
@@ -49,6 +51,7 @@ namespace ATM.Logic.Handlers
                 }
 
                 OnTrackSortedUpdated(new TrackObjectEventArgs(SortedList));
+                
             }
 
         public void OnTrackSortedUpdated(TrackObjectEventArgs tracksortedobject)

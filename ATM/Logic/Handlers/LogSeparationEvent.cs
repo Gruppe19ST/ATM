@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ATM.Logic.Interfaces;
 
@@ -10,42 +11,36 @@ namespace ATM.Logic.Handlers
 {
     public class LogSeparationEvent : ISeperationEventLogger
     {
-        /*// Filename
-        static string filename = "E:/Visual Studio 2017/SWT/ATM/test.txt";
+        // Filename
+        private static readonly string Path = System.Environment.CurrentDirectory;
+        static string fileName = "test.txt";
+        private static readonly string FilePath = System.IO.Path.Combine(Path, fileName);
 
+        /*
         // Create/open stream and file
         FileStream output = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write);*/
 
         public LogSeparationEvent(ISeperationEventChecker checker)
         {
-            checker.SeperationEvents += (o, trackArgs) => SaveToFile(trackArgs);
+            checker.FinishedSeperationEvents += (o, trackArgs) => SaveToFile(trackArgs);
+            //checker.SeperationEvents += (o, trackArgs) => SaveToFile(trackArgs);
         }
         
         public void SaveToFile(SeparationEventArgs separationEvent)
         {
-            // Input to file
-            string input = $"{separationEvent.SeparationObjects[0].Tag}, {separationEvent.SeparationObjects[1].Tag}, {Convert.ToString(separationEvent.SeparationObjects[0].TimeStamp)}";
-
-            try
+            foreach (var separationObject in separationEvent.SeparationObjects)
             {
-                // Filename
-                string filename = "E:/Visual Studio 2017/SWT/ATM/test.txt";
+                // Input to file
+                string input = $"Separation from {Convert.ToString(separationObject.FirstTime, Thread.CurrentThread.CurrentCulture)} to {Convert.ToString(separationObject.FirstTime, Thread.CurrentThread.CurrentCulture)} with tracks: " +
+                               $"{separationObject.Tag1}, {separationObject.Tag2}";
 
-                // Create/open stream and file
-                FileStream output = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write);
+                StreamWriter writer;
 
-                // Create writing-object that can write to output
-                StreamWriter fileWriter = new StreamWriter(output);
+                using (writer = File.AppendText(FilePath))
+                {
+                    writer.WriteLine(input);
+                }
 
-                // Write til file
-                fileWriter.WriteLine(input);
-
-                // Close file and stream
-                fileWriter.Close();
-            }
-            catch (IOException e)
-            {
-                
             }
         }
     }

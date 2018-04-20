@@ -5,11 +5,11 @@ namespace ATM.Logic.Handlers
 {
     public class SeparationEventArgs : EventArgs
     {
-        public SeparationEventArgs(List<TrackObject> separationList)
+        public SeparationEventArgs(List<SeparationEventObject> separationList)
         {
             this.SeparationObjects = separationList;
         }
 
-        public List<TrackObject> SeparationObjects { get; }
+        public List<SeparationEventObject> SeparationObjects { get; }
     }
 }

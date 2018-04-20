@@ -18,29 +18,38 @@ namespace ATM.Logic.Controllers
         private TrackSpeed ts;
         private TrackCompassCourse tcc;
 
-        public Controller(ISorter sorter, ISeperationEventChecker checker, ISeperationEventHandler warningCreator)
+        public Controller(ISorter sorter)
         {
+            currentTracks = new List<TrackObject>();
             _sorter = sorter;
-            _checker = checker;
-            _warningCreator = warningCreator;
-
             _sorter.TrackSortedReady += _sorter_TrackSortedReady;
-            _checker.SeperationEvents += _checker_SeperationEvents;
-
-
             ts = new TrackSpeed();
             tcc = new TrackCompassCourse();
         }
 
-        private void _checker_SeperationEvents(object sender, SeparationEventArgs e)
-        {
-            _warningCreator.CreateWarning(e);
+        private void _sorter_TrackSortedReady(object sender, TrackObjectEventArgs e)
+        { 
+            currentTracks = e.TrackObjects;
+            if (currentTracks.Count >=1)
+            {
+                HandleTrack(); 
+                CheckTracks();
+            }
+            // UDSKRIV TRACKS I LUFTEN
+            priorTracks = new List<TrackObject>(currentTracks);
+            currentTracks = null;
         }
 
-        private void _sorter_TrackSortedReady(object sender, TrackObjectEventArgs e)
+        private void CheckTracks()
         {
-            priorTracks = currentTracks; // Undtaget første gang, da currentracks så vil være tom. Da kopieres currenttracks til priortracks. 
-            currentTracks = e.TrackObjects;
+            _checker = new CheckForSeparationEvent(); 
+            _warningCreator = new CreateWarning(_checker);
+            _checker.SeperationEvents += _checker_SeperationEvents;
+        }
+
+        private void _checker_SeperationEvents(object sender, SeparationEventArgs e) //skal denne være her? 
+        {
+            _warningCreator.CreateSeparationWarning(e);
         }
 
         public void HandleTrack()
@@ -52,12 +61,14 @@ namespace ATM.Logic.Controllers
                     if (trackC.Tag == trackP.Tag)
                     {
                         trackC.horizontalVelocity = ts.CalculateSpeed(trackC, trackP);
-                        //tilføj kompaskurs her
                         trackC.compassCourse = tcc.CalculateCompassCourse(trackC, trackP);
+                        Console.WriteLine(trackC.ToString());
                     }
 
                 }
             }
         }
     }
-}
+
+        
+    }

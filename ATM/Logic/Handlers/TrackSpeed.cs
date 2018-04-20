@@ -24,7 +24,7 @@ namespace ATM.Logic.Handlers
             timeSpan = c.TimeStamp - p.TimeStamp;
             horizontalDisplacement = Math.Sqrt(Math.Pow((c.XCoordinate - p.XCoordinate), 2) + Math.Pow((c.YCoordinate - p.YCoordinate), 2));
             horizontalVelocity = horizontalDisplacement / timeSpan.TotalSeconds;
-            return horizontalVelocity;
+            return Math.Round(horizontalVelocity,2);
         }
 
         

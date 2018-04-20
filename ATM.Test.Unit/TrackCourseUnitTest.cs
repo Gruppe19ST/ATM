@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace ATM.Test.Unit
             track2 = new TrackObject("Tag123", 80500, 60400, 1000, DateTime.ParseExact("20180412111322111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             trackcoure = _uut.CalculateCompassCourse(track1, track2);
 
-            Assert.That(Math.Round(trackcoure), Is.EqualTo(Math.Round(0)));
+            Assert.That(Math.Round(trackcoure), Is.EqualTo(Math.Round(51.0)));
         }
 
         [Test]
@@ -44,7 +45,7 @@ namespace ATM.Test.Unit
             track2 = new TrackObject("Tag123", 70500, 50400, 1000, DateTime.ParseExact("20180412111322111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             trackcoure = _uut.CalculateCompassCourse(track1, track2);
 
-            Assert.That(Math.Round(trackcoure), Is.EqualTo(Math.Round(0)));
+            Assert.That(Math.Round(trackcoure), Is.EqualTo(Math.Round(225.0)));
         }
 
         [Test]
@@ -54,7 +55,7 @@ namespace ATM.Test.Unit
             track2 = new TrackObject("Tag123", 81500, 58000, 1000, DateTime.ParseExact("20180412111322111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             trackcoure = _uut.CalculateCompassCourse(track1, track2);
 
-            Assert.That(Math.Round(trackcoure), Is.EqualTo(Math.Round(0)));
+            Assert.That(Math.Round(trackcoure), Is.EqualTo(Math.Round(143.0)));
         }
 
         [Test]
@@ -65,7 +66,7 @@ namespace ATM.Test.Unit
             track2 = new TrackObject("Tag123", 70500, 62000, 1000, DateTime.ParseExact("20180412111322111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             trackcoure = _uut.CalculateCompassCourse(track1, track2);
 
-            Assert.That(Math.Round(trackcoure), Is.EqualTo(Math.Round(0)));
+            Assert.That(Math.Round(trackcoure), Is.EqualTo(Math.Round(282.0)));
         }
 
 

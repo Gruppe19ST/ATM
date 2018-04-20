@@ -32,7 +32,7 @@ namespace ATM.Logic.Handlers
             };
 
             var dotProduct = (planeVector.X * northVector.X) + (planeVector.Y * northVector.Y);
-            var determinant = (planeVector.X * northVector.X) - (planeVector.Y * northVector.Y);
+            var determinant = (planeVector.X * northVector.Y) - (planeVector.Y * northVector.X);
 
             //Calculate course between north and plane vector. 
             var compassCourse = Math.Atan2(determinant, dotProduct) * (180 / Math.PI); //Convert radians to degrees.

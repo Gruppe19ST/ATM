@@ -13,7 +13,7 @@ using ATM.Logic.Handlers;
 namespace ATM.Test.Unit
 {
     [TestFixture]
-    class SortingTest
+    class SorterUnitTest
     {
         private Logic.Handlers.Sorter _uut;
         private Logic.Interfaces.ITrackConverter trackconverter; 
