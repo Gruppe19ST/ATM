@@ -48,7 +48,7 @@ namespace ATM.Logic.Controllers
             }
 
             _checker = new CheckForSeparationEvent(currentTracks); // opretter checker her i stedet for at give den med som constructor parameter
-            _warningCreator = new WarningDisplay(_checker);
+            _warningCreator = new CreateWarning(_checker);
 
             _checker.SeperationEvents += _checker_SeperationEvents;
             priorTracks = new List<TrackObject>(currentTracks);  
@@ -56,7 +56,7 @@ namespace ATM.Logic.Controllers
 
         private void _checker_SeperationEvents(object sender, SeparationEventArgs e) //skal denne være her? 
         {
-            _warningCreator.DisplayWarning(e);
+            _warningCreator.CreateSeparationWarning(e);
         }
 
         public void HandleTrack()

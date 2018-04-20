@@ -40,7 +40,7 @@ namespace TransponderRecieverConsoleApp
             _listOfTracks.Add(_track3);
 
             CheckForSeparationEvent separationChecker = new CheckForSeparationEvent(_listOfTracks);
-            WarningDisplay separationWarning = new WarningDisplay(separationChecker);
+            CreateWarning separationWarning = new CreateWarning(separationChecker);
             LogSeparationEvent separationLogger = new LogSeparationEvent(separationChecker);
             separationChecker.CheckSeparationEvents();
 
