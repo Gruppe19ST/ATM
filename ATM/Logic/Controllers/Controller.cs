@@ -8,7 +8,7 @@ using ATM.Logic.Interfaces;
 
 namespace ATM.Logic.Controllers
 {
-    class Controller : ITrackController
+    public class Controller : ITrackController
     {
         List<TrackObject> priorTracks;
         List<TrackObject> currentTracks;
