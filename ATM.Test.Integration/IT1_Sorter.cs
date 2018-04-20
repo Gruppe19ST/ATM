@@ -18,22 +18,19 @@ namespace ATM.Test.Integration
         //Drivers
         private FakeDLL _fakeDLL;
 
-        //stubs
-        private ITrackController _trackcontroller;
+        //system under test
+        private TrackConverter _sut;
 
-        //included
-        private TrackConverter _trackconverter;
+        // Interface under test 
+        private ISorter _fakeSorter;
 
-        //systemundertest
-        private Sorter _sut;
 
         [SetUp]
         public void SetUp()
         {
             _fakeDLL = new FakeDLL();
-            _trackcontroller = Substitute.For<ITrackController>();
-            _trackconverter = new TrackConverter(_fakeDLL);
-            _sut = new Sorter(_trackconverter);
+            _sut = new TrackConverter(_fakeDLL);
+            _fakeSorter = Substitute.For<ISorter>();
         }
 
        
