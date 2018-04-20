@@ -16,8 +16,11 @@ namespace ATM.Logic.Handlers
         
         public void DisplayWarning(SeparationEventArgs conflictList)
         {
-            // $ for at gøre kompile hurtigere
-            System.Console.WriteLine($"{conflictList.SeparationObjects[0].Tag} and {conflictList.SeparationObjects[1].Tag} are in conflict");
+            foreach (var separationObject in conflictList.SeparationObjects)
+            {
+                // $ for at gøre kompile hurtigere
+                System.Console.WriteLine($"{separationObject.Tag1} and {separationObject.Tag2} are in conflict");
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ATM.Logic.Interfaces;
 
@@ -26,16 +27,19 @@ namespace ATM.Logic.Handlers
         
         public void SaveToFile(SeparationEventArgs separationEvent)
         {
-            // Input to file
-            string input = $"{Convert.ToString(separationEvent.SeparationObjects[0].TimeStamp)}, {separationEvent.SeparationObjects[0].Tag}, {separationEvent.SeparationObjects[1].Tag}";
-            StreamWriter writer;
+            foreach (var separationObject in separationEvent.SeparationObjects)
+            {
+                // Input to file
+                string input = $"{Convert.ToString(separationObject.EventTime, Thread.CurrentThread.CurrentCulture)}: {separationObject.Tag1}, {separationObject.Tag2}";
+
+                StreamWriter writer;
 
                 using (writer = File.AppendText(FilePath))
                 {
                     writer.WriteLine(input);
                 }
-            //}
-            
+
+            }
         }
     }
 }

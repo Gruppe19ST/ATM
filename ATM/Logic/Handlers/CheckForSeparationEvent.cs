@@ -13,7 +13,6 @@ namespace ATM.Logic.Handlers
         // List to hold received list of tracks
         private readonly List<TrackObject> _listOfTracks;
 
-        private List<SeparationEventObject> _listOfSeparations;
         private List<SeparationEventObject> _currentSeparations;
         private List<SeparationEventObject> _priorSeparations;
 
@@ -24,7 +23,6 @@ namespace ATM.Logic.Handlers
         {
             // Initialization of lists
             _listOfTracks = new List<TrackObject>();
-            _listOfSeparations = new List<SeparationEventObject>();
             _currentSeparations = new List<SeparationEventObject>();
             _priorSeparations = new List<SeparationEventObject>();
 
@@ -38,7 +36,7 @@ namespace ATM.Logic.Handlers
 
         public void CheckSeparationEvents()
         {
-            _listOfSeparations.Clear();
+            _currentSeparations.Clear();
 
             // Runs through the elements in _listOfTracks
             for (int i = 0; i < _listOfTracks.Count; i++)
@@ -53,7 +51,7 @@ namespace ATM.Logic.Handlers
                     {
                         // If two tracks are on separation course, an eventobject is created and added to list
                         SeparationEventObject separationEvent = new SeparationEventObject(_listOfTracks[i].Tag, _listOfTracks[j].Tag, _listOfTracks[i].TimeStamp);
-                        _listOfSeparations.Add(separationEvent);
+                        _currentSeparations.Add(separationEvent);
 
                        /* // If two tracks are on separation course, they should be added to a list with TrackObjects
                         // And this list should be added to the conflicted-list
@@ -62,38 +60,51 @@ namespace ATM.Logic.Handlers
                 }
             }
 
-            // Compare _listOfSeparations to priorSeparations
-            foreach (var newSep in _listOfSeparations)
+            if (_priorSeparations.Count != 0)
             {
+                // Compare _currentSeparations to priorSeparations
+                foreach (var newSep in _currentSeparations)
+                {
+
+                    foreach (var priorSep in _priorSeparations)
+                    {
+                        if ((newSep.Tag1 == priorSep.Tag1 && newSep.Tag2 == priorSep.Tag2)
+                            || newSep.Tag1 == priorSep.Tag2 && newSep.Tag2 == priorSep.Tag1)
+                        {
+                            priorSep.EventTime = newSep.EventTime;
+                            _currentSeparations.Remove(newSep);
+                        }
+                        else
+                        {
+                            _priorSeparations.Add(newSep);
+                        }
+                    }
+                }
+
                 foreach (var priorSep in _priorSeparations)
                 {
-                    if ((newSep.Tag1 == priorSep.Tag1 && newSep.Tag2 == priorSep.Tag2)
-                        || newSep.Tag1 == priorSep.Tag2 && newSep.Tag2 == priorSep.Tag1)
+                    foreach (var newSep in _currentSeparations)
                     {
-                        priorSep.EventTime = newSep.EventTime;
-                        _listOfSeparations.Remove(newSep);
-                    }
-                    else
-                    {
-                        _priorSeparations.Add(newSep);
+                        if ((priorSep.Tag1 == newSep.Tag1 && priorSep.Tag2 == newSep.Tag2
+                             || priorSep.Tag1 == newSep.Tag2 && priorSep.Tag2 == newSep.Tag1))
+                        {
+                            priorSep.EventTime = newSep.EventTime;
+                        }
+                        else
+                        {
+                            _priorSeparations.Remove(priorSep);
+                        }
                     }
                 }
             }
-
-            foreach (var priorSep in _priorSeparations)
+            else
             {
-                foreach (var newSep in _listOfSeparations)
-                {
-                    if ((priorSep.Tag1 == newSep.Tag1 && priorSep.Tag2 == newSep.Tag2
-                         || priorSep.Tag1 == newSep.Tag2 && priorSep.Tag2 == newSep.Tag1))
-                    {
-                        priorSep.EventTime = newSep.EventTime;
-                    }
-                    else
-                    {
-                        _priorSeparations.Remove(priorSep);
-                    }
-                }
+                _priorSeparations = _currentSeparations;
+            }
+
+            if (_priorSeparations.Count != 0)
+            {
+                OnSeparationEvent(new SeparationEventArgs(_priorSeparations));
             }
 
         }
