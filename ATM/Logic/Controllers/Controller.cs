@@ -42,14 +42,14 @@ namespace ATM.Logic.Controllers
 
         private void CheckTracks()
         {
-            _checker = new CheckForSeparationEvent(currentTracks); 
-            _warningCreator = new WarningDisplay(_checker);
+            _checker = new CheckForSeparationEvent(); 
+            _warningCreator = new CreateWarning(_checker);
             _checker.SeperationEvents += _checker_SeperationEvents;
         }
 
         private void _checker_SeperationEvents(object sender, SeparationEventArgs e) //skal denne være her? 
         {
-            _warningCreator.DisplayWarning(e);
+            _warningCreator.CreateSeparationWarning(e);
         }
 
         public void HandleTrack()
