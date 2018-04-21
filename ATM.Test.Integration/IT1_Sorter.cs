@@ -32,7 +32,7 @@ namespace ATM.Test.Integration
         {
             _fakeDLL = new FakeDLL();
             _trackcontroller = Substitute.For<ITrackController>();
-            _trackconverter = new TrackConverter(_fakeDLL);
+            //_trackconverter = new TrackConverter(_fakeDLL);
             _sut = new Sorter(_trackconverter);
         }
 

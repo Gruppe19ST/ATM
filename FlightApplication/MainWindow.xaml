@@ -1,0 +1,19 @@
+﻿<Window x:Class="FlightApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FlightApplication"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Name="flightsinairspace">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"></ColumnDefinition>
+            <ColumnDefinition Width="400"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Height="28" Margin="10,17,0,0" Name="labelflyiluften" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="15">Fly i luftrum</Label>
+        <Label Height="28" Margin="10,17,0,0" Name="labelflyikonflikt" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="15" Grid.Column="1">Fly i konflikt</Label>
+        <ListBox Margin="10,55,10,9" Name="lbxflyiluften" ></ListBox>
+        <ListBox Margin="10,55,16,9" Name="lbxflyikonflikt" Grid.Column="1"></ListBox>
+    </Grid>
+</Window>

@@ -11,6 +11,7 @@ namespace ATM.Logic.Controllers
     public class Controller : ITrackController
     {
         List<TrackObject> priorTracks;
+
         List<TrackObject> currentTracks;
         private ISorter _sorter;
         private ISeperationEventChecker _checker;
@@ -67,6 +68,11 @@ namespace ATM.Logic.Controllers
 
                 }
             }
+        }
+
+        public List<TrackObject> GetList()
+        {
+            throw new NotImplementedException();
         }
     }
 
