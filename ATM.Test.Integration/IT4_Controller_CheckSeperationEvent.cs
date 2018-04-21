@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATM.Test.Integration
 {
-    class IT4_CheckSeperationEvent
+    class IT4_Controller_CheckSeperationEvent
     {
     }
 }

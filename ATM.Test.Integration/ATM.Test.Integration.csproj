@@ -63,8 +63,8 @@
     <Compile Include="IT1_Sorter.cs" />
     <Compile Include="IT2_Controller.cs" />
     <Compile Include="IT3_TrackCourse_TrackSpeed.cs" />
-    <Compile Include="IT4_CheckSeperationEvent.cs" />
-    <Compile Include="IT5_Logfile_CreateWarning.cs" />
+    <Compile Include="IT4_Controller_CheckSeperationEvent.cs" />
+    <Compile Include="IT5_CheckSeparation_Logfile_CreateWarning.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

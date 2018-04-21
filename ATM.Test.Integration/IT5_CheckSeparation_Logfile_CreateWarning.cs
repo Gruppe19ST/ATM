@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATM.Test.Integration
 {
-    class IT5_Logfile_CreateWarning
+    class IT5_CheckSeparation_Logfile_CreateWarning
     {
     }
 }
