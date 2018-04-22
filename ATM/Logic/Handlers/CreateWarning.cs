@@ -15,13 +15,8 @@ namespace ATM.Logic.Handlers
         }
 
         public void Checker_SeperationEvents(object sender, SeparationEventArgs e)
-{
-            CreateSeparationWarning(e);
-        }
-
-        public void CreateSeparationWarning(SeparationEventArgs conflictList)
         {
-            foreach (var separationObject in conflictList.SeparationObjects)
+            foreach (var separationObject in e.SeparationObjects)
             {
                 // $ for at gøre kompile hurtigere
                 System.Console.WriteLine($"{separationObject.Tag1} and {separationObject.Tag2} are in conflict");

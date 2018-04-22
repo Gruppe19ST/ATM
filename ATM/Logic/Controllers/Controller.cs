@@ -26,6 +26,10 @@ namespace ATM.Logic.Controllers
             _sorter.TrackSortedReady += _sorter_TrackSortedReady;
             ts = new TrackSpeed();
             tcc = new TrackCompassCourse();
+
+            _checker = new CheckForSeparationEvent();
+            _warningCreator = new CreateWarning(_checker);
+            _logger = new LogSeparationEvent(_checker);
         }
 
         private void _sorter_TrackSortedReady(object sender, TrackObjectEventArgs e)
@@ -43,9 +47,6 @@ namespace ATM.Logic.Controllers
 
         public void CheckTracks(List<TrackObject> tracks)
         {
-            _checker = new CheckForSeparationEvent(); 
-            _warningCreator = new CreateWarning(_checker);
-            _logger = new LogSeparationEvent(_checker);
             _checker.CheckSeparationEvents(tracks);
             //_checker.SeperationEvents += _checker_SeperationEvents;
         }

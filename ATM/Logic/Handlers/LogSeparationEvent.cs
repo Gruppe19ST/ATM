@@ -16,19 +16,14 @@ namespace ATM.Logic.Handlers
         static string fileName = "test.txt";
         private static readonly string FilePath = System.IO.Path.Combine(Path, fileName);
 
-        /*
-        // Create/open stream and file
-        FileStream output = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write);*/
-
         public LogSeparationEvent(ISeperationEventChecker checker)
         {
-            checker.FinishedSeperationEvents += (o, trackArgs) => SaveToFile(trackArgs);
-            //checker.SeperationEvents += (o, trackArgs) => SaveToFile(trackArgs);
+            checker.FinishedSeperationEvents += Checker_FinishedSeperationEvents;
         }
-        
-        public void SaveToFile(SeparationEventArgs separationEvent)
+
+        private void Checker_FinishedSeperationEvents(object sender, SeparationEventArgs e)
         {
-            foreach (var separationObject in separationEvent.SeparationObjects)
+            foreach (var separationObject in e.SeparationObjects)
             {
                 // Input to file
                 string input = $"Separation from {Convert.ToString(separationObject.FirstTime, Thread.CurrentThread.CurrentCulture)} to {Convert.ToString(separationObject.FirstTime, Thread.CurrentThread.CurrentCulture)} with tracks: " +

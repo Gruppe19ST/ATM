@@ -23,7 +23,7 @@ namespace ATM.Test.Integration
 
         // System under test
         private Controller _controller;
-        private CheckForSeparationEvent _checker;
+        private ISeperationEventChecker _checker;
 
         // Stubs/mocks
         private ISeperationEventLogger _logger;
@@ -31,11 +31,8 @@ namespace ATM.Test.Integration
 
         // Data
         private List<TrackObject> _listOfTracks;
-        private TrackObject _track1, _track2, _track3, _track4;
-        private TrackObjectEventArgs _receivedArgs;
+        private TrackObject _track1, _track2, _track3;
         private SeparationEventArgs _separationArgs;
-        private int _nEventsRaised;
-        private object objectsender;
 
         #endregion
 
@@ -51,6 +48,7 @@ namespace ATM.Test.Integration
             _checker = new CheckForSeparationEvent();
 
             // Stubs/mocks
+            // Substituted with classes to pass constructor parameters
             _logger = Substitute.For<LogSeparationEvent>(_checker);
             _warningCreator = Substitute.For<CreateWarning>(_checker);
 
@@ -59,30 +57,16 @@ namespace ATM.Test.Integration
             _track1 = new TrackObject("Tag123", 70000, 70000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _track2 = new TrackObject("Tag456", 68000, 68000, 800, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _track3 = new TrackObject("Tag789", 89000, 89000, 5000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
-            //_track4 = new TrackObject("TagABC", 9000, 72000, 1200, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _listOfTracks.Add(_track1);
             _listOfTracks.Add(_track2);
             _listOfTracks.Add(_track3);
-            //_listOfTracks.Add(_track4);
 
-            _nEventsRaised = 0;
-
-            _sorter.TrackSortedReady += _sorter_TrackSortedReady;
             _checker.SeperationEvents += _checker_SeperationEvents;
-
-            //_sorter.TrackSortedReady += (o, args) => { _receivedArgs = args; };
-            //_checker.SeperationEvents += (o, args) => { _separationArgs = args; };
-        }
-
-        private void _sorter_TrackSortedReady(object sender, TrackObjectEventArgs e)
-        {
-            _receivedArgs = e;
+            
         }
 
         private void _checker_SeperationEvents(object sender, SeparationEventArgs e)
         {
-            ++_nEventsRaised;
-            objectsender = sender;
             _separationArgs = e;
         }
 
@@ -92,13 +76,13 @@ namespace ATM.Test.Integration
         [Test]
         public void HandleTrack_CheckSeparationEvents_CreateWarningReceiveEvent()
         {
-            //_sorter.SortTracks(_listOfTracks);
-            //_controller.CheckTracks(_listOfTracks);
+           // When the method is called, it calls CheckSeparationEvents on the _checker-class
+           // _controller.CheckTracks(_listOfTracks);
+           
+            // _checker.CheckSeparationEvents(_listOfTracks);
 
-            //Assert.That(_separationArgs.SeparationObjects.Count, Is.EqualTo(2));
-
-            //_checker.CheckSeparationEvents(_listOfTracks);
-           // _warningCreator.CreateSeparationWarning(_separationArgs);
+            // CheckSeparationEvents raises an event with args (=_separationArgs)
+            // _warningCreator assigns to this event and calls CreateSeparationWarning when receiving event
            _warningCreator.Received().CreateSeparationWarning(_separationArgs);
         }
 
