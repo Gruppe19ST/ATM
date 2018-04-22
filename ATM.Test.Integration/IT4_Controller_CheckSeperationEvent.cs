@@ -32,6 +32,8 @@ namespace ATM.Test.Integration
         // Data
         private List<TrackObject> _listOfTracks;
         private TrackObject _track1, _track2, _track3, _track4;
+        private TrackObjectEventArgs _receivedArgs;
+        private SeparationEventArgs _separationArgs;
 
         #endregion
 
@@ -68,8 +70,11 @@ namespace ATM.Test.Integration
         [Test]
         public void HandleTrack_CheckSeparationEvents_CreateWarningReceiveEvent()
         {
+            _sorter.TrackSortedReady += (o, args) => { _receivedArgs = args; };
             _sorter.SortTracks(_listOfTracks);
-            _controller.HandleTrack();
+            _sorter.TrackSortedReady += Raise.EventWith(this, _receivedArgs);
+            _checker.SeperationEvents += (o, args) => { _separationArgs = args;};
+            _warningCreator.Received().CreateSeparationWarning(_separationArgs);
         }
 
         #endregion
