@@ -34,20 +34,20 @@ namespace ATM.Logic.Controllers
             if (currentTracks.Count >=1)
             {
                 HandleTrack(); 
-                CheckTracks();
+                CheckTracks(currentTracks);
             }
             // UDSKRIV TRACKS I LUFTEN
             priorTracks = new List<TrackObject>(currentTracks);
             currentTracks = null;
         }
 
-        private void CheckTracks()
+        public void CheckTracks(List<TrackObject> tracks)
         {
             _checker = new CheckForSeparationEvent(); 
             _warningCreator = new CreateWarning(_checker);
             _logger = new LogSeparationEvent(_checker);
-            
-            _checker.SeperationEvents += _checker_SeperationEvents;
+            _checker.CheckSeparationEvents(tracks);
+            //_checker.SeperationEvents += _checker_SeperationEvents;
         }
 
         private void _checker_SeperationEvents(object sender, SeparationEventArgs e) //skal denne være her? 
@@ -58,18 +58,26 @@ namespace ATM.Logic.Controllers
 
         public void HandleTrack()
         {
-            foreach (var trackC in currentTracks)
+            if (priorTracks != null)
             {
-                foreach (var trackP in priorTracks)
+                foreach (var trackC in currentTracks)
                 {
-                    if (trackC.Tag == trackP.Tag)
+                    foreach (var trackP in priorTracks)
                     {
-                        trackC.horizontalVelocity = ts.CalculateSpeed(trackC, trackP);
-                        trackC.compassCourse = tcc.CalculateCompassCourse(trackC, trackP);
-                        Console.WriteLine(trackC.ToString());
-                    }
+                        if (trackC.Tag == trackP.Tag)
+                        {
+                            trackC.horizontalVelocity = ts.CalculateSpeed(trackC, trackP);
+                            trackC.compassCourse = tcc.CalculateCompassCourse(trackC, trackP);
+                            Console.WriteLine(trackC.ToString());
+                        }
 
+                    }
                 }
+            }
+            else
+            {
+
+                priorTracks = currentTracks;
             }
         }
     }
