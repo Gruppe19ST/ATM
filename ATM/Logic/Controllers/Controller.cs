@@ -15,6 +15,7 @@ namespace ATM.Logic.Controllers
         private ISorter _sorter;
         private ISeperationEventChecker _checker;
         private ISeperationEventHandler _warningCreator;
+        private ISeperationEventLogger _logger;
         private TrackSpeed ts;
         private TrackCompassCourse tcc;
 
@@ -44,12 +45,15 @@ namespace ATM.Logic.Controllers
         {
             _checker = new CheckForSeparationEvent(); 
             _warningCreator = new CreateWarning(_checker);
+            _logger = new LogSeparationEvent(_checker);
+            
             _checker.SeperationEvents += _checker_SeperationEvents;
         }
 
         private void _checker_SeperationEvents(object sender, SeparationEventArgs e) //skal denne være her? 
         {
-            _warningCreator.CreateSeparationWarning(e);
+            _checker.CheckSeparationEvents(currentTracks);
+            //_warningCreator.CreateSeparationWarning(e);
         }
 
         public void HandleTrack()
