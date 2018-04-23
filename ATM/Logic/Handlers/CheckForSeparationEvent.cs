@@ -34,7 +34,7 @@ namespace ATM.Logic.Handlers
             // Set the limits to the specified values
             _horizontalSeperationLimit = 5000;
             _verticalSeperationLimit = 300;
-
+            
         }
 
         public void CheckSeparationEvents(List<TrackObject> sortedTracksList)

@@ -29,6 +29,9 @@ namespace ATM.Test.Integration
         // Stubs/mocks
         private ISeperationEventLogger _logger;
         private ISeperationEventHandler _warningCreator;
+        private ITrackSpeed _ts;
+        private ITrackCompassCourse _tcc;
+        
 
         // Data
         private List<TrackObject> _listOfTracks;
@@ -44,16 +47,18 @@ namespace ATM.Test.Integration
             // Drivers/included
             _trackConverter = Substitute.For<ITrackConverter>();
             _sorter = new Sorter(_trackConverter);
-            
+
 
             // System under test
-            //_controller = new Controller(_sorter);
             _checker = new CheckForSeparationEvent();
 
             // Stubs/mocks
             _logger = Substitute.For<ISeperationEventLogger>();
             _warningCreator = Substitute.For<ISeperationEventHandler>();
 
+            // System under test
+            _controller = new Controller(_sorter, _ts, _tcc, _checker, _warningCreator, _logger);
+            
             _listOfTracks = new List<TrackObject>();
 
             _track1 = new TrackObject("Tag123", 70000, 70000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
@@ -63,8 +68,8 @@ namespace ATM.Test.Integration
             _listOfTracks.Add(_track2);
             _listOfTracks.Add(_track3);
 
-            
-            
+            _checker.SeperationEvents += _checker_SeperationEvents;
+
         }
 
         private void _checker_SeperationEvents(object sender, SeparationEventArgs e)
@@ -79,7 +84,6 @@ namespace ATM.Test.Integration
         [Test]
         public void HandleTrack_CheckSeparationEvents_CreateWarningReceiveEvent()
         {
-            _checker.SeperationEvents += _checker_SeperationEvents;
 
             // When the method is called, it calls CheckSeparationEvents on the _checker-class
             _controller.CheckTracks(_listOfTracks);
@@ -89,7 +93,7 @@ namespace ATM.Test.Integration
             // CheckSeparationEvents raises an event with args (=_separationArgs)
             // _warningCreator assigns to this event and handles the information
 
-            Assert.That(_separationArgs.SeparationObjects.Count, Is.EqualTo(2));
+            Assert.That(_separationArgs.SeparationObjects.Count, Is.EqualTo(1));
         }
 
         
