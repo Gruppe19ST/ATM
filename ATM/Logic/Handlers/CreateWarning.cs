@@ -11,12 +11,12 @@ namespace ATM.Logic.Handlers
     {
         public CreateWarning(ISeperationEventChecker checker)
         {
-            checker.SeperationEvents += (o, trackArgs) => CreateSeparationWarning(trackArgs);
+            checker.SeperationEvents += Checker_SeperationEvents;
         }
-        
-        public void CreateSeparationWarning(SeparationEventArgs conflictList)
+
+        public void Checker_SeperationEvents(object sender, SeparationEventArgs e)
         {
-            foreach (var separationObject in conflictList.SeparationObjects)
+            foreach (var separationObject in e.SeparationObjects)
             {
                 // $ for at gøre kompile hurtigere
                 System.Console.WriteLine($"{separationObject.Tag1} and {separationObject.Tag2} are in conflict");

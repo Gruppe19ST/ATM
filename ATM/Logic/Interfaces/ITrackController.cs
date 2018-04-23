@@ -9,7 +9,8 @@ namespace ATM.Logic.Interfaces
     public interface ITrackController
     {
         void HandleTrack();
-       
+        void CheckTracks(List<TrackObject> listOfTracks);
+
 
     }
 }

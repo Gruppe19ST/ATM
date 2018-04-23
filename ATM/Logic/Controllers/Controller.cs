@@ -10,26 +10,26 @@ namespace ATM.Logic.Controllers
 {
     public class Controller : ITrackController
     {
-        // List of tracks in airspace 
         List<TrackObject> priorTracks;
         List<TrackObject> currentTracks;
-
-        // Classes that will handle tracks 
         private ISorter _sorter;
         private ISeperationEventChecker _checker;
         private ISeperationEventHandler _warningCreator;
+        private ISeperationEventLogger _logger;
         private TrackSpeed ts;
         private TrackCompassCourse tcc;
 
         public Controller(ISorter sorter)
         {
+            currentTracks = new List<TrackObject>();
             _sorter = sorter;
-            // Register when a list of sorted tracks is ready
             _sorter.TrackSortedReady += _sorter_TrackSortedReady;
-
             ts = new TrackSpeed();
             tcc = new TrackCompassCourse();
-            currentTracks = new List<TrackObject>();
+
+            _checker = new CheckForSeparationEvent();
+            _warningCreator = new CreateWarning(_checker);
+            _logger = new LogSeparationEvent(_checker);
         }
 
         private void _sorter_TrackSortedReady(object sender, TrackObjectEventArgs e)
@@ -38,38 +38,47 @@ namespace ATM.Logic.Controllers
             if (currentTracks.Count >=1)
             {
                 HandleTrack(); 
-                CheckTracks();
+                CheckTracks(currentTracks);
             }
+            // UDSKRIV TRACKS I LUFTEN
             priorTracks = new List<TrackObject>(currentTracks);
-            // Set current tracks to null, all information is now contained in prior. 
             currentTracks = null;
         }
 
-        private void CheckTracks()
+        public void CheckTracks(List<TrackObject> tracks)
         {
-            _checker = new CheckForSeparationEvent(); 
-            _warningCreator = new CreateWarning(_checker);
-            _checker.SeperationEvents += _checker_SeperationEvents;
+            _checker.CheckSeparationEvents(tracks);
+            //_checker.SeperationEvents += _checker_SeperationEvents;
         }
 
-        private void _checker_SeperationEvents(object sender, SeparationEventArgs e)
+        private void _checker_SeperationEvents(object sender, SeparationEventArgs e) //skal denne være her? 
         {
-            _warningCreator.CreateSeparationWarning(e);
+            _checker.CheckSeparationEvents(currentTracks);
+            //_warningCreator.CreateSeparationWarning(e);
         }
 
         public void HandleTrack()
-        { // find speed and compass course of all tracks that are still in monitored air space
-            foreach (var trackC in currentTracks)
+        {
+            if (priorTracks != null)
             {
-                foreach (var trackP in priorTracks)
+                foreach (var trackC in currentTracks)
                 {
-                    if (trackC.Tag == trackP.Tag)
+                    foreach (var trackP in priorTracks)
                     {
-                        trackC.horizontalVelocity = ts.CalculateSpeed(trackC, trackP);
-                        trackC.compassCourse = tcc.CalculateCompassCourse(trackC, trackP);
-                    }
+                        if (trackC.Tag == trackP.Tag)
+                        {
+                            trackC.horizontalVelocity = ts.CalculateSpeed(trackC, trackP);
+                            trackC.compassCourse = tcc.CalculateCompassCourse(trackC, trackP);
+                            Console.WriteLine(trackC.ToString());
+                        }
 
+                    }
                 }
+            }
+            else
+            {
+
+                priorTracks = currentTracks;
             }
         }
     }

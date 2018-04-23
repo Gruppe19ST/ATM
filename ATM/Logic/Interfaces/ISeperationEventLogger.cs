@@ -9,6 +9,6 @@ namespace ATM.Logic.Interfaces
 {
     public interface ISeperationEventLogger
     {
-        void SaveToFile(SeparationEventArgs separationEvent);
+        void Checker_FinishedSeperationEvents(object sender, SeparationEventArgs e);
     }
 }
