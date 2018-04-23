@@ -29,6 +29,8 @@ namespace ATM.Test.Integration
 
         // Data
         private List<TrackObject> _trackObjectList;
+        private List<TrackObject> _sortedTrackList;
+        private TrackObjectEventArgs _trackObjectEvent;
         private List<TrackObject> _convertedList;
         private TrackObject _t1, _t2, _t3;
 
@@ -47,16 +49,17 @@ namespace ATM.Test.Integration
             });
             _sut.TrackObjectsReady += (o,args) => _trackObjectList = args.TrackObjects;
             _iut = Substitute.For<ISorter>();
+            _iut.TrackSortedReady += (o, args) => _sortedTrackList = args.TrackObjects;
             
-            _convertedList=new List<TrackObject>();
+            //_convertedList=new List<TrackObject>();
             
-            _t1 = new TrackObject("Fly1", 88000, 88000, 6000, DateTime.ParseExact("20180420222222222", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
-            _t2 = new TrackObject("Fly2", 72000, 91000, 19999, DateTime.ParseExact("20180420222222222", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
-            _t3 = new TrackObject("Fly3", 86000, 86000, 6500, DateTime.ParseExact("20180420222222222", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
+            //_t1 = new TrackObject("Fly1", 88000, 88000, 6000, DateTime.ParseExact("20180420222222222", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
+            //_t2 = new TrackObject("Fly2", 72000, 91000, 19999, DateTime.ParseExact("20180420222222222", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
+            //_t3 = new TrackObject("Fly3", 86000, 86000, 6500, DateTime.ParseExact("20180420222222222", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
 
-            _convertedList.Add(_t1);
-            _convertedList.Add(_t2);
-            _convertedList.Add(_t3);
+            //_convertedList.Add(_t1);
+            //_convertedList.Add(_t2);
+            //_convertedList.Add(_t3);
 
         }
 
@@ -64,11 +67,10 @@ namespace ATM.Test.Integration
         public void EventRaisedInConverter_EventDetectedInSorter()
         {
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
-            
+            //Assert.That(_trackObjectList.Count, Is.EqualTo(3)); // Den her virker, men det er jo ikke nyt....
+            Assert.That(_sortedTrackList.Count,Is.EqualTo(2));
             //_iut.Received().SortTracks(_convertedList);
-            // Hvordan i alverden får jeg min fake-sorteringsklasse til at registrere det event der raises i controlleren? 
-            // Det er højst sandsynligt muligt at raise et event i converteren med allerede konverterede tracks, 
-            // men så er det jo ikke transponderrecieveren der er driveren? 
+            
         }
 
     }
