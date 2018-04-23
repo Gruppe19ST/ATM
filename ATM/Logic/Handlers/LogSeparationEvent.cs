@@ -21,7 +21,7 @@ namespace ATM.Logic.Handlers
             checker.FinishedSeperationEvents += Checker_FinishedSeperationEvents;
         }
 
-        private void Checker_FinishedSeperationEvents(object sender, SeparationEventArgs e)
+        public void Checker_FinishedSeperationEvents(object sender, SeparationEventArgs e)
         {
             foreach (var separationObject in e.SeparationObjects)
             {
