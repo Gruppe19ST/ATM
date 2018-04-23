@@ -8,6 +8,7 @@ using ATM.Logic.Controllers;
 using ATM.Logic.Handlers;
 using ATM.Logic.Interfaces;
 using NSubstitute;
+using NSubstitute.Core.Arguments;
 using NUnit.Framework;
 using NUnit.Framework.Api;
 
@@ -33,6 +34,7 @@ namespace ATM.Test.Integration
         private List<TrackObject> _listOfTracks;
         private TrackObject _track1, _track2, _track3;
         private SeparationEventArgs _separationArgs;
+        private object _objectSender;
 
         #endregion
 
@@ -49,9 +51,8 @@ namespace ATM.Test.Integration
             _checker = new CheckForSeparationEvent();
 
             // Stubs/mocks
-            // Substituted with classes to pass constructor parameters
-            _logger = Substitute.For<LogSeparationEvent>(_checker);
-            _warningCreator = Substitute.For<CreateWarning>(_checker);
+            _logger = Substitute.For<ISeperationEventLogger>();
+            _warningCreator = Substitute.For<ISeperationEventHandler>();
 
             _listOfTracks = new List<TrackObject>();
 
@@ -62,12 +63,13 @@ namespace ATM.Test.Integration
             _listOfTracks.Add(_track2);
             _listOfTracks.Add(_track3);
 
-            _checker.SeperationEvents += _checker_SeperationEvents;
+            
             
         }
 
         private void _checker_SeperationEvents(object sender, SeparationEventArgs e)
         {
+            _objectSender = sender;
             _separationArgs = e;
         }
 
@@ -77,15 +79,20 @@ namespace ATM.Test.Integration
         [Test]
         public void HandleTrack_CheckSeparationEvents_CreateWarningReceiveEvent()
         {
-           // When the method is called, it calls CheckSeparationEvents on the _checker-class
-           // _controller.CheckTracks(_listOfTracks);
+            _checker.SeperationEvents += _checker_SeperationEvents;
+
+            // When the method is called, it calls CheckSeparationEvents on the _checker-class
+            _controller.CheckTracks(_listOfTracks);
            
             // _checker.CheckSeparationEvents(_listOfTracks);
 
             // CheckSeparationEvents raises an event with args (=_separationArgs)
-            // _warningCreator assigns to this event and calls CreateSeparationWarning when receiving event
-           //_warningCreator.Received().CreateSeparationWarning(_separationArgs);
+            // _warningCreator assigns to this event and handles the information
+
+            Assert.That(_separationArgs.SeparationObjects.Count, Is.EqualTo(2));
         }
+
+        
 
         #endregion
     }
