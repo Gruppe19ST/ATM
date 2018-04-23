@@ -62,7 +62,7 @@ namespace ATM.Test.Integration
         }
 
         [Test]
-        public void CalculateSpeed_CorrectTrackSpeed()
+        public void CalculateSpeed_CorrectTrackSpeedReturnedToController()
         {
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs2);
@@ -70,7 +70,7 @@ namespace ATM.Test.Integration
         }
 
         [Test]
-        public void CalculateCourse_CorrectTrackCourse()
+        public void CalculateCourse_CorrectTrackCourseReturnedToController()
         {
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs2);

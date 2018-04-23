@@ -79,13 +79,20 @@ namespace ATM.Test.Integration
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs2);
             Assert.That(_controller.priorTracks[0].XCoordinate, Is.EqualTo(86000));
         }
-
+        
         [Test]
-        public void handletracks_CorrectTracksInPrior_Fly1VelocityIsZero()
+        public void handletracks_CorrectCallToSpeed()
         {
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs2);
-            Assert.That(_controller.priorTracks[0].horizontalVelocity, Is.EqualTo(0));
+            _speed.ReceivedWithAnyArgs().CalculateSpeed(new TrackObject(), new TrackObject() );
+        }
+        [Test]
+        public void handletracks_CorrectCallToCompassCourse()
+        {
+            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
+            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs2);
+            _compassCourse.ReceivedWithAnyArgs().CalculateCompassCourse(new TrackObject(), new TrackObject());
         }
 
 
