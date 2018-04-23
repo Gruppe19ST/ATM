@@ -95,6 +95,13 @@ namespace ATM.Test.Integration
             _compassCourse.ReceivedWithAnyArgs().CalculateCompassCourse(new TrackObject(), new TrackObject());
         }
 
+        [Test]
+        public void checkTracks_CorrectCallToCheckForSeperation()
+        {
+            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
+            _checker.ReceivedWithAnyArgs().CheckSeparationEvents(new List<TrackObject>());
+        }
+
 
     }
 }
