@@ -10,8 +10,11 @@ namespace ATM.Logic.Controllers
 {
     public class Controller : ITrackController
     {
+        // List of tracks in airspace 
         List<TrackObject> priorTracks;
         List<TrackObject> currentTracks;
+
+        // Classes that will handle tracks 
         private ISorter _sorter;
         private ISeperationEventChecker _checker;
         private ISeperationEventHandler _warningCreator;
@@ -20,11 +23,13 @@ namespace ATM.Logic.Controllers
 
         public Controller(ISorter sorter)
         {
-            currentTracks = new List<TrackObject>();
             _sorter = sorter;
+            // Register when a list of sorted tracks is ready
             _sorter.TrackSortedReady += _sorter_TrackSortedReady;
+
             ts = new TrackSpeed();
             tcc = new TrackCompassCourse();
+            currentTracks = new List<TrackObject>();
         }
 
         private void _sorter_TrackSortedReady(object sender, TrackObjectEventArgs e)
@@ -35,8 +40,8 @@ namespace ATM.Logic.Controllers
                 HandleTrack(); 
                 CheckTracks();
             }
-            // UDSKRIV TRACKS I LUFTEN
             priorTracks = new List<TrackObject>(currentTracks);
+            // Set current tracks to null, all information is now contained in prior. 
             currentTracks = null;
         }
 
@@ -47,13 +52,13 @@ namespace ATM.Logic.Controllers
             _checker.SeperationEvents += _checker_SeperationEvents;
         }
 
-        private void _checker_SeperationEvents(object sender, SeparationEventArgs e) //skal denne være her? 
+        private void _checker_SeperationEvents(object sender, SeparationEventArgs e)
         {
             _warningCreator.CreateSeparationWarning(e);
         }
 
         public void HandleTrack()
-        {
+        { // find speed and compass course of all tracks that are still in monitored air space
             foreach (var trackC in currentTracks)
             {
                 foreach (var trackP in priorTracks)
@@ -62,7 +67,6 @@ namespace ATM.Logic.Controllers
                     {
                         trackC.horizontalVelocity = ts.CalculateSpeed(trackC, trackP);
                         trackC.compassCourse = tcc.CalculateCompassCourse(trackC, trackP);
-                        Console.WriteLine(trackC.ToString());
                     }
 
                 }

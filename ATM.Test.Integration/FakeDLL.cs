@@ -25,15 +25,20 @@ namespace ATM.Test.Integration
             t4 = "Fly3;84000;84000;6502;20180420222222222";
             t5 = "Fly4;40000;32000;10000;20180420222222222";
             t6 = "Fly2;74000;74000;10000;20180420222222222";
-
+            
             _faketracks1.Add(t1);
             _faketracks1.Add(t2);
             _faketracks1.Add(t3);
             _faketracks2.Add(t4);
             _faketracks2.Add(t5);
             _faketracks2.Add(t6);
-            OnTransponderDataReady(new RawTransponderDataEventArgs(_faketracks1));
+            
 
+        }
+
+        public void RaiseEvent(List<string> rawList)
+        {
+            OnTransponderDataReady(new RawTransponderDataEventArgs(rawList));
         }
 
         public void OnTransponderDataReady(RawTransponderDataEventArgs rawTracks)

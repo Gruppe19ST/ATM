@@ -50,7 +50,7 @@ namespace TransponderRecieverConsoleApp
             separationChecker.CheckSeparationEvents(_listOfTracks);*/
 
 
-            //Console.ReadLine(); 
+            Console.ReadLine(); 
             
         }
 
