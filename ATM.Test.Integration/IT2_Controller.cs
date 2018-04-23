@@ -87,12 +87,12 @@ namespace ATM.Test.Integration
         }
 
         [Test]
-        public void handletracks_CorrectTracksInPrior_Fly1VelocityIsCorrect()
+        public void handletracks_CorrectTracksInPrior_Fly1VelocityIsZero()
         {
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs2);
-            Assert.That(_controller.priorTracks[0].horizontalVelocity, Is.EqualTo(4.71));
-            // Virker fordi Controlleren opretter sin egen TrackSpeed og TrackCompassCourse...
+            Assert.That(_controller.priorTracks[0].horizontalVelocity, Is.EqualTo(0));
+            
 
 
         }

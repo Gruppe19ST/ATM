@@ -24,7 +24,13 @@ namespace TransponderRecieverConsoleApp
 
             TrackConverter trackConverter = new TrackConverter(TransponderReceiverFactory.CreateTransponderDataReceiver());
             Sorter sorter = new Sorter(trackConverter);
-            Controller controller = new Controller(sorter);
+            TrackSpeed ts = new TrackSpeed();
+            TrackCompassCourse tcc = new TrackCompassCourse();
+            CheckForSeparationEvent checker = new CheckForSeparationEvent();
+            CreateWarning warner = new CreateWarning(checker);
+            LogSeparationEvent logger = new LogSeparationEvent(checker);
+
+            Controller controller = new Controller(sorter,ts,tcc,checker,warner,logger);
            
             /*_listOfTracks = new List<TrackObject>();
             _track1 = new TrackObject("Tag123", 70000, 70000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
