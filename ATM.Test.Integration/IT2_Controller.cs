@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,45 +19,82 @@ namespace ATM.Test.Integration
         //Drivers
         private ITransponderReceiver _receiver;
         private RawTransponderDataEventArgs _fakeRawArgs;
+        private RawTransponderDataEventArgs _fakeRawArgs2;
 
         //system under test
-        private Sorter _sut;
-
-        // Interface under test 
-        private ITrackController _iut;
-
+        private Sorter _sorter;
+        private Controller _controller;
+        
         // Included 
-        private TrackConverter _trackConverter;
+        private TrackConverter _converter;
 
         // Data
-        private List<TrackObject> _trackObjectList;
+        private List<TrackObject> _currentList;
+        private List<TrackObject> _priorList;
+        private TrackObject _tp, _tc;
+        
+        // Fakes
+        private ISeperationEventChecker _checker;
+        private ISeperationEventHandler _warningCreator;
+        private ISeperationEventLogger _logger;
+        private ITrackSpeed _speed;
+        private ITrackCompassCourse _compassCourse;
+    
+
 
         [SetUp]
         public void SetUp()
         {
             _receiver = Substitute.For<ITransponderReceiver>();
-            _trackConverter = new TrackConverter(_receiver);
+            _converter = new TrackConverter(_receiver);
+            _sorter = new Sorter(_converter);
+            _speed = Substitute.For<ITrackSpeed>();
+            _compassCourse = Substitute.For<ITrackCompassCourse>();
+            _checker = Substitute.For<ISeperationEventChecker>();
+            _warningCreator = Substitute.For<ISeperationEventHandler>();
+            _logger = Substitute.For<ISeperationEventLogger>();
+            
+            _controller = new Controller(_sorter,_speed,_compassCourse,_checker,_warningCreator,_logger);
+            
             _fakeRawArgs = new RawTransponderDataEventArgs(new List<string>()
             {
                 "Fly1;88000;88000;6000;20180420222222222","Fly2;72000;91000;19999;20180420222222222", "Fly3;86000;86000;6500;20180420222222222"
             });
+            _fakeRawArgs2 = new RawTransponderDataEventArgs(new List<string>()
+            {
+                "Fly1;86000;86000;6000;20180420223222222","Fly2;72000;91000;19999;20180420223222222", "Fly3;86000;86000;6500;20180420223222222"
+            });
 
+            _tp=new TrackObject("Fly1",88000,88000,6000,DateTime.ParseExact("20180420222222222", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
+            _tc = new TrackObject("Fly1", 86000, 86000, 6500, DateTime.ParseExact("20180420222222222", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
 
-            
             
         }
 
         [Test]
-        public void EventRaisedInSorter_EventDetectedInController()
+        public void FirstEventFromSorter_CorrectTracksInPrior_Fly1At88000()
         {
-            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);           
-            _sut = new Sorter(_trackConverter); // listen med trackobjects i converteren har et count på 3, men der bliver aldrig lavet et kald til sortList. 
-            _iut = Substitute.For<ITrackController>();
+            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
+            Assert.That(_controller.priorTracks[0].XCoordinate, Is.EqualTo(88000));
+        }
 
+        [Test]
+        public void SecondEventFromSorter_CorrectTracksInPrior_Fly1At86000()
+        {
+            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
+            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs2);
+            Assert.That(_controller.priorTracks[0].XCoordinate, Is.EqualTo(86000));
+        }
 
+        [Test]
+        public void handletracks_CorrectTracksInPrior_Fly1VelocityIsCorrect()
+        {
+            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
+            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs2);
+            Assert.That(_controller.priorTracks[0].horizontalVelocity, Is.EqualTo(4.71));
+            // Virker fordi Controlleren opretter sin egen TrackSpeed og TrackCompassCourse...
 
 
         }
-
     }
 }

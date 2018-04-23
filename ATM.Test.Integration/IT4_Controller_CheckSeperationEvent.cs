@@ -42,9 +42,10 @@ namespace ATM.Test.Integration
             // Drivers/included
             _trackConverter = Substitute.For<ITrackConverter>();
             _sorter = new Sorter(_trackConverter);
+            
 
             // System under test
-            _controller = new Controller(_sorter);
+            //_controller = new Controller(_sorter);
             _checker = new CheckForSeparationEvent();
 
             // Stubs/mocks

@@ -10,26 +10,28 @@ namespace ATM.Logic.Controllers
 {
     public class Controller : ITrackController
     {
-        List<TrackObject> priorTracks;
+        public List<TrackObject> priorTracks;
         List<TrackObject> currentTracks;
         private ISorter _sorter;
         private ISeperationEventChecker _checker;
         private ISeperationEventHandler _warningCreator;
         private ISeperationEventLogger _logger;
-        private TrackSpeed ts;
-        private TrackCompassCourse tcc;
+        private ITrackSpeed _ts;
+        private ITrackCompassCourse _tcc;
 
-        public Controller(ISorter sorter)
+        public Controller(ISorter sorter, ITrackSpeed ts, ITrackCompassCourse tcc, ISeperationEventChecker checker, ISeperationEventHandler warningCreator, ISeperationEventLogger logger)
         {
             currentTracks = new List<TrackObject>();
+
             _sorter = sorter;
             _sorter.TrackSortedReady += _sorter_TrackSortedReady;
-            ts = new TrackSpeed();
-            tcc = new TrackCompassCourse();
 
-            _checker = new CheckForSeparationEvent();
-            _warningCreator = new CreateWarning(_checker);
-            _logger = new LogSeparationEvent(_checker);
+            _ts = ts;
+            _tcc = tcc;
+           
+            _checker = checker;
+            _warningCreator = warningCreator;
+            _logger = logger;
         }
 
         private void _sorter_TrackSortedReady(object sender, TrackObjectEventArgs e)
@@ -40,7 +42,6 @@ namespace ATM.Logic.Controllers
                 HandleTrack(); 
                 CheckTracks(currentTracks);
             }
-            // UDSKRIV TRACKS I LUFTEN
             priorTracks = new List<TrackObject>(currentTracks);
             currentTracks = null;
         }
@@ -51,7 +52,7 @@ namespace ATM.Logic.Controllers
             //_checker.SeperationEvents += _checker_SeperationEvents;
         }
 
-        private void _checker_SeperationEvents(object sender, SeparationEventArgs e) //skal denne være her? 
+        private void _checker_SeperationEvents(object sender, SeparationEventArgs e) 
         {
             _checker.CheckSeparationEvents(currentTracks);
             //_warningCreator.CreateSeparationWarning(e);
@@ -67,8 +68,8 @@ namespace ATM.Logic.Controllers
                     {
                         if (trackC.Tag == trackP.Tag)
                         {
-                            trackC.horizontalVelocity = ts.CalculateSpeed(trackC, trackP);
-                            trackC.compassCourse = tcc.CalculateCompassCourse(trackC, trackP);
+                            trackC.horizontalVelocity = _ts.CalculateSpeed(trackC, trackP);
+                            trackC.compassCourse = _tcc.CalculateCompassCourse(trackC, trackP);
                             Console.WriteLine(trackC.ToString());
                         }
 
