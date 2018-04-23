@@ -80,7 +80,6 @@
     <Compile Include="Logic\Interfaces\ISorter.cs" />
     <Compile Include="Logic\Interfaces\ITrackCompassCourse.cs" />
     <Compile Include="Logic\Interfaces\ITrackController.cs" />
-    <Compile Include="Logic\Interfaces\ITrackSorter.cs" />
     <Compile Include="Logic\Interfaces\ITrackSpeed.cs" />
     <Compile Include="Logic\Handlers\CreateWarning.cs" />
     <Compile Include="Logic\SeparationEventObject.cs" />
