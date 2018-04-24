@@ -53,8 +53,11 @@ namespace ATM.Logic.Handlers
                     }
                 }
 
-                OnTrackSortedUpdated(new TrackObjectEventArgs(SortedList));
-                
+                if (SortedList.Count != 0)
+                {
+                    OnTrackSortedUpdated(new TrackObjectEventArgs(SortedList));
+                }
+
             }
 
         public void OnTrackSortedUpdated(TrackObjectEventArgs tracksortedobject)

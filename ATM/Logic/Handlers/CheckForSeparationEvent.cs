@@ -60,28 +60,31 @@ namespace ATM.Logic.Handlers
              * Now the current separation events should be compared to the prior ones to see, which events to keep raised, which are new and which are no longer present
              * This is done by running through the two lists and removing objects. The following reference is for removing elements while iterating: https://stackoverflow.com/questions/1582285/how-to-remove-elements-from-a-generic-list-while-iterating-over-it
              */
-            // Checking whether there are any prior separations
-            if (_priorSeparations.Count != 0)
+            // Checking whether there are any current separations
+            if (_currentSeparations.Count != 0)
             {
-                // Checking if there are any current separations
-                if (_currentSeparations.Count != 0)
+                // Checking if there are any prior separations
+                if (_priorSeparations.Count != 0)
                 {
                     /*
                      * Compare the current events to the former to see, if there are any new events
                      */
                     // Running through every current event
-                    foreach (var newSep in _currentSeparations.Reverse<SeparationEventObject>())
+                    foreach (var currentSep in _currentSeparations.Reverse<SeparationEventObject>())
                     {
                         isNewSeparation = true;
                         // Running through every former event
                         foreach (var priorSep in _priorSeparations.Reverse<SeparationEventObject>())
                         {
                             // If the two events are for the same tracks
-                            if ((newSep.Tag1 == priorSep.Tag1 && newSep.Tag2 == priorSep.Tag2)
-                                || newSep.Tag1 == priorSep.Tag2 && newSep.Tag2 == priorSep.Tag1)
+                            if ((currentSep.Tag1 == priorSep.Tag1 && currentSep.Tag2 == priorSep.Tag2)
+                                || currentSep.Tag1 == priorSep.Tag2 && currentSep.Tag2 == priorSep.Tag1)
                             {
+                                // Update priorlist
+                                priorSep.TimeOfOcccurence = currentSep.TimeOfOcccurence;
+                                
                                 // Remove the event from the current event-list as it has been "used"
-                                _currentSeparations.Remove(newSep);
+                                _currentSeparations.Remove(currentSep);
 
                                 // It's not a new separation
                                 isNewSeparation = false;
@@ -92,8 +95,8 @@ namespace ATM.Logic.Handlers
                         // If the two elements aren't the same then the event is new and can be added to the prior-list
                         if (isNewSeparation)
                         {
-                            _priorSeparations.Add(newSep);
-                            OnNewSeparationEvent(new SeparationEventArgs(newSep));
+                            _priorSeparations.Add(currentSep);
+                            OnNewSeparationEvent(new SeparationEventArgs(currentSep));
                         }
                     }
 
@@ -123,12 +126,17 @@ namespace ATM.Logic.Handlers
                         }
                     }
                 }
+                // If there are no prior separations, then all current separations are new = no need to comparing
+                else
+                {
+                    _priorSeparations = _currentSeparations;
+                    OnNewSeparationEvent(new SeparationEventArgs(_priorSeparations));
+                }
             }
-            // If there are no prior separations, then all current separations are new = no need to comparing
-            else if(_currentSeparations.Count != 0)
+            // If there are no new separations
+            else
             {
-                _priorSeparations = _currentSeparations;
-                OnNewSeparationEvent(new SeparationEventArgs(_priorSeparations));
+                _priorSeparations.Clear();
             }
 
             if (_priorSeparations.Count != 0)

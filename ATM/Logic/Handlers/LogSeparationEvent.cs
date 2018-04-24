@@ -13,7 +13,7 @@ namespace ATM.Logic.Handlers
     {
         // Filename
         private static readonly string Path = System.Environment.CurrentDirectory;
-        static string fileName = "test.txt";
+        static string fileName = "separationLog.txt";
         private static readonly string FilePath = System.IO.Path.Combine(Path, fileName);
 
         public LogSeparationEvent(ISeperationEventChecker checker)

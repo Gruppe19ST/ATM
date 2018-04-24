@@ -19,6 +19,9 @@ namespace ATM.Logic.Controllers
         private ITrackSpeed _ts;
         private ITrackCompassCourse _tcc;
 
+        // Boolean to check whether there's a console and something to clear or not
+        private bool consoleReady;
+
         public Controller(ISorter sorter, ITrackSpeed ts, ITrackCompassCourse tcc, ISeperationEventChecker checker, ISeperationEventHandler warningCreator, ISeperationEventLogger logger)
         {
             currentTracks = new List<TrackObject>();
@@ -32,6 +35,8 @@ namespace ATM.Logic.Controllers
             _checker = checker;
             _warningCreator = warningCreator;
             _logger = logger;
+
+            consoleReady = false;
         }
 
         private void _sorter_TrackSortedReady(object sender, TrackObjectEventArgs e)
@@ -53,6 +58,12 @@ namespace ATM.Logic.Controllers
 
         public void HandleTrack()
         {
+            // If there's already something in the console, then clear that
+            if (consoleReady)
+            {
+                Console.Clear();
+            }
+
             if (priorTracks != null)
             {
                 foreach (var trackC in currentTracks)
@@ -63,7 +74,11 @@ namespace ATM.Logic.Controllers
                         {
                             trackC.horizontalVelocity = _ts.CalculateSpeed(trackC, trackP);
                             trackC.compassCourse = _tcc.CalculateCompassCourse(trackC, trackP);
+                            // Make sure that the color is reset as it might be red from a conflict
+                            Console.ResetColor();
                             Console.WriteLine(trackC.ToString());
+                            // Setting the boolean true, as there's something to clear
+                            consoleReady = true;
                         }
 
                     }

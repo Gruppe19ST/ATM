@@ -67,6 +67,39 @@ namespace ATM.Test.Unit
         }
 
         [Test]
+        public void checkSeparationOf2Objects_StillTooClose_1SeparationEventWithNewData()
+        {
+            _listOfTracks.Clear();
+            _listOfTracks.Add(_track1);
+            _listOfTracks.Add(_track2);
+
+            _uut.CheckSeparationEvents(_listOfTracks);
+
+            DateTime firstOccurence = new DateTime();
+            foreach (var separation in _receivedArgs.SeparationObjects)
+            {
+                 firstOccurence = separation.TimeOfOcccurence;
+            }
+
+            _listOfTracks.Clear();
+            _track1 = new TrackObject("Tag123", 70000, 70000, 1000, DateTime.ParseExact("20180412111211111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
+            _listOfTracks.Add(_track1);
+            _listOfTracks.Add(_track2);
+
+            _uut.CheckSeparationEvents(_listOfTracks);
+
+            DateTime nextOccurence = new DateTime();
+            foreach (var separation in _receivedArgs.SeparationObjects)
+            {
+                nextOccurence = separation.TimeOfOcccurence;
+            }
+
+            // Assume, that when 1 pair of tracks is too close, this creates 1 separation event object with new data
+            Assert.That(nextOccurence, !Is.EqualTo(firstOccurence));
+
+        }
+
+        [Test]
         public void checkSeparationOf3Objects_1TooClose_1SeparationEvent()
         {
             _listOfTracks.Clear();

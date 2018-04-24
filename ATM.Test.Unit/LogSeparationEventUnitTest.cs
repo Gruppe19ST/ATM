@@ -24,7 +24,7 @@ namespace ATM.Test.Unit
          * Filepath etc. for the location of the logfile
          */
         private static readonly string Path = System.Environment.CurrentDirectory;
-        static string fileName = "test.txt";
+        static string fileName = "separationLog.txt";
         private static readonly string FilePath = System.IO.Path.Combine(Path, fileName);
 
         [SetUp]
@@ -102,11 +102,18 @@ namespace ATM.Test.Unit
             int initialLines;
             int endingLines;
 
-            // Open stream
-            using (File.OpenRead(FilePath))
+            if (File.Exists(FilePath))
             {
-                // Count number of lines and save
-                initialLines = File.ReadLines(FilePath).Count();
+                // Open stream
+                using (File.OpenRead(FilePath))
+                {
+                    // Count number of lines and save
+                    initialLines = File.ReadLines(FilePath).Count();
+                }
+            }
+            else
+            {
+                initialLines = 0;           
             }
 
             // Create event args and raise event with it
@@ -115,7 +122,7 @@ namespace ATM.Test.Unit
                 DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture)));
             _checker.NewSeperationEvents += Raise.EventWith(separationEvent);
 
-            // Open straeam
+            // Open stream
             using (File.OpenRead(FilePath))
             {
                 // Count number of lines and save

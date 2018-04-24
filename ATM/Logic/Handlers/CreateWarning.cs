@@ -19,7 +19,8 @@ namespace ATM.Logic.Handlers
             foreach (var separationObject in e.SeparationObjects)
             {
                 // $ for at gøre kompile hurtigere
-                System.Console.WriteLine($"{separationObject.Tag1} and {separationObject.Tag2} are in conflict");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"{separationObject.Tag1} and {separationObject.Tag2} are in conflict");
             }
         }
     }

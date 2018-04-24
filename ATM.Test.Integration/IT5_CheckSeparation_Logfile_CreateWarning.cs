@@ -40,7 +40,7 @@ namespace ATM.Test.Integration
         private SeparationEventArgs _finishedSeparationArgs;
         // Filepath etc. for the location of the logfile
         private static readonly string Path = System.Environment.CurrentDirectory;
-        static string fileName = "test.txt";
+        static string fileName = "separationLog.txt";
         private static readonly string FilePath = System.IO.Path.Combine(Path, fileName);
         #endregion
 

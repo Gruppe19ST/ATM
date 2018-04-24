@@ -103,13 +103,11 @@ namespace ATM.Test.Integration
         [Test]
         public void HandleTrack_NewSeparationEvents_RaiseEvent()
         {
-            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
-
             // First create a separation event
             _fakeRawArgs = new RawTransponderDataEventArgs(new List<string>()
             {
                 "Tag123;70000;70000;1000;20180420222222222",
-                "Tag456;64000;64000;800;20180420222222222",
+                "Tag456;67000;67000;800;20180420222222222",
                 "Tag789;89000;89000;5000;20180420222222222"
             });
 
