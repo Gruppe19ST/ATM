@@ -10,10 +10,12 @@ using NSubstitute;
 using NUnit.Framework;
 using TransponderReceiver;
 
+// This is not a real integration test, as we can't test on output to System.Console
+// This integration test is rather a guideline to what to verify through visual test on the application part or in a logfile
 namespace ATM.Test.Integration
 {
     [TestFixture]
-    public class IT5_CheckSeparation_Logfile_CreateWarning
+    class IT5_CheckSeparation_Logfile_CreateWarning
     {
         #region Defining objects
         // Drivers/included
@@ -59,11 +61,13 @@ namespace ATM.Test.Integration
             // Driver
             _controller = new Controller(_sorter, _ts, _tcc, _checker, _warningCreator, _logger);
 
+            // Data
             _fakeRawArgs = new RawTransponderDataEventArgs(new List<string>()
             {
                 "Tag123;70000;70000;1000;20180420222222222","Tag456;68000;68000;800;20180420222222222", "Tag789;89000;89000;5000;20180420222222222"
             });
 
+            // Assign to events
             _checker.SeperationEvents += _checker_SeperationEvents;
             _checker.FinishedSeperationEvents += _checker_FinishedSeperationEvents;
 
@@ -79,5 +83,7 @@ namespace ATM.Test.Integration
             _finishedSeparationArgs = e;
         }
         #endregion
+
+
     }
 }

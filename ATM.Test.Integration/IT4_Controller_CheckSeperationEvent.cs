@@ -66,23 +66,22 @@ namespace ATM.Test.Integration
             // System under test
             _controller = new Controller(_sorter, _ts, _tcc, _checker, _warningCreator, _logger);
             
+
+            // Data
             _fakeRawArgs = new RawTransponderDataEventArgs(new List<string>()
             {
                 "Tag123;70000;70000;1000;20180420222222222","Tag456;68000;68000;800;20180420222222222", "Tag789;89000;89000;5000;20180420222222222"
             });
 
-            /*_track1 = new TrackObject("Tag123", 70000, 70000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
-            _track2 = new TrackObject("Tag456", 68000, 68000, 800, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
-            _track3 = new TrackObject("Tag789", 89000, 89000, 5000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
-            _listOfTracks.Add(_track1);
-            _listOfTracks.Add(_track2);
-            _listOfTracks.Add(_track3);*/
-
+            // Assign to events
             _checker.SeperationEvents += _checker_SeperationEvents;
             _checker.FinishedSeperationEvents += _checker_FinishedSeperationEvents;
 
         }
 
+        /*
+         * Save arguments when events appear
+         */
         private void _checker_SeperationEvents(object sender, SeparationEventArgs e)
         {
             _separationArgs = e;
