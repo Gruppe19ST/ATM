@@ -26,19 +26,35 @@ namespace FlightApplication
     public partial class MainWindow : Window
     {
         // private List<TrackObject> tracks;
+        ITrackConverter trackConverter;
+        ISorter sorter;
+        ITrackController controller;
+        ITrackSpeed ts;
+        ITrackCompassCourse tcc;
+        ISeperationEventChecker seperationEventChecker;
+        ISeperationEventHandler seperationEventHandler;
+        ISeperationEventLogger logger;
+
+
+
         public MainWindow()
         {
-            TrackConverter trackConverter = new TrackConverter(TransponderReceiverFactory.CreateTransponderDataReceiver());
-            Sorter sorter = new Sorter(trackConverter);
-            Controller controller = new Controller(sorter);
+            trackConverter = new TrackConverter(TransponderReceiverFactory.CreateTransponderDataReceiver());
+            sorter = new Sorter(trackConverter);
             InitializeComponent();
+            DataContext = new Controller(sorter, ts, tcc, seperationEventChecker, seperationEventHandler, logger);
             Loaded += new RoutedEventHandler(MainWindow_Loaded);
 
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-     //       TrackConverter_TrackObjectsReady(??);
+           
+        }
+
+        public void UpdateCurrentTracks(List<TrackObject> trackObjects)
+        {
+           // lbxflyikonflik
         }
 
         private static void TrackConverter_TrackObjectsReady(object sender, TrackObjectEventArgs e)
