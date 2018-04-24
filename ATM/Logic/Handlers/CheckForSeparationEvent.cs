@@ -133,11 +133,12 @@ namespace ATM.Logic.Handlers
             else
             {
                 _priorSeparations = _currentSeparations;
+                OnNewSeparationEvent(new SeparationEventArgs(_priorSeparations));
             }
 
             if (_priorSeparations.Count != 0)
             {
-                OnNewSeparationEvent(new SeparationEventArgs(_priorSeparations));
+                OnSeparationEvent(new SeparationEventArgs(_priorSeparations));
             }
 
         }
