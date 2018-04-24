@@ -57,24 +57,8 @@ namespace ATM.Logic.Controllers
             _checker.CheckSeparationEvents(tracks);
         }
 
-        /*
-         * Comment regarding the clearing of Console:
-         * We don't know, if it's okay to do it this way?
-         * We've tried multiple ways to checking, that there is a console to clear (as this failed in unit testing)
-         * and we found this to work.
-         * Hopefully it's allowed to do it that way?
-         */
         public void HandleTrack()
         {
-            // If there's already a console, something might be in it - clear this
-            if (Console.In.GetLifetimeService() != null)
-            {
-                if (Console.CursorVisible)
-                {
-                    Console.Clear();
-                }
-            }
-
             if (currentTracks != null)
             {
                 if (priorTracks != null)
@@ -90,8 +74,6 @@ namespace ATM.Logic.Controllers
                                 // Make sure that the color is reset as it might be red from a conflict
                                 Console.ResetColor();
                                 Console.WriteLine(trackC.ToString());
-                                
-                                Console.In.InitializeLifetimeService();
                             }
 
                         }
@@ -104,8 +86,6 @@ namespace ATM.Logic.Controllers
                         // Make sure that the color is reset as it might be red from a conflict
                         Console.ResetColor();
                         Console.WriteLine(trackC.ToString());
-
-                        Console.In.InitializeLifetimeService();
                     }
                 }
             }

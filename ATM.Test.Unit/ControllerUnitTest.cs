@@ -12,7 +12,6 @@ namespace ATM.Test.Unit
     /*
      * This Unit test class does not contain real, automatic unit tests, as the controller doesn't give an output except the one to the Console.
      * The tests in this class are tests, where the developer can look at the test output and see, that it is as expected - or check the console
-     * However the unit test class has been helpful in debugging the actions on the Console
      */
     [TestFixture]
     public class ControllerUnitTest
