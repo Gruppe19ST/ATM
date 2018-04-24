@@ -124,5 +124,19 @@ namespace ATM.Test.Unit
 
             Assert.That(_finishedArgs.SeparationObjects.Count, Is.EqualTo(1));
         }
+
+        [Test]
+        public void checkSeparationOf3Objects_2TooClose_NoFinishedEvents()
+        {
+            _listOfTracks.Clear();
+            _listOfTracks.Add(_track1);
+            _listOfTracks.Add(_track2);
+            _listOfTracks.Add(_track4);
+
+            _uut.CheckSeparationEvents(_listOfTracks);
+
+            // Assume that no finished events are there yet
+            Assert.That(_finishedArgs, Is.EqualTo(null));
+        }
     }
 }

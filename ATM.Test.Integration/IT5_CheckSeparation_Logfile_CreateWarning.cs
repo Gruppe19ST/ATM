@@ -10,8 +10,6 @@ using NSubstitute;
 using NUnit.Framework;
 using TransponderReceiver;
 
-// This is not a real integration test, as we can't test on output to System.Console
-// This integration test is rather a guideline to what to verify through visual test on the application part or in a logfile
 namespace ATM.Test.Integration
 {
     [TestFixture]
@@ -84,6 +82,9 @@ namespace ATM.Test.Integration
         }
         #endregion
 
+        #region Log
+
+        #endregion
 
     }
 }
