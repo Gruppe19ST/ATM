@@ -33,6 +33,9 @@ namespace ATM.Test.Unit
             _track3 = new TrackObject("Tag789", 89000,89000,5000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _track4 = new TrackObject("TagABC", 72000, 72000, 1200, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
 
+            // Clear args
+            _receivedArgs = null;
+            _newArgs = null;
 
             _uut = new CheckForSeparationEvent();
             _uut.SeperationEvents += (o, args) => {
