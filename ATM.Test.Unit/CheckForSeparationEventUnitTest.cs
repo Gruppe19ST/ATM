@@ -99,24 +99,16 @@ namespace ATM.Test.Unit
         }
 
         [Test]
-        public void checkSeparation_NotTooCloseAnyMore_EventFinished()
+        public void checkSeparation_NewSeparation_EventRaised()
         {
-            // First create a separationevent
+            // Create a new separationevent
             _listOfTracks.Clear();
             _listOfTracks.Add(_track1);
             _listOfTracks.Add(_track2);
 
             _uut.CheckSeparationEvents(_listOfTracks);
-            
-            // Track2 has moved => no more event
-            _track2.XCoordinate = 10000;
-            _track2.YCoordinate = 10000;
-            _track2.Altitude = 5000;
-            _track2.TimeStamp =
-                DateTime.ParseExact("20180412111111115", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture);
 
-            _uut.CheckSeparationEvents(_listOfTracks);
-
+            // Check that the event was raised with the right info
             Assert.That(_newArgs.SeparationObjects.Count, Is.EqualTo(1));
         }
 

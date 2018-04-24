@@ -18,10 +18,10 @@ namespace ATM.Logic.Handlers
 
         public LogSeparationEvent(ISeperationEventChecker checker)
         {
-            checker.NewSeperationEvents += Checker_FinishedSeperationEvents;
+            checker.NewSeperationEvents += Checker_NewSeperationEvents;
         }
 
-        public void Checker_FinishedSeperationEvents(object sender, SeparationEventArgs e)
+        public void Checker_NewSeperationEvents(object sender, SeparationEventArgs e)
         {
             foreach (var separationObject in e.SeparationObjects)
             {
@@ -39,7 +39,7 @@ namespace ATM.Logic.Handlers
             }
         }
 
-        void ISeperationEventLogger.Checker_FinishedSeperationEvents(object sender, SeparationEventArgs e) // after implementing interface?
+        void ISeperationEventLogger.Checker_NewSeperationEvents(object sender, SeparationEventArgs e) // after implementing interface?
         {
             throw new NotImplementedException();
         }
