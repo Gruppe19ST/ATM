@@ -29,9 +29,7 @@ namespace ATM.Test.Integration
         private TrackConverter _converter;
 
         // Data
-        private List<TrackObject> _currentList;
         private List<TrackObject> _priorList;
-        private TrackObject _tp, _tc;
         
         // Fakes
         private ISeperationEventChecker _checker;
@@ -64,10 +62,6 @@ namespace ATM.Test.Integration
             {
                 "Fly1;86000;86000;6000;20180420223222222","Fly2;72000;91000;19999;20180420223222222", "Fly3;86000;86000;6500;20180420223222222"
             });
-
-            _tp=new TrackObject("Fly1",88000,88000,6000,DateTime.ParseExact("20180420222222222", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
-            _tc = new TrackObject("Fly1", 86000, 86000, 6500, DateTime.ParseExact("20180420222222222", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
-
             
         }
 
@@ -85,16 +79,29 @@ namespace ATM.Test.Integration
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs2);
             Assert.That(_controller.priorTracks[0].XCoordinate, Is.EqualTo(86000));
         }
-
+        
         [Test]
-        public void handletracks_CorrectTracksInPrior_Fly1VelocityIsZero()
+        public void handletracks_CorrectCallToSpeed()
         {
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs2);
-            Assert.That(_controller.priorTracks[0].horizontalVelocity, Is.EqualTo(0));
-            
-
-
+            _speed.ReceivedWithAnyArgs().CalculateSpeed(new TrackObject(), new TrackObject() );
         }
+        [Test]
+        public void handletracks_CorrectCallToCompassCourse()
+        {
+            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
+            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs2);
+            _compassCourse.ReceivedWithAnyArgs().CalculateCompassCourse(new TrackObject(), new TrackObject());
+        }
+
+        [Test]
+        public void checkTracks_CorrectCallToCheckForSeperation()
+        {
+            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
+            _checker.ReceivedWithAnyArgs().CheckSeparationEvents(new List<TrackObject>());
+        }
+
+
     }
 }
