@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27428.2011
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATM", "ATM\ATM.csproj", "{F795D620-CBC2-461B-A7A3-4462CDE4438C}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATM.Test.Unit", "ATM.Test.Unit\ATM.Test.Unit.csproj", "{7F1D6DAF-5CAF-48B7-8F65-CC9AC5E0CB81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATM.Test.Integration", "ATM.Test.Integration\ATM.Test.Integration.csproj", "{80C09E69-3D73-4558-A714-98B1900159F4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightApplication", "FlightApplication\FlightApplication.csproj", "{F8BAD631-B5E4-4F22-AE7E-C409D04776C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{80C09E69-3D73-4558-A714-98B1900159F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80C09E69-3D73-4558-A714-98B1900159F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80C09E69-3D73-4558-A714-98B1900159F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8BAD631-B5E4-4F22-AE7E-C409D04776C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8BAD631-B5E4-4F22-AE7E-C409D04776C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8BAD631-B5E4-4F22-AE7E-C409D04776C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8BAD631-B5E4-4F22-AE7E-C409D04776C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
