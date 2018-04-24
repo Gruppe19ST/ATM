@@ -17,6 +17,11 @@ namespace ATM
         public double horizontalVelocity { get; set; }
         public double compassCourse { get; set; }
 
+        // Default constructor for unit test
+        public TrackObject()
+        {
+        }
+
         public TrackObject(string tag, float x, float y, float alt, DateTime time)
         {
             Tag = tag;

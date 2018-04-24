@@ -10,7 +10,7 @@ namespace ATM.Logic.Interfaces
     public interface ISeperationEventChecker
     {
         event EventHandler<SeparationEventArgs> SeperationEvents;
-        event EventHandler<SeparationEventArgs> FinishedSeperationEvents;
+        event EventHandler<SeparationEventArgs> NewSeperationEvents;
         void CheckSeparationEvents(List<TrackObject> sortedTracksList);
     }
 }

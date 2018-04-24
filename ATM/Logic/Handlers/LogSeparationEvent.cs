@@ -18,7 +18,7 @@ namespace ATM.Logic.Handlers
 
         public LogSeparationEvent(ISeperationEventChecker checker)
         {
-            checker.FinishedSeperationEvents += Checker_FinishedSeperationEvents;
+            checker.NewSeperationEvents += Checker_FinishedSeperationEvents;
         }
 
         public void Checker_FinishedSeperationEvents(object sender, SeparationEventArgs e)

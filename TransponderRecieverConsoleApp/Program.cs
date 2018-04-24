@@ -16,9 +16,6 @@ namespace TransponderRecieverConsoleApp
 {
     class Program
     {
-        // private static List<TrackObject> _listOfTracks;
-       // private static TrackObject _track1, _track2, _track3;
-
         static void Main(string[] args)
         {
 

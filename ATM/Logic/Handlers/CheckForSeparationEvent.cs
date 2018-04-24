@@ -14,13 +14,11 @@ namespace ATM.Logic.Handlers
         private List<SeparationEventObject> _currentSeparations;
         // List containing the former separations - this list is updated with information from _currentSeparations
         private List<SeparationEventObject> _priorSeparations;
-        // List to contain finishedSeparations to raise event to logger with
-        private List<SeparationEventObject> _finishedSeparations;
 
         // Variables for the limits for horizontal and vertical separation
         private readonly float _horizontalSeperationLimit, _verticalSeperationLimit;
 
-        // Variables to see, if the separation is new and finished
+        // Variables to see, if the separation is new or finished
         private bool isNewSeparation;
         private bool isFinishedSeparation;
 
@@ -29,7 +27,6 @@ namespace ATM.Logic.Handlers
             // Initialization of lists
             _currentSeparations = new List<SeparationEventObject>();
             _priorSeparations = new List<SeparationEventObject>();
-            _finishedSeparations = new List<SeparationEventObject>();
 
             // Set the limits to the specified values
             _horizontalSeperationLimit = 5000;
@@ -41,8 +38,6 @@ namespace ATM.Logic.Handlers
         {
             // Clearing the list to remove historical data
             _currentSeparations = new List<SeparationEventObject>();
-            // Clearing the list to remove historical data
-            _finishedSeparations.Clear();
 
             // Runs through the elements in the received list (sortedTracksList)
             for (int i = 0; i < sortedTracksList.Count; i++)
@@ -100,6 +95,7 @@ namespace ATM.Logic.Handlers
                         if (isNewSeparation)
                         {
                             _priorSeparations.Add(newSep);
+                            OnNewSeparationEvent(new SeparationEventArgs(newSep));
                         }
                     }
 
@@ -125,19 +121,12 @@ namespace ATM.Logic.Handlers
                             }
                         }
 
-                        // If the two elements aren't the same, then the event is finished and can be added to the finished-list
-                        // and removed from the prior-list
+                        // If the two elements aren't the same, then the event is finished
                         if (isFinishedSeparation)
                         {
-                            _finishedSeparations.Add(priorSep);
                             _priorSeparations.Remove(priorSep);
                         }
                     }
-                }
-                // If there are no current separations, then the former ones are all done and can be put into the finished-list
-                else
-                {
-                    _finishedSeparations = _priorSeparations;
                 }
             }
             // If there are no prior separations, then all current separations are new = no need to comparing
@@ -151,11 +140,6 @@ namespace ATM.Logic.Handlers
                 OnSeparationEvent(new SeparationEventArgs(_priorSeparations));
             }
 
-            if (_finishedSeparations.Count != 0)
-            {
-                OnFinishedSeparationEvent(new SeparationEventArgs(_finishedSeparations));
-            }
-
         }
 
         private void OnSeparationEvent(SeparationEventArgs conflictedList)
@@ -166,12 +150,12 @@ namespace ATM.Logic.Handlers
 
         public event EventHandler<SeparationEventArgs> SeperationEvents;
 
-        private void OnFinishedSeparationEvent(SeparationEventArgs finishedEvents)
+        private void OnNewSeparationEvent(SeparationEventArgs newEvents)
         {
-            var handler = FinishedSeperationEvents;
-            handler?.Invoke(this, finishedEvents);
+            var handler = NewSeperationEvents;
+            handler?.Invoke(this, newEvents);
         }
 
-        public event EventHandler<SeparationEventArgs> FinishedSeperationEvents;
+        public event EventHandler<SeparationEventArgs> NewSeperationEvents;
     }
 }

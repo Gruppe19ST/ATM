@@ -10,6 +10,12 @@ namespace ATM.Logic.Handlers
             this.SeparationObjects = separationList;
         }
 
+        public SeparationEventArgs(SeparationEventObject separationObject)
+        {
+            this.SeparationObject = separationObject;
+        }
+
         public List<SeparationEventObject> SeparationObjects { get; }
+        public SeparationEventObject SeparationObject { get; }
     }
 }

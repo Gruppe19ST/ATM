@@ -19,10 +19,7 @@ namespace ATM.Test.Unit
 
         private CheckForSeparationEvent _uut;
         private SeparationEventArgs _receivedArgs;
-        private SeparationEventArgs _finishedArgs;
-
-        private int _nEventsRaised;
-
+        private SeparationEventArgs _newArgs;
 
         [SetUp]
         public void SetUp()
@@ -34,14 +31,12 @@ namespace ATM.Test.Unit
             _track3 = new TrackObject("Tag789", 89000,89000,5000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _track4 = new TrackObject("TagABC", 72000, 72000, 1200, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
 
-            _nEventsRaised = 0;
 
             _uut = new CheckForSeparationEvent();
             _uut.SeperationEvents += (o, args) => {
-                ++_nEventsRaised;
                 _receivedArgs = args;
             };
-            _uut.FinishedSeperationEvents += (o, args) => { _finishedArgs = args; };
+            _uut.NewSeperationEvents += (o, args) => { _newArgs = args; };
         }
         
 
@@ -122,7 +117,7 @@ namespace ATM.Test.Unit
 
             _uut.CheckSeparationEvents(_listOfTracks);
 
-            Assert.That(_finishedArgs.SeparationObjects.Count, Is.EqualTo(1));
+            Assert.That(_newArgs.SeparationObjects.Count, Is.EqualTo(1));
         }
 
         [Test]
@@ -136,7 +131,7 @@ namespace ATM.Test.Unit
             _uut.CheckSeparationEvents(_listOfTracks);
 
             // Assume that no finished events are there yet
-            Assert.That(_finishedArgs, Is.EqualTo(null));
+            Assert.That(_newArgs, Is.EqualTo(null));
         }
     }
 }

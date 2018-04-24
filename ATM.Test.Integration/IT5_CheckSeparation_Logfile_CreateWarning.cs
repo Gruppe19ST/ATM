@@ -67,7 +67,7 @@ namespace ATM.Test.Integration
 
             // Assign to events
             _checker.SeperationEvents += _checker_SeperationEvents;
-            _checker.FinishedSeperationEvents += _checker_FinishedSeperationEvents;
+            _checker.NewSeperationEvents += _checker_FinishedSeperationEvents;
 
         }
 
