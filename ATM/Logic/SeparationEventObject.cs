@@ -10,15 +10,13 @@ namespace ATM.Logic
     {
         public string Tag1 { get; set; }
         public string Tag2 { get; set; }
-        public DateTime FirstTime { get; set; }
-        public DateTime LastTime { get; set; }
+        public DateTime TimeOfOcccurence { get; set; }
 
-        public SeparationEventObject(string tag1, string tag2, DateTime first, DateTime last)
+        public SeparationEventObject(string tag1, string tag2, DateTime time)
         {
             Tag1 = tag1;
             Tag2 = tag2;
-            FirstTime = first;
-            LastTime = last;
+            TimeOfOcccurence = time;
         }
 
     }
