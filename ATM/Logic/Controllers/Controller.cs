@@ -51,11 +51,6 @@ namespace ATM.Logic.Controllers
             _checker.CheckSeparationEvents(tracks);
         }
 
-        private void _checker_SeperationEvents(object sender, SeparationEventArgs e) 
-        {
-            _checker.CheckSeparationEvents(currentTracks);
-        }
-
         public void HandleTrack()
         {
             if (priorTracks != null)
