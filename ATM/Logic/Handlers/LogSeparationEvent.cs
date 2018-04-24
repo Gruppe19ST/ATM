@@ -23,7 +23,7 @@ namespace ATM.Logic.Handlers
 
         public void Checker_NewSeperationEvents(object sender, SeparationEventArgs e)
         {
-            if (e.SeparationObjects.Count != 0)
+            if (e.SeparationObjects != null)
             {
                 foreach (var separationObject in e.SeparationObjects)
                 {
