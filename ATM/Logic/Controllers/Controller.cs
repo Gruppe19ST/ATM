@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace ATM.Logic.Controllers
 
             _ts = ts;
             _tcc = tcc;
-           
+
             _checker = checker;
             _warningCreator = warningCreator;
             _logger = logger;
@@ -40,11 +41,11 @@ namespace ATM.Logic.Controllers
         }
 
         private void _sorter_TrackSortedReady(object sender, TrackObjectEventArgs e)
-        { 
+        {
             currentTracks = e.TrackObjects;
-            if (currentTracks.Count >=1)
+            if (currentTracks.Count >= 1)
             {
-                HandleTrack(); 
+                HandleTrack();
                 CheckTracks(currentTracks);
             }
             priorTracks = new List<TrackObject>(currentTracks);
@@ -56,41 +57,60 @@ namespace ATM.Logic.Controllers
             _checker.CheckSeparationEvents(tracks);
         }
 
+        /*
+         * Comment regarding the clearing of Console:
+         * We don't know, if it's okay to do it this way?
+         * We've tried multiple ways to checking, that there is a console to clear (as this failed in unit testing)
+         * and we found this to work.
+         * Hopefully it's allowed to do it that way?
+         */
         public void HandleTrack()
         {
-            // If there's already something in the console, then clear that
-            if (consoleReady)
+            // If there's already a console, something might be in it - clear this
+            if (Console.In.GetLifetimeService() != null)
             {
-                Console.Clear();
-            }
-
-            if (priorTracks != null)
-            {
-                foreach (var trackC in currentTracks)
+                if (Console.CursorVisible)
                 {
-                    foreach (var trackP in priorTracks)
-                    {
-                        if (trackC.Tag == trackP.Tag)
-                        {
-                            trackC.horizontalVelocity = _ts.CalculateSpeed(trackC, trackP);
-                            trackC.compassCourse = _tcc.CalculateCompassCourse(trackC, trackP);
-                            // Make sure that the color is reset as it might be red from a conflict
-                            Console.ResetColor();
-                            Console.WriteLine(trackC.ToString());
-                            // Setting the boolean true, as there's something to clear
-                            consoleReady = true;
-                        }
-
-                    }
+                    Console.Clear();
                 }
             }
-            else
-            {
 
-                priorTracks = currentTracks;
+            if (currentTracks != null)
+            {
+                if (priorTracks != null)
+                {
+                    foreach (var trackC in currentTracks)
+                    {
+                        foreach (var trackP in priorTracks)
+                        {
+                            if (trackC.Tag == trackP.Tag)
+                            {
+                                trackC.horizontalVelocity = _ts.CalculateSpeed(trackC, trackP);
+                                trackC.compassCourse = _tcc.CalculateCompassCourse(trackC, trackP);
+                                // Make sure that the color is reset as it might be red from a conflict
+                                Console.ResetColor();
+                                Console.WriteLine(trackC.ToString());
+                                
+                                Console.In.InitializeLifetimeService();
+                            }
+
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var trackC in currentTracks)
+                    {
+                        // Make sure that the color is reset as it might be red from a conflict
+                        Console.ResetColor();
+                        Console.WriteLine(trackC.ToString());
+
+                        Console.In.InitializeLifetimeService();
+                    }
+                }
             }
         }
     }
 
-        
-    }
+
+}

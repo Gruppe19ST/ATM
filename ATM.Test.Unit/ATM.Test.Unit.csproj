@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckForSeparationEventUnitTest.cs" />
+    <Compile Include="ControllerUnitTest.cs" />
     <Compile Include="LogSeparationEventUnitTest.cs" />
     <Compile Include="SorterUnitTest.cs" />
     <Compile Include="TrackControllerUnitTest.cs" />
