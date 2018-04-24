@@ -17,6 +17,11 @@ namespace ATM
         public double horizontalVelocity { get; set; }
         public double compassCourse { get; set; }
 
+        // Default constructor for unit test
+        public TrackObject()
+        {
+        }
+
         public TrackObject(string tag, float x, float y, float alt, DateTime time)
         {
             Tag = tag;
@@ -28,11 +33,6 @@ namespace ATM
             compassCourse = 0;
         }
 
-        public TrackObject()
-        {
-
-        }
-        
         public override string ToString()
         {
             String trackInfo=String.Format("Track Tag: "+Tag+": X coordinates: " +XCoordinate+", Y coordinates: "+YCoordinate+", Altitude: "+Altitude+"m, Horizontal velocity: " + horizontalVelocity +"m/s, Compass course: "+ compassCourse+"deg, Timestamp: "+TimeStamp);
