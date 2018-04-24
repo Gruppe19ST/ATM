@@ -11,7 +11,7 @@ namespace ATM.Logic.Controllers
     public class Controller : ITrackController
     {
         public List<TrackObject> priorTracks;
-        List<TrackObject> currentTracks;
+        private List<TrackObject> currentTracks;
         private ISorter _sorter;
         private ISeperationEventChecker _checker;
         private ISeperationEventHandler _warningCreator;
@@ -49,13 +49,11 @@ namespace ATM.Logic.Controllers
         public void CheckTracks(List<TrackObject> tracks)
         {
             _checker.CheckSeparationEvents(tracks);
-            //_checker.SeperationEvents += _checker_SeperationEvents;
         }
 
         private void _checker_SeperationEvents(object sender, SeparationEventArgs e) 
         {
             _checker.CheckSeparationEvents(currentTracks);
-            //_warningCreator.CreateSeparationWarning(e);
         }
 
         public void HandleTrack()

@@ -28,11 +28,6 @@ namespace ATM
             compassCourse = 0;
         }
 
-        public TrackObject()
-        {
-
-        }
-        
         public override string ToString()
         {
             String trackInfo=String.Format("Track Tag: "+Tag+": X coordinates: " +XCoordinate+", Y coordinates: "+YCoordinate+", Altitude: "+Altitude+"m, Horizontal velocity: " + horizontalVelocity +"m/s, Compass course: "+ compassCourse+"deg, Timestamp: "+TimeStamp);

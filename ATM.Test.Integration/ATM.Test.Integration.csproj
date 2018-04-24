@@ -59,7 +59,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FakeDLL.cs" />
     <Compile Include="IT1_Sorter.cs" />
     <Compile Include="IT2_Controller.cs" />
     <Compile Include="IT3_TrackCourse_TrackSpeed.cs" />
