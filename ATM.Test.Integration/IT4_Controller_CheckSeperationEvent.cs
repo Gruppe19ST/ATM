@@ -99,12 +99,13 @@ namespace ATM.Test.Integration
             Assert.That(_separationArgs.SeparationObjects.Count, Is.EqualTo(1));
         }
 
-        // Test that an event indicating finished separations is raised
+        // Test that an event indicating new separations is raised
         [Test]
         public void HandleTrack_NewSeparationEvents_RaiseEvent()
         {
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
 
+            // First create a separation event
             _fakeRawArgs = new RawTransponderDataEventArgs(new List<string>()
             {
                 "Tag123;70000;70000;1000;20180420222222222",
@@ -114,7 +115,18 @@ namespace ATM.Test.Integration
 
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
 
-            Assert.That(_newSeparationArgs.SeparationObject.Tag1 ,Is.EqualTo("Tag123"));
+            // Create a new separation event that's not with the same tracks as before
+            _fakeRawArgs = new RawTransponderDataEventArgs(new List<string>()
+            {
+                "Tag123;70000;70000;1000;20180420222222222",
+                "Tag456;64000;64000;800;20180420222222222",
+                "TagABC;87000;87000;4800;20180420222222222",
+                "TagDEF;89000;89000;5000;20180420222222222"
+            });
+
+            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
+
+            Assert.That(_newSeparationArgs.SeparationObject.Tag1 ,Is.EqualTo("TagABC"));
         }
 
         #endregion

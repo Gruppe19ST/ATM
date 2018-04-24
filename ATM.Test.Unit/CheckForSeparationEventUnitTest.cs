@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ATM.Logic;
 using NSubstitute;
 using NUnit.Framework;
 using ATM.Logic.Handlers;
@@ -150,4 +151,40 @@ namespace ATM.Test.Unit
             Assert.That(_newArgs, Is.EqualTo(null));
         }
     }
+
+    [TestFixture]
+    public class LogSeparationEventUnitTest
+    {
+        private List<TrackObject> _listOfTracks;
+        private TrackObject _track1, _track2, _track3, _track4;
+
+        private ISeperationEventChecker _checker;
+        private ISeperationEventLogger _uut;
+        private SeparationEventArgs _receivedArgs;
+        private SeparationEventArgs _newArgs;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _checker = Substitute.For<ISeperationEventChecker>();
+            _uut = new LogSeparationEvent(_checker);
+
+            _checker.NewSeperationEvents += (o, args) => { _receivedArgs = args; };
+
+        }
+
+
+        [Test]
+        public void OneNewSeparationEvent_ReceiveEvent_LogEvent()
+        {
+            _checker.NewSeperationEvents += Raise.EventWith(new SeparationEventArgs(new SeparationEventObject("Tag123",
+                "Tag456",
+                DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture))));
+
+            // Assume, that when 1 pair of tracks is too close, this creates 1 separation event object
+            Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(1));
+
+        }
+    }
+
 }

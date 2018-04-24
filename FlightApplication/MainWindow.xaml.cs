@@ -28,8 +28,11 @@ namespace FlightApplication
         // private List<TrackObject> tracks;
         public MainWindow()
         {
+            // TrackConverter that takes a TransponderReceiver and starts it
             TrackConverter trackConverter = new TrackConverter(TransponderReceiverFactory.CreateTransponderDataReceiver());
+            // A sorter that uses the information from the TrackConverter
             Sorter sorter = new Sorter(trackConverter);
+            // The logic-classes handling data
             Controller controller = new Controller(sorter);
             InitializeComponent();
             Loaded += new RoutedEventHandler(MainWindow_Loaded);

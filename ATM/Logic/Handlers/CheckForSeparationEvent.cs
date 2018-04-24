@@ -51,7 +51,7 @@ namespace ATM.Logic.Handlers
                         && Math.Abs(sortedTracksList[i].Altitude - sortedTracksList[j].Altitude) <= _verticalSeperationLimit)
                     {
                         // If two tracks are on separation course, an eventobject is created and added to list
-                        _currentSeparations.Add(new SeparationEventObject(sortedTracksList[i].Tag, sortedTracksList[j].Tag, sortedTracksList[i].TimeStamp, sortedTracksList[i].TimeStamp));
+                        _currentSeparations.Add(new SeparationEventObject(sortedTracksList[i].Tag, sortedTracksList[j].Tag, sortedTracksList[i].TimeStamp));
                     }
                 }
             }
@@ -80,8 +80,6 @@ namespace ATM.Logic.Handlers
                             if ((newSep.Tag1 == priorSep.Tag1 && newSep.Tag2 == priorSep.Tag2)
                                 || newSep.Tag1 == priorSep.Tag2 && newSep.Tag2 == priorSep.Tag1)
                             {
-                                // Update the time for when the last time seeing the event is
-                                priorSep.LastTime = newSep.LastTime;
                                 // Remove the event from the current event-list as it has been "used"
                                 _currentSeparations.Remove(newSep);
 
@@ -113,9 +111,6 @@ namespace ATM.Logic.Handlers
                             if ((priorSep.Tag1 == newSep.Tag1 && priorSep.Tag2 == newSep.Tag2
                                  || priorSep.Tag1 == newSep.Tag2 && priorSep.Tag2 == newSep.Tag1))
                             {
-                                // Update the time for last time for seen the event
-                                priorSep.LastTime = newSep.LastTime;
-
                                 // It's not a finished separation
                                 isFinishedSeparation = false;
                             }
@@ -130,7 +125,7 @@ namespace ATM.Logic.Handlers
                 }
             }
             // If there are no prior separations, then all current separations are new = no need to comparing
-            else
+            else if(_currentSeparations.Count != 0)
             {
                 _priorSeparations = _currentSeparations;
                 OnNewSeparationEvent(new SeparationEventArgs(_priorSeparations));

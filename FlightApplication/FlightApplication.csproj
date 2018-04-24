@@ -46,7 +46,7 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="TransponderReceiver">
-      <HintPath>..\..\..\..\Desktop\TransponderReceiver.dll</HintPath>
+      <HintPath>..\TransponderReceiver.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />

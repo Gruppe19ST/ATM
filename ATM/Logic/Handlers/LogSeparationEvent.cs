@@ -26,8 +26,7 @@ namespace ATM.Logic.Handlers
             foreach (var separationObject in e.SeparationObjects)
             {
                 // Input to file
-                string input = $"Separation from {Convert.ToString(separationObject.FirstTime, Thread.CurrentThread.CurrentCulture)} to {Convert.ToString(separationObject.FirstTime, Thread.CurrentThread.CurrentCulture)} with tracks: " +
-                               $"{separationObject.Tag1}, {separationObject.Tag2}";
+                string input = $"Separation occured at {Convert.ToString(separationObject.TimeOfOcccurence, Thread.CurrentThread.CurrentCulture)} between tracks: {separationObject.Tag1}, {separationObject.Tag2}";
 
                 StreamWriter writer;
 
