@@ -19,6 +19,7 @@ namespace ATM.Test.Unit
 
         private CheckForSeparationEvent _uut;
         private SeparationEventArgs _receivedArgs;
+        private SeparationEventArgs _finishedArgs;
 
         private int _nEventsRaised;
 
@@ -34,17 +35,15 @@ namespace ATM.Test.Unit
             _track4 = new TrackObject("TagABC", 72000, 72000, 1200, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
 
             _nEventsRaised = 0;
-        }
 
-        public void SeparationEvent()
-        {
-            _uut = new CheckForSeparationEvent(_listOfTracks);
+            _uut = new CheckForSeparationEvent();
             _uut.SeperationEvents += (o, args) => {
                 ++_nEventsRaised;
                 _receivedArgs = args;
             };
-            _uut.CheckSeparationEvents();
+            _uut.FinishedSeperationEvents += (o, args) => { _finishedArgs = args; };
         }
+        
 
         [Test]
         public void checkSeparationOf2Objects_1TooClose_1SeparationEvent()
@@ -53,7 +52,7 @@ namespace ATM.Test.Unit
             _listOfTracks.Add(_track1);
             _listOfTracks.Add(_track2);
 
-            SeparationEvent();
+            _uut.CheckSeparationEvents(_listOfTracks);
 
             // Assume, that when 1 pair of tracks is too close, this creates 1 separation event object
             Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(1));
@@ -68,7 +67,7 @@ namespace ATM.Test.Unit
             _listOfTracks.Add(_track2);
             _listOfTracks.Add(_track3);
 
-            SeparationEvent();
+            _uut.CheckSeparationEvents(_listOfTracks);
 
             // Assume, that when 1 pair of tracks is too close, this creates 1 separation event object
             // and that this happens, eventhough 3 tracks are now in the air
@@ -83,7 +82,7 @@ namespace ATM.Test.Unit
             _listOfTracks.Add(_track2);
             _listOfTracks.Add(_track4);
 
-            SeparationEvent();
+            _uut.CheckSeparationEvents(_listOfTracks);
 
             // Assume, that when 2 pair of tracks are too close, this creates 2 separation events
             Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(2));
@@ -98,10 +97,32 @@ namespace ATM.Test.Unit
             _track2.YCoordinate = 10000;
             _track2.Altitude = 5000;
             _listOfTracks.Add(_track2);
-            
-            SeparationEvent();
+
+            _uut.CheckSeparationEvents(_listOfTracks);
 
             Assert.That(_receivedArgs, Is.EqualTo(null));
+        }
+
+        [Test]
+        public void checkSeparation_NotTooCloseAnyMore_EventFinished()
+        {
+            // First create a separationevent
+            _listOfTracks.Clear();
+            _listOfTracks.Add(_track1);
+            _listOfTracks.Add(_track2);
+
+            _uut.CheckSeparationEvents(_listOfTracks);
+            
+            // Track2 has moved => no more event
+            _track2.XCoordinate = 10000;
+            _track2.YCoordinate = 10000;
+            _track2.Altitude = 5000;
+            _track2.TimeStamp =
+                DateTime.ParseExact("20180412111111115", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture);
+
+            _uut.CheckSeparationEvents(_listOfTracks);
+
+            Assert.That(_finishedArgs.SeparationObjects.Count, Is.EqualTo(1));
         }
     }
 }

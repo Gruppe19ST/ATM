@@ -10,13 +10,19 @@ namespace ATM.Logic.Handlers
 {
     public class CheckForSeparationEvent : ISeperationEventChecker
     {
-
+        // List to contain the current separations
         private List<SeparationEventObject> _currentSeparations;
+        // List containing the former separations - this list is updated with information from _currentSeparations
         private List<SeparationEventObject> _priorSeparations;
+        // List to contain finishedSeparations to raise event to logger with
         private List<SeparationEventObject> _finishedSeparations;
 
         // Variables for the limits for horizontal and vertical separation
         private readonly float _horizontalSeperationLimit, _verticalSeperationLimit;
+
+        // Variables to see, if the separation is new and finished
+        private bool isNewSeparation;
+        private bool isFinishedSeparation;
 
         public CheckForSeparationEvent()
         {
@@ -33,70 +39,108 @@ namespace ATM.Logic.Handlers
 
         public void CheckSeparationEvents(List<TrackObject> sortedTracksList)
         {
-            _currentSeparations.Clear();
+            // Clearing the list to remove historical data
+            _currentSeparations = new List<SeparationEventObject>();
+            // Clearing the list to remove historical data
+            _finishedSeparations.Clear();
 
-            // Runs through the elements in _listOfTracks
+            // Runs through the elements in the received list (sortedTracksList)
             for (int i = 0; i < sortedTracksList.Count; i++)
             {
-                // Runs through the elements in _listOfTracks (but "sorts" out the ones from the former loop)
-                for (int j = i+1; j < sortedTracksList.Count; j++)
+                // Runs through the elements in sortedTracksList (but "sorts" out the ones from the former loop = no comparing to it self or repetition of compare)
+                for (int j = i + 1; j < sortedTracksList.Count; j++)
                 {
-                    // Check whether the tracks are too close to eachother
+                    // Check whether the tracks are too close to each other
                     if (Math.Abs(sortedTracksList[i].XCoordinate - sortedTracksList[j].XCoordinate) <= _horizontalSeperationLimit
                         && Math.Abs(sortedTracksList[i].YCoordinate - sortedTracksList[j].YCoordinate) <= _horizontalSeperationLimit
                         && Math.Abs(sortedTracksList[i].Altitude - sortedTracksList[j].Altitude) <= _verticalSeperationLimit)
                     {
                         // If two tracks are on separation course, an eventobject is created and added to list
-                        SeparationEventObject separationEvent = new SeparationEventObject(sortedTracksList[i].Tag, sortedTracksList[j].Tag, sortedTracksList[i].TimeStamp, sortedTracksList[i].TimeStamp);
-                        _currentSeparations.Add(separationEvent);
-
-                       /* // If two tracks are on separation course, they should be added to a list with TrackObjects
-                        // And this list should be added to the conflicted-list
-                        OnSeparationEvent(new SeparationEventArgs(new List<TrackObject> { _listOfTracks[i], _listOfTracks[j] }));*/
+                        _currentSeparations.Add(new SeparationEventObject(sortedTracksList[i].Tag, sortedTracksList[j].Tag, sortedTracksList[i].TimeStamp, sortedTracksList[i].TimeStamp));
                     }
                 }
             }
 
-            // Reference to removing elements while iterating: https://stackoverflow.com/questions/1582285/how-to-remove-elements-from-a-generic-list-while-iterating-over-it
+            /*
+             * Now the current separation events should be compared to the prior ones to see, which events to keep raised, which are new and which are no longer present
+             * This is done by running through the two lists and removing objects. The following reference is for removing elements while iterating: https://stackoverflow.com/questions/1582285/how-to-remove-elements-from-a-generic-list-while-iterating-over-it
+             */
+            // Checking whether there are any prior separations
             if (_priorSeparations.Count != 0)
             {
-                // Compare _currentSeparations to priorSeparations
-                foreach (var newSep in _currentSeparations.Reverse<SeparationEventObject>())
+                // Checking if there are any current separations
+                if (_currentSeparations.Count != 0)
                 {
-
-                    foreach (var priorSep in _priorSeparations.Reverse<SeparationEventObject>())
+                    /*
+                     * Compare the current events to the former to see, if there are any new events
+                     */
+                    // Running through every current event
+                    foreach (var newSep in _currentSeparations.Reverse<SeparationEventObject>())
                     {
-                        if ((newSep.Tag1 == priorSep.Tag1 && newSep.Tag2 == priorSep.Tag2)
-                            || newSep.Tag1 == priorSep.Tag2 && newSep.Tag2 == priorSep.Tag1)
+                        isNewSeparation = true;
+                        // Running through every former event
+                        foreach (var priorSep in _priorSeparations.Reverse<SeparationEventObject>())
                         {
-                            priorSep.LastTime = newSep.LastTime;
-                            _currentSeparations.Remove(newSep);
+                            // If the two events are for the same tracks
+                            if ((newSep.Tag1 == priorSep.Tag1 && newSep.Tag2 == priorSep.Tag2)
+                                || newSep.Tag1 == priorSep.Tag2 && newSep.Tag2 == priorSep.Tag1)
+                            {
+                                // Update the time for when the last time seeing the event is
+                                priorSep.LastTime = newSep.LastTime;
+                                // Remove the event from the current event-list as it has been "used"
+                                _currentSeparations.Remove(newSep);
+
+                                // It's not a new separation
+                                isNewSeparation = false;
+                            }
+
                         }
-                        else
+
+                        // If the two elements aren't the same then the event is new and can be added to the prior-list
+                        if (isNewSeparation)
                         {
                             _priorSeparations.Add(newSep);
                         }
                     }
-                }
 
-                foreach (var priorSep in _priorSeparations.Reverse<SeparationEventObject>())
-                {
-                    foreach (var newSep in _currentSeparations.Reverse<SeparationEventObject>())
+                    /*
+                     * Compare the former events to the current to see, if there are any old/finished events
+                     */
+                    // Running through former events
+                    foreach (var priorSep in _priorSeparations.Reverse<SeparationEventObject>())
                     {
-                        if ((priorSep.Tag1 == newSep.Tag1 && priorSep.Tag2 == newSep.Tag2
-                             || priorSep.Tag1 == newSep.Tag2 && priorSep.Tag2 == newSep.Tag1))
+                        isFinishedSeparation = true;
+                        // Running through current events
+                        foreach (var newSep in _currentSeparations.Reverse<SeparationEventObject>())
                         {
-                            priorSep.LastTime = newSep.LastTime;
-                            //priorSep.EventTime = newSep.EventTime;
+                            // If the two elements are for the same tracks
+                            if ((priorSep.Tag1 == newSep.Tag1 && priorSep.Tag2 == newSep.Tag2
+                                 || priorSep.Tag1 == newSep.Tag2 && priorSep.Tag2 == newSep.Tag1))
+                            {
+                                // Update the time for last time for seen the event
+                                priorSep.LastTime = newSep.LastTime;
+
+                                // It's not a finished separation
+                                isFinishedSeparation = false;
+                            }
                         }
-                        else
+
+                        // If the two elements aren't the same, then the event is finished and can be added to the finished-list
+                        // and removed from the prior-list
+                        if (isFinishedSeparation)
                         {
                             _finishedSeparations.Add(priorSep);
                             _priorSeparations.Remove(priorSep);
                         }
                     }
                 }
+                // If there are no current separations, then the former ones are all done and can be put into the finished-list
+                else
+                {
+                    _finishedSeparations = _priorSeparations;
+                }
             }
+            // If there are no prior separations, then all current separations are new = no need to comparing
             else
             {
                 _priorSeparations = _currentSeparations;
@@ -117,7 +161,7 @@ namespace ATM.Logic.Handlers
         private void OnSeparationEvent(SeparationEventArgs conflictedList)
         {
             var handler = SeperationEvents;
-            handler?.Invoke(this,conflictedList);
+            handler?.Invoke(this, conflictedList);
         }
 
         public event EventHandler<SeparationEventArgs> SeperationEvents;
