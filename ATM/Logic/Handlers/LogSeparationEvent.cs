@@ -54,10 +54,5 @@ namespace ATM.Logic.Handlers
                 }
             }
         }
-
-        void ISeperationEventLogger.Checker_NewSeperationEvents(object sender, SeparationEventArgs e) // after implementing interface?
-        {
-            throw new NotImplementedException();
-        }
     }
 }

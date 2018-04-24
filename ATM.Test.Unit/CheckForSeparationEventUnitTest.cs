@@ -16,18 +16,22 @@ namespace ATM.Test.Unit
     [TestFixture]
     public class CheckForSeparationEventUnitTest
     {
+        #region Defining objects
         private List<TrackObject> _listOfTracks;
         private TrackObject _track1, _track2, _track3, _track4;
 
         private CheckForSeparationEvent _uut;
         private SeparationEventArgs _receivedArgs;
         private SeparationEventArgs _newArgs;
+        #endregion
 
+        #region Setup
         [SetUp]
         public void SetUp()
         {
             _listOfTracks = new List<TrackObject>();
 
+            // Create tracks
             _track1 = new TrackObject("Tag123", 70000,70000,1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _track2 = new TrackObject("Tag456", 68000, 68000, 800, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _track3 = new TrackObject("Tag789", 89000,89000,5000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
@@ -38,13 +42,16 @@ namespace ATM.Test.Unit
             _newArgs = null;
 
             _uut = new CheckForSeparationEvent();
+
+            // Assign to events and save the arguments the events are raised with
             _uut.SeperationEvents += (o, args) => {
                 _receivedArgs = args;
             };
             _uut.NewSeperationEvents += (o, args) => { _newArgs = args; };
         }
-        
+        #endregion
 
+        #region Events to Handler
         [Test]
         public void checkSeparationOf2Objects_1TooClose_1SeparationEvent()
         {
@@ -103,7 +110,9 @@ namespace ATM.Test.Unit
             // Assume, that when 3 pair of tracks are too close, this creates 3 separation events
             Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(3));
         }
-        
+        #endregion
+
+        #region No separations
         [Test]
         public void checkSeparation_NotTooClose_ReturnEmptyList()
         {
@@ -118,8 +127,9 @@ namespace ATM.Test.Unit
 
             Assert.That(_receivedArgs, Is.EqualTo(null));
         }
-        
+        #endregion
 
+        #region Events to Logger
         [Test]
         public void checkSeparation_NewSeparation_EventRaised()
         {
@@ -138,13 +148,14 @@ namespace ATM.Test.Unit
             _listOfTracks.Add(new TrackObject("TagABC", 87500, 88000, 4800, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture)));
 
             _uut.CheckSeparationEvents(_listOfTracks);
+
             // Check that the event was raised with the right info
             Assert.That(_newArgs.SeparationObject.Tag1, Is.EqualTo("Tag789"));
         }
-        
-        /*
+
+
         [Test]
-        public void checkSeparationOf3Objects_2TooClose_NoFinishedEvents()
+        public void checkSeparationOf3Objects_2TooClose_NoNewEvents()
         {
             _listOfTracks.Clear();
             _listOfTracks.Add(_track1);
@@ -153,10 +164,10 @@ namespace ATM.Test.Unit
 
             _uut.CheckSeparationEvents(_listOfTracks);
 
-            // Assume that no finished events are there yet
-            Assert.That(_newArgs, Is.EqualTo(null));
+            //Assume that no finished events are there yet
+            Assert.That(_newArgs.SeparationObject, Is.EqualTo(null));
         }
-        */
+        #endregion
     }
 
 }

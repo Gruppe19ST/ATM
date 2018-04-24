@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ATM.Logic;
 using ATM.Logic.Controllers;
 using ATM.Logic.Handlers;
 using ATM.Logic.Interfaces;
@@ -15,7 +18,7 @@ namespace ATM.Test.Integration
     [TestFixture]
     class IT5_CheckSeparation_Logfile_CreateWarning
     {
-        #region Defining objects
+        #region Defining objects etc
         // Drivers/included
         private ITransponderReceiver _receiver;
         private ITrackConverter _trackConverter;
@@ -35,6 +38,10 @@ namespace ATM.Test.Integration
         private RawTransponderDataEventArgs _fakeRawArgs;
         private SeparationEventArgs _separationArgs;
         private SeparationEventArgs _finishedSeparationArgs;
+        // Filepath etc. for the location of the logfile
+        private static readonly string Path = System.Environment.CurrentDirectory;
+        static string fileName = "test.txt";
+        private static readonly string FilePath = System.IO.Path.Combine(Path, fileName);
         #endregion
 
         #region Setup
@@ -83,8 +90,40 @@ namespace ATM.Test.Integration
         #endregion
 
         #region Log
+        // Test to see that a new separation event is saved in the log file
+        [Test]
+        public void ANewSeparationEvent_ReceiveEvent_LogEvent()
+        {
+            //"Tag123;70000;70000;1000;20180420222222222","Tag456;68000;68000;800;20180420222222222", "Tag789;89000;89000;5000;20180420222222222"
+            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
 
+            string lastLine;
+            // Open file
+            using (File.OpenRead(FilePath))
+            {
+                // Read the last line from file into variable
+                lastLine = File.ReadLines(FilePath).Last();
+            }
+
+            // Checking that the newest added line matches the expected
+            Assert.That(lastLine, Is.EqualTo("Separation occured at 20-04-2018 22:22:22 between tracks: Tag123, Tag456"));
+        }
         #endregion
 
+        #region Handler
+        /*
+         * This region doesn't really contain an integration test, as we can't test output to the console.
+         * But the test describes what we expect to see on the console and should verify on the console
+         */
+
+        // When a separation event is found the should be shown on the Console
+        [Test]
+        public void ANewSeparationEvent_ReceiveEvent_CreateWarning()
+        {
+            _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
+            Console.WriteLine("Tag123 and Tag456 are in conflict");
+        }
+
+        #endregion
     }
 }
