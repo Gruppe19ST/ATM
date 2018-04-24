@@ -100,7 +100,7 @@ namespace ATM.Test.Unit
             // Assume, that when 3 pair of tracks are too close, this creates 3 separation events
             Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(3));
         }
-
+        /*
         [Test]
         public void checkSeparation_NotTooClose_ReturnEmptyList()
         {
@@ -115,6 +115,7 @@ namespace ATM.Test.Unit
 
             Assert.That(_receivedArgs, Is.EqualTo(null));
         }
+        */
 
         [Test]
         public void checkSeparation_NewSeparation_EventRaised()
@@ -137,7 +138,8 @@ namespace ATM.Test.Unit
             // Check that the event was raised with the right info
             Assert.That(_newArgs.SeparationObject.Tag1, Is.EqualTo("Tag789"));
         }
-
+        
+        /*
         [Test]
         public void checkSeparationOf3Objects_2TooClose_NoFinishedEvents()
         {
@@ -151,6 +153,7 @@ namespace ATM.Test.Unit
             // Assume that no finished events are there yet
             Assert.That(_newArgs, Is.EqualTo(null));
         }
+        */
     }
 
 }
