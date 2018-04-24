@@ -23,10 +23,28 @@ namespace ATM.Logic.Handlers
 
         public void Checker_NewSeperationEvents(object sender, SeparationEventArgs e)
         {
-            foreach (var separationObject in e.SeparationObjects)
+            if (e.SeparationObjects.Count != 0)
+            {
+                foreach (var separationObject in e.SeparationObjects)
+                {
+                    // Input to file
+                    string input =
+                        $"Separation occured at {Convert.ToString(separationObject.TimeOfOcccurence, Thread.CurrentThread.CurrentCulture)} between tracks: {separationObject.Tag1}, {separationObject.Tag2}";
+
+                    StreamWriter writer;
+
+                    using (writer = File.AppendText(FilePath))
+                    {
+                        writer.WriteLine(input);
+                    }
+
+                }
+            }
+            else if (e.SeparationObject != null)
             {
                 // Input to file
-                string input = $"Separation occured at {Convert.ToString(separationObject.TimeOfOcccurence, Thread.CurrentThread.CurrentCulture)} between tracks: {separationObject.Tag1}, {separationObject.Tag2}";
+                string input =
+                    $"Separation occured at {Convert.ToString(e.SeparationObject.TimeOfOcccurence, Thread.CurrentThread.CurrentCulture)} between tracks: {e.SeparationObject.Tag1}, {e.SeparationObject.Tag2}";
 
                 StreamWriter writer;
 
@@ -34,7 +52,6 @@ namespace ATM.Logic.Handlers
                 {
                     writer.WriteLine(input);
                 }
-
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -155,13 +156,14 @@ namespace ATM.Test.Unit
     [TestFixture]
     public class LogSeparationEventUnitTest
     {
-        private List<TrackObject> _listOfTracks;
-        private TrackObject _track1, _track2, _track3, _track4;
-
         private ISeperationEventChecker _checker;
         private ISeperationEventLogger _uut;
         private SeparationEventArgs _receivedArgs;
-        private SeparationEventArgs _newArgs;
+
+        private static readonly string Path = System.Environment.CurrentDirectory;
+        static string fileName = "test.txt";
+        private static readonly string FilePath = System.IO.Path.Combine(Path, fileName);
+        StreamReader _reader;
 
         [SetUp]
         public void SetUp()
@@ -177,12 +179,18 @@ namespace ATM.Test.Unit
         [Test]
         public void OneNewSeparationEvent_ReceiveEvent_LogEvent()
         {
-            _checker.NewSeperationEvents += Raise.EventWith(new SeparationEventArgs(new SeparationEventObject("Tag123",
+            var separationEvent = new SeparationEventArgs(new SeparationEventObject("Tag123",
                 "Tag456",
-                DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture))));
+                DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture)));
+            _checker.NewSeperationEvents += Raise.EventWith(separationEvent);
 
-            // Assume, that when 1 pair of tracks is too close, this creates 1 separation event object
-            Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(1));
+
+            var lastLine = File.ReadLines(FilePath).Last();
+
+            //Separation occured at { Convert.ToString(separationObject.TimeOfOcccurence, Thread.CurrentThread.CurrentCulture)}
+            //between tracks: { separationObject.Tag1}, { separationObject.Tag2}
+
+            Assert.That(lastLine, Is.EqualTo("Separation occured at 12-04-2018 11:11:11 between tracks: Tag123, Tag456"));
 
         }
     }
