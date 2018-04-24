@@ -39,9 +39,9 @@ namespace ATM.Logic.Handlers
 
             //Convert negative course values between 0-1 PI to number between 0-360 degrees
             if (compassCourse < 0)
-                return Math.Round(360 + compassCourse,3);
+                return Math.Round(360 + compassCourse,1);
 
-            return Math.Round(compassCourse,3);
+            return Math.Round(compassCourse,1);
         }
     }
 }
