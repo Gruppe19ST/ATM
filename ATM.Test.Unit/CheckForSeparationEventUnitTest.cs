@@ -84,6 +84,22 @@ namespace ATM.Test.Unit
         }
 
         [Test]
+        public void checkSeparationOf4Objects_3TooClose_3SeparationEvents()
+        {
+            _listOfTracks.Clear();
+            _listOfTracks.Add(_track1);
+            _listOfTracks.Add(_track2);
+            _listOfTracks.Add(new TrackObject("Tag789", 73000, 73000, 1400, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture)));
+            _listOfTracks.Add(_track4);
+            //Track 1+2, 1+3, 3+4 are in conflict
+
+            _uut.CheckSeparationEvents(_listOfTracks);
+
+            // Assume, that when 3 pair of tracks are too close, this creates 3 separation events
+            Assert.That(_receivedArgs.SeparationObjects.Count, Is.EqualTo(3));
+        }
+
+        [Test]
         public void checkSeparation_NotTooClose_ReturnEmptyList()
         {
             _listOfTracks.Clear();
@@ -101,15 +117,23 @@ namespace ATM.Test.Unit
         [Test]
         public void checkSeparation_NewSeparation_EventRaised()
         {
-            // Create a new separationevent
+            // Create a separationevent
             _listOfTracks.Clear();
             _listOfTracks.Add(_track1);
             _listOfTracks.Add(_track2);
 
             _uut.CheckSeparationEvents(_listOfTracks);
 
+            // Create a new separationevent
+            _listOfTracks.Clear();
+            _listOfTracks.Add(_track1);
+            _listOfTracks.Add(_track2);
+            _listOfTracks.Add(_track3);
+            _listOfTracks.Add(new TrackObject("TagABC", 87500, 88000, 4800, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture)));
+
+            _uut.CheckSeparationEvents(_listOfTracks);
             // Check that the event was raised with the right info
-            Assert.That(_newArgs.SeparationObjects.Count, Is.EqualTo(1));
+            Assert.That(_newArgs.SeparationObject.Tag1, Is.EqualTo("Tag789"));
         }
 
         [Test]

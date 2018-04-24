@@ -114,7 +114,7 @@ namespace ATM.Test.Integration
 
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
 
-            Assert.That(_newSeparationArgs.SeparationObjects.Count ,Is.EqualTo(1));
+            Assert.That(_newSeparationArgs.SeparationObject.Tag1 ,Is.EqualTo("Tag123"));
         }
 
         #endregion
