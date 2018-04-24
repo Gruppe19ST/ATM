@@ -36,6 +36,7 @@ namespace ATM.Test.Integration
             _converter = new TrackConverter(_receiver);
             _sorter = new Sorter(_converter);
             _sorter.TrackSortedReady += (o, args) => _sortedTrackList = args.TrackObjects;
+
             _fakeRawArgs = new RawTransponderDataEventArgs(new List<string>()
             {
                 "Fly1;88000;88000;6000;20180420222222222","Fly2;72000;91000;19999;20180420222222222", "Fly3;86000;86000;6500;20180420222222222"

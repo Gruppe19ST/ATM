@@ -44,6 +44,7 @@ namespace ATM.Test.Integration
             _sorter = new Sorter(_converter);
             _ts = new TrackSpeed();
             _tcc = new TrackCompassCourse();
+
             _checker = Substitute.For<ISeperationEventChecker>();
             _warningCreator = Substitute.For<ISeperationEventHandler>();
             _logger = Substitute.For<ISeperationEventLogger>();

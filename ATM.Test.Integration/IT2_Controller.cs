@@ -46,6 +46,7 @@ namespace ATM.Test.Integration
             _receiver = Substitute.For<ITransponderReceiver>();
             _converter = new TrackConverter(_receiver);
             _sorter = new Sorter(_converter);
+
             _speed = Substitute.For<ITrackSpeed>();
             _compassCourse = Substitute.For<ITrackCompassCourse>();
             _checker = Substitute.For<ISeperationEventChecker>();
@@ -58,6 +59,7 @@ namespace ATM.Test.Integration
             {
                 "Fly1;88000;88000;6000;20180420222222222","Fly2;72000;91000;19999;20180420222222222", "Fly3;86000;86000;6500;20180420222222222"
             });
+
             _fakeRawArgs2 = new RawTransponderDataEventArgs(new List<string>()
             {
                 "Fly1;86000;86000;6000;20180420223222222","Fly2;72000;91000;19999;20180420223222222", "Fly3;86000;86000;6500;20180420223222222"

@@ -31,41 +31,10 @@ namespace TransponderRecieverConsoleApp
             LogSeparationEvent logger = new LogSeparationEvent(checker);
 
             Controller controller = new Controller(sorter,ts,tcc,checker,warner,logger);
-           
-            /*_listOfTracks = new List<TrackObject>();
-            _track1 = new TrackObject("Tag123", 70000, 70000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
-            _track2 = new TrackObject("Tag456", 68000, 68000, 800, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
-            _track3 = new TrackObject("Tag789", 72000, 72000, 1200, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
-            
-            _listOfTracks.Clear();
-            _listOfTracks.Add(_track1);
-            _listOfTracks.Add(_track2);
-            _listOfTracks.Add(_track3);
-
-            CheckForSeparationEvent separationChecker = new CheckForSeparationEvent();
-            CreateWarning separationWarning = new CreateWarning(separationChecker);
-            LogSeparationEvent separationLogger = new LogSeparationEvent(separationChecker);
-            separationChecker.CheckSeparationEvents(_listOfTracks);
-
-
-            Console.ReadLine();
-
-            _track4 = new TrackObject("Tag456", 89000, 89000, 5000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
-            _track2 = _track4;
-
-            separationChecker.CheckSeparationEvents(_listOfTracks);*/
-
-
             Console.ReadLine(); 
             
         }
 
-        //private static void TrackConverter_TrackObjectsReady(object sender, TrackObjectEventArgs e)
-        //{
-        //    foreach (var track in e.TrackObjects)
-        //    {
-        //        Console.WriteLine(track.ToString());
-        //    }
-        //}
+        
     }
 }
