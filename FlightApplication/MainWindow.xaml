@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
         <Label Height="28" Margin="10,17,0,0" Name="labelflyiluften" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="15">Fly i luftrum</Label>
         <Label Height="28" Margin="10,17,0,0" Name="labelflyikonflikt" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="15" Grid.Column="1">Fly i konflikt</Label>
-        <ListBox Margin="10,55,10,9" Name="lbxflyiluften" ></ListBox>
-        <ListBox Margin="10,55,16,9" Name="lbxflyikonflikt" Grid.Column="1"></ListBox>
+        <ListBox ItemsSource="{Binding Controller}" DisplayMemberPath="Tag" IsSynchronizedWithCurrentItem="True" Margin="10,55,10,9" Name="lbxflyiluften" ></ListBox>
+        <ListBox ItemsSource="{Binding }" IsSynchronizedWithCurrentItem="True" Margin="10,55,16,9" Name="lbxflyikonflikt" Grid.Column="1"></ListBox>
     </Grid>
 </Window>
