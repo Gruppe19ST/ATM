@@ -37,11 +37,7 @@ namespace ATM.Test.Integration
         // Data
         private RawTransponderDataEventArgs _fakeRawArgs;
         private SeparationEventArgs _separationArgs;
-        private SeparationEventArgs _finishedSeparationArgs;
-
-        /*
-        private List<TrackObject> _listOfTracks;
-        private TrackObject _track1, _track2, _track3;*/
+        private SeparationEventArgs _newSeparationArgs;
         #endregion
 
         #region Setup
@@ -75,7 +71,7 @@ namespace ATM.Test.Integration
 
             // Assign to events
             _checker.SeperationEvents += _checker_SeperationEvents;
-            _checker.NewSeperationEvents += _checker_FinishedSeperationEvents;
+            _checker.NewSeperationEvents += _checker_NewSeperationEvents;
 
         }
 
@@ -87,9 +83,9 @@ namespace ATM.Test.Integration
             _separationArgs = e;
         }
 
-        private void _checker_FinishedSeperationEvents(object sender, SeparationEventArgs e)
+        private void _checker_NewSeperationEvents(object sender, SeparationEventArgs e)
         {
-            _finishedSeparationArgs = e;
+            _newSeparationArgs = e;
         }
         #endregion
 
@@ -105,7 +101,7 @@ namespace ATM.Test.Integration
 
         // Test that an event indicating finished separations is raised
         [Test]
-        public void HandleTrack_FinishedSeparationEvents_RaiseFinishedEvent()
+        public void HandleTrack_NewSeparationEvents_RaiseEvent()
         {
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
 
@@ -118,7 +114,7 @@ namespace ATM.Test.Integration
 
             _receiver.TransponderDataReady += Raise.EventWith(_fakeRawArgs);
 
-            Assert.That(_finishedSeparationArgs.SeparationObjects.Count ,Is.EqualTo(1));
+            Assert.That(_newSeparationArgs.SeparationObjects.Count ,Is.EqualTo(1));
         }
 
         #endregion

@@ -137,7 +137,7 @@ namespace ATM.Logic.Handlers
 
             if (_priorSeparations.Count != 0)
             {
-                OnSeparationEvent(new SeparationEventArgs(_priorSeparations));
+                OnNewSeparationEvent(new SeparationEventArgs(_priorSeparations));
             }
 
         }
