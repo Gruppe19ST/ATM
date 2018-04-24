@@ -31,18 +31,30 @@ namespace FlightApplication
         ITrackController controller;
         ITrackSpeed ts;
         ITrackCompassCourse tcc;
-        ISeperationEventChecker seperationEventChecker;
-        ISeperationEventHandler seperationEventHandler;
+        ISeperationEventChecker checker;
+        ISeperationEventHandler warningCreator;
         ISeperationEventLogger logger;
 
 
 
         public MainWindow()
         {
+            // TrackConverter that takes a TransponderReceiver and starts it
             trackConverter = new TrackConverter(TransponderReceiverFactory.CreateTransponderDataReceiver());
+            // A sorter that uses the information from the TrackConverter
             sorter = new Sorter(trackConverter);
+            // The logic-classes using and handling data
+            ts = new TrackSpeed();
+            tcc = new TrackCompassCourse();
+            checker = new CheckForSeparationEvent();
+            warningCreator = new CreateWarning(checker);
+            logger = new LogSeparationEvent(checker);
+
+            // Controller that delegates out the data
+            controller = new Controller(sorter,ts,tcc,checker,warningCreator,logger);
+
             InitializeComponent();
-            DataContext = new Controller(sorter, ts, tcc, seperationEventChecker, seperationEventHandler, logger);
+            DataContext = new Controller(sorter, ts, tcc, checker, warningCreator, logger);
             Loaded += new RoutedEventHandler(MainWindow_Loaded);
 
         }
