@@ -67,7 +67,7 @@ namespace ATM.Test.Unit
         }
 
         [Test]
-        public void somePriorTracks_newListOfCurrentTracks_ShowCurrentTracks()
+        public void somePriorTracks_newListOfCurrentTracksSameTags_ShowCurrentTracks()
         {
             _listOfTracks.Clear();
             _listOfTracks.Add(_track1);
@@ -78,6 +78,27 @@ namespace ATM.Test.Unit
 
             _listOfTracks.Clear();
             _track1 = new TrackObject("Tag123", 72000, 72000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
+            _listOfTracks.Add(_track1);
+            _listOfTracks.Add(_track2);
+            _fakeTrackArgs = new TrackObjectEventArgs(_listOfTracks);
+
+            _sorter.TrackSortedReady += Raise.EventWith(_fakeTrackArgs);
+
+        }
+
+        [Test]
+        public void somePriorTracks_newListOfCurrentTracksNewTags_ShowCurrentTracks()
+        {
+            _listOfTracks.Clear();
+            _listOfTracks.Add(_track1);
+            _listOfTracks.Add(_track2);
+            _fakeTrackArgs = new TrackObjectEventArgs(_listOfTracks);
+
+            _sorter.TrackSortedReady += Raise.EventWith(_fakeTrackArgs);
+
+            _listOfTracks.Clear();
+            _track1 = new TrackObject("TagABC", 72000, 72000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
+            _track2 = new TrackObject("TagDEF", 72000, 72000, 1000, DateTime.ParseExact("20180412111111111", "yyyyMMddHHmmssfff", CultureInfo.InvariantCulture));
             _listOfTracks.Add(_track1);
             _listOfTracks.Add(_track2);
             _fakeTrackArgs = new TrackObjectEventArgs(_listOfTracks);

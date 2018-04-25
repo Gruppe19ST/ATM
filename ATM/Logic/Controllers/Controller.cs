@@ -61,9 +61,13 @@ namespace ATM.Logic.Controllers
         {
             if (currentTracks != null)
             {
-                if (priorTracks != null)
+                // We would like to clear the display but have not found a proper way, as Console.Clear() doesn't pass unit testing,
+                // because there might be no Console to clear there - maybe an interface would make it posssible to stub the Console?
+                // Any way, our solution for now is to put in a blank line between the old data and the new data
+                Console.WriteLine();
+                foreach (var trackC in currentTracks)
                 {
-                    foreach (var trackC in currentTracks)
+                    if (priorTracks != null)
                     {
                         foreach (var trackP in priorTracks)
                         {
@@ -71,26 +75,14 @@ namespace ATM.Logic.Controllers
                             {
                                 trackC.horizontalVelocity = _ts.CalculateSpeed(trackC, trackP);
                                 trackC.compassCourse = _tcc.CalculateCompassCourse(trackC, trackP);
-                                // Make sure that the color is reset as it might be red from a conflict
-                                Console.ResetColor();
-                                Console.WriteLine(trackC.ToString());
                             }
-
                         }
                     }
-                }
-                else
-                {
-                    foreach (var trackC in currentTracks)
-                    {
-                        // Make sure that the color is reset as it might be red from a conflict
-                        Console.ResetColor();
-                        Console.WriteLine(trackC.ToString());
-                    }
+                    // Make sure that the color is reset as it might be red from a conflict
+                    Console.ResetColor();
+                    Console.WriteLine(trackC.ToString());
                 }
             }
         }
     }
-
-
 }
