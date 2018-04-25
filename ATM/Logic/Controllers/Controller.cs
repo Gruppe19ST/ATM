@@ -63,6 +63,10 @@ namespace ATM.Logic.Controllers
             {
                 // We would like to clear the display but have not found a proper way, as Console.Clear() doesn't pass unit testing,
                 // because there might be no Console to clear there - maybe an interface would make it posssible to stub the Console?
+                // Another way would be to create an output class and let that class' only method be outputs to the console
+                // This class could get a parameter telling, whether it's called from Controller og CreateWarning - if from Controller, then it should clear the console before outputting.
+                // Then the problem with no Console in the unit test would be solved
+
                 // Any way, our solution for now is to put in a blank line between the old data and the new data
                 Console.WriteLine();
                 foreach (var trackC in currentTracks)
